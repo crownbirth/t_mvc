@@ -155,11 +155,13 @@ if (defined('ENVIRONMENT'))
  */
         
     // Redirect to installation folder if it still exists.
-    $request = explode('/', $_SERVER['REQUEST_URI']);
+    $request = explode('/', filter_input(INPUT_SERVER, 'REQUEST_URI'));
     $path_exists = realpath("{$application_folder}/controllers/installation.php");
     
-    if($path_exists && (!isset($request[1]) || $request[1] != 'installation')) {
-        header("Location: installation");
+    if($path_exists && !in_array('tams_installation', $request)) {
+        $url = filter_input(INPUT_SERVER, 'REQUEST_SCHEME').'://';
+        $url .= filter_input(INPUT_SERVER, 'HTTP_HOST').'/tams_installation';
+        header("Location: {$url}");
     }
 
 /*
