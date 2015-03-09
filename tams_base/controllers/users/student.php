@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-require_once APPPATH.'controllers/users/Users.php';
+require_once APPPATH.'controllers/users/users.php';
 
 /**
  * Student controller
@@ -33,20 +33,22 @@ class Student extends Users {
     }// End func __construct
     
     /**
-     * Index page for the application.	 
+     * Index page for the student.	 
      */
     public function index() { 
         
         $this->check_user_type();
         
-        $data = array();
+        $data = array(
+            'tiles' => $this->dashboard_tiles()
+        );
         
         $page_name = 'dashboard';
         $page_content = $this->load->view($this->folder_name.'/'.$page_name, $data, true);
-        $this->page->build($page_content, $this->folder_name, $page_content, 'Dashboard');       
+        $this->page->build($page_content, $this->folder_name, $page_content, 'Dashboard', false);       
     }// End of func index
     
 }
 
-/* End of file admin.php */
-/* Location: ./application/controllers/admin.php */
+/* End of file users.php */
+/* Location: ./application/controllers/users.php */

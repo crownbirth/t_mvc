@@ -14,15 +14,22 @@
  */
 ?>
 <?php echo $top_nav; ?>
-<div class="container-fluid" id="content">
+<div class="container-fluid nav-fixed" id="content">
     
     <?php echo $left_sidebar; ?>
     
     <div id="main" style="margin-bottom: 50px">
         <div class="container-fluid">
+            <?php foreach($notification as $type => $not) {?>
+            <div class='alert alert-<?php echo $type;?>' style='margin-top: 10px'>
+                <?php echo $not['msg']?>
+            </div>
+            <?php }?>
+            
             <div class="page-header">
-                <div class="pull-left">                                
-                    <input id="logo" type="image" src="/img/logo.jpg" name="logo">
+                <div class="pull-left">
+                    <img id="logo" type="image" src="<?php echo base_url("img/logo.jpg")?>" name="logo"/>
+                    <h2 class="pull-right" style="margin-left: 10px"><?php echo $school_name?></h2>
                 </div>
 
                 <div class="pull-right">
@@ -38,6 +45,7 @@
                 </div>
             </div>    
 
+            <?php if($dashboard) {?>
             <div class="breadcrumbs">
                 <ul>                                
                     <li>
@@ -46,12 +54,17 @@
                     </li>                              
                 </ul>                              
             </div>
+            <?php }?>
             
             <div class="row-fluid">
                 
-                <div class="span9" ng-controller="PageController">
+                <div class="span<?php echo $width?>" ng-controller="PageController">
                     <?php echo $page_content;?>
                 </div>
+                
+                <?php 
+                    // Show feedbar only if width is 9
+                    if($width != 12) {?>
                 
                 <div class="span3">                                
                     <div class="box">
@@ -69,8 +82,8 @@
                             </div>
                         </div>
 
-                        <div class="box-content nopadding scrollable" data-height="400" data-visible="true">
-                            <table id="randomFeed" class="table table-nohead">
+                        <div class="box-content nopadding scrollable" data-visible="true">
+                            <table class="table table-nohead">
                                 <tbody>
                                     <tr>
                                         <td><span class="label"><i class="icon-plus"></i></span> <a href="#">Admin</a> added a new H.O.D</td>
@@ -98,6 +111,7 @@
                         </div>                                    
                     </div>                               
                 </div>
+                <?php }?>
             </div>  
         </div>
     </div>

@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php  if ( !defined('BASEPATH')) exit('No direct script access allowed');
 /*
 | -------------------------------------------------------------------------
 | URI ROUTING
@@ -40,58 +40,90 @@
 
 $route['default_controller'] = "application";
 
-/**
+
+/*
+ *---------------------------------------------------------------
  * Installation routes
+ *---------------------------------------------------------------
  */
+
 $route['tams_installation'] = "installation";
 $route['tams_installation/complete'] = "application/complete_installation";
 $route['tams_installation/(:any)'] = "installation/$1";
 
-/**
+
+/*
+ *---------------------------------------------------------------
  * General application routing rules.
+ *---------------------------------------------------------------
  */
 
 // Login rules
 $route['login'] = "application/login";
 $route['authenticate'] = "application/authenticate";
+$route['logout'] = "application/logout";
+
+$route['login_require'] = false;
+$route['authenticate_require'] = false;
+$route['logout_require'] = false;
+$route['_require'] = false;
 
 // Forgot password rules
 $route['forgot_password/(:any)'] = "application/forgot_password/$1";
 $route['forgot_password'] = "application/forgot_password";
+$route['forgot_password_require'] = false;
 
 // Reset password rules
 $route['reset_password/(:any)'] = "application/reset_password/$1";
 $route['reset_password'] = "application/reset_password";
-    
+$route['reset_password_require'] = false;
+
 // Change password rules
 $route['change_password'] = "application/change_password";
 
 // User route rules
 $route['(:any)/dashboard'] = "users/$1";
 
+
+/*
+ *---------------------------------------------------------------
+ * Set-up routes.
+ *---------------------------------------------------------------
+ */
+
 // College route
-$route['college'] = "college/college";
-$route['college/(:any)'] = "college/college/$1";
-$route['college/info/(:any)'] = "college/college/details/$1";
+$route['college'] = "setup/college";
+$route['college/(:any)'] = "setup/college/$1";
+$route['college/info/(:any)'] = "setup/college/details/$1";
 
 // Department route
-$route['department'] = "department/department";
-$route['department/(:any)'] = "department/department/$1";
-$route['department/info/(:any)'] = "department/department/details/$1";
+$route['department'] = "setup/department";
+$route['department/(:any)'] = "setup/department/$1";
+$route['department/info/(:any)'] = "setup/department/details/$1";
 
 // Programme route
-$route['programme'] = "programme/programme";
-$route['programme/(:any)'] = "programme/programme/$1";
-$route['programme/info/(:any)'] = "programme/programme/details/$1";
+$route['programme'] = "setup/programme";
+$route['programme/(:any)'] = "setup/programme/$1";
+$route['programme/info/(:any)'] = "setup/programme/details/$1";
 
-// Admission route
-$route['admission'] = "admission/admission";
-$route['admission/(:any)'] = "admission/$1";
-$route['admission/(:any)/(:any)'] = "admission/$1/$2";
 
-$route['exam/(:any)/create'] = "admission/exam/create_$1";
-$route['exam/(:any)/update'] = "admission/exam/update_$1";
-$route['exam/(:any)/delete'] = "admission/exam/delete_$1";
+/*
+ *---------------------------------------------------------------
+ * Access Control routes.
+ *---------------------------------------------------------------
+ */
+$route['access'] = "access_control/group";
+$route['access/groups'] = "access_control/group";
+$route['access/group'] = "access_control/group/details";
+$route['access/group/(:any)'] = "access_control/group/$1";
+
+$route['access/roles'] = "access_control/role";
+$route['access/role'] = "access_control/role/details";
+$route['access/role/(:any)'] = "access_control/role/$1";
+
+$route['access/permissions'] = "access_control/permission";
+$route['access/permission'] = "access_control/permission/details";
+$route['access/permission/(:any)'] = "access_control/permission/details/$1";
 
 $route['404_override'] = '';
 

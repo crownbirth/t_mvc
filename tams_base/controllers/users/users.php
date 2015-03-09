@@ -72,7 +72,7 @@ abstract class Users extends CI_Controller {
      */
     public function index() {        
        
-        $this->login();        
+               
     }// End of func index
     
     /**
@@ -114,7 +114,7 @@ abstract class Users extends CI_Controller {
                 $error              = true;
                 
                 // Set error message and type
-                $data['msg']        = $this->lang->line('password_unmatch');    
+                $data['msg']        = $this->lang->line('password_mismatch');    
                 $data['msg_type']   = MSG_TYPE_ERROR;                               
             }
             
@@ -202,11 +202,24 @@ abstract class Users extends CI_Controller {
         if($this->user_type == $url) {
             return true;
         }
-        
+        /* TODO: Insert error into notification and retreive on redirect. Should remove the extra slash on the redict*/
         redirect('error/error_ErrorNum');
     }// End of func reset_pasword
     
+    /**
+     * Generate the tiles that should be generated on the user's dashboard.
+     * 
+     * @access protected
+     * @param 
+     * @return void	 
+     */
+    protected function dashboard_tiles() {
+        
+        // Retrieve module tiles to be displayed on the dashboard.
+        return $this->main->get_dashboard();
+        
+    }// End of func dashboard_tiles
 }
 
-/* End of file application.php */
-/* Location: ./application/controllers/application.php */
+/* End of file users.php */
+/* Location: ./application/controllers/users.php */
