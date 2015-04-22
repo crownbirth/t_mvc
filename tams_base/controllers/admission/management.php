@@ -86,20 +86,26 @@ class Management extends CI_Controller {
         $data['exams'] = $this->adm_mdl->get_exam();
         $data['grades'] = $this->adm_mdl->get_grade();
         $data['subjects'] = $this->adm_mdl->get_subject();
+        $data['exam_subjects'] = $this->adm_mdl->get_exam_subject();
+        $data['exam_grades'] = $this->adm_mdl->get_exam_grade();
         
         $page_name = 'management';
         
         //build view pade for prospective registration 
         $page_content = $this->load->view($this->folder_name.'/management/'.$page_name, $data, true);
-        $page_content .= $this->load->view($this->folder_name.'/partials/edit_group', "", true);
-        $page_content .= $this->load->view($this->folder_name.'/partials/edit_exam', "", true);
-        $page_content .= $this->load->view($this->folder_name.'/partials/edit_subject', "", true);
-        $page_content .= $this->load->view($this->folder_name.'/partials/edit_grade', "", true);
-        $page_content .= $this->load->view($this->folder_name.'/partials/create_group', "", true);
-        $page_content .= $this->load->view($this->folder_name.'/partials/create_exam', "", true);
-        $page_content .= $this->load->view($this->folder_name.'/partials/create_subject', "", true);
-        $page_content .= $this->load->view($this->folder_name.'/partials/create_grade', "", true);
-        $page_content .= $this->load->view($this->folder_name.'/partials/delete_modal', "", true);
+        $page_content .= $this->load->view($this->folder_name.'/partials/edit_group', $data, true);
+        $page_content .= $this->load->view($this->folder_name.'/partials/edit_exam', $data, true);
+        $page_content .= $this->load->view($this->folder_name.'/partials/edit_exam_subject', $data, true);
+        $page_content .= $this->load->view($this->folder_name.'/partials/edit_subject', $data, true);
+        $page_content .= $this->load->view($this->folder_name.'/partials/edit_grade', $data, true);
+        $page_content .= $this->load->view($this->folder_name.'/partials/edit_exam_grade', $data, true);
+        $page_content .= $this->load->view($this->folder_name.'/partials/create_group', $data, true);
+        $page_content .= $this->load->view($this->folder_name.'/partials/create_exam', $data, true);
+        $page_content .= $this->load->view($this->folder_name.'/partials/create_subject', $data, true);
+        $page_content .= $this->load->view($this->folder_name.'/partials/create_exam_subject', $data, true);
+        $page_content .= $this->load->view($this->folder_name.'/partials/create_grade', $data, true);
+        $page_content .= $this->load->view($this->folder_name.'/partials/create_exam_grade', $data, true);
+        $page_content .= $this->load->view($this->folder_name.'/partials/delete_modal', $data, true);
         
         $this->page->build($page_content, $this->folder_name, $page_name, $this->page_title );
     }

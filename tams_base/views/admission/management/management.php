@@ -216,10 +216,44 @@
                                             </div>
                                             <div id="t4" class="tab-pane ">
                                                 <ul class="tabs pull-right form">
-                                                    <li class="btn btn-green" data-toggle="modal" href="#create_subject_modal">                             
+                                                    <li class="btn btn-green" data-toggle="modal" href="#create_exam_subject_modal">                             
                                                         <i class="icon-plus"> </i> New Exam Subject                        
                                                     </li>
                                                 </ul>
+                                                <p>&nbsp;</p><br/>
+                                                <table class="table table-hover table-nomargin">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S/N</th>
+                                                            <th>Exam Names</th>
+                                                            <th>Subjects </th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="exsubj in data.exam_subjects">
+                                                            <td ng-bind="$index +1"></td>
+                                                            <td ng-bind="exsubj.shortname"></td>
+                                                            <td ng-bind="exsubj.subname"></td>
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
+                                                                        <i class="icon-cog"> </i>
+                                                                        <span class="caret"></span>
+                                                                    </a>
+                                                                    <ul class="dropdown-menu dropdown-success">
+                                                                        <li>
+                                                                            <a ng-click="openEditDialog('exam_subject', $index, $event)">Edit</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a ng-click="openDeleteDialog('grade', $index, $event)">Delete</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                             <div id="t5" class="tab-pane ">
                                                 <ul class="tabs pull-right form">
@@ -227,13 +261,88 @@
                                                         <i class="icon-plus"></i> New Grade
                                                     </li>
                                                 </ul>
+                                                <p>&nbsp;</p><br/>
+                                                <table class="table table-hover table-nomargin">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S/N</th>                                
+                                                            <th>Name</th>
+                                                            <th>Weight</th>
+                                                            <th>Description</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="grade in data.grades">
+                                                            <td ng-bind="$index+1"></td>
+                                                            <td ng-bind="grade.gradename"></td> 
+                                                            <td ng-bind="grade.gradeweight"></td> 
+                                                            <td ng-bind="grade.gradedesc"></td> 
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
+                                                                        <i class="icon-cog"> </i>
+                                                                        <span class="caret"></span>
+                                                                    </a>
+                                                                    <ul class="dropdown-menu dropdown-success">
+                                                                        <li>
+                                                                            <a ng-click="openEditDialog('grade', $index, $event)">Edit</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a ng-click="openDeleteDialog('grade', $index, $event)">Delete</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr ng-show="data.grades.length < 1">                                
+                                                            <td colspan="5">
+                                                                <?php echo sprintf($this->lang->line('no_entries'), 'grades')?>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                             <div id="t6" class="tab-pane ">
                                                 <ul class="tabs pull-right form">
-                                                    <li class="btn btn-green" data-toggle="modal" href="#create_grade_modal">
+                                                    <li class="btn btn-green" data-toggle="modal" href="#create_exam_grade_modal">
                                                         <i class="icon-plus"></i> New Exam Grade
                                                     </li>
                                                 </ul>
+                                                <p>&nbsp;</p><br/>
+                                                <table class="table table-hover table-nomargin">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S/N</th>
+                                                            <th>Exam Names</th>
+                                                            <th>Subjects </th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="exgrd in data.exam_grades">
+                                                            <td ng-bind="$index +1"></td>
+                                                            <td ng-bind="exgrd.shortname"></td>
+                                                            <td ng-bind="exgrd.gradename"></td>
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
+                                                                        <i class="icon-cog"> </i>
+                                                                        <span class="caret"></span>
+                                                                    </a>
+                                                                    <ul class="dropdown-menu dropdown-success">
+                                                                        <li>
+                                                                            <a ng-click="openEditDialog('exam_grade', $index, $event)">Edit</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a ng-click="openDeleteDialog('exam_grade', $index, $event)">Delete</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
@@ -242,13 +351,13 @@
                         </div>
                     </div>
                     <div id="second22" class="tab-pane">
-                        here                    
+                        here2                    
                     </div>
                     <div id="thirds3322" class="tab-pane">
-                        here
+                        here3
                     </div>
                     <div id="thirds33" class="tab-pane">
-                        here
+                        here4
                     </div>
                 </div>
             </div>
@@ -264,4 +373,8 @@
     var grades = <?php echo (is_array($grades['rs']))? json_encode($grades['rs']): '[]'?>;
     
     var subjects = <?php echo (is_array($subjects['rs']))? json_encode($subjects['rs']): '[]'?>;
+    
+    var exam_subjects = <?php echo (is_array($exam_subjects['rs']))? json_encode($exam_subjects['rs']): '[]'?>;
+    
+    var exam_grades = <?php echo (is_array($exam_grades['rs']))? json_encode($exam_grades['rs']): '[]'?>;
 </script>

@@ -6,14 +6,18 @@ examModule.controller('PageController', function($scope) {
         "groups": groups,
         "exams": exams,
         "grades": grades,
-        "subjects": subjects
+        "subjects": subjects,
+        "exam_subjects": exam_subjects,
+        "exam_grades": exam_grades
     };
 
     groups = null;
     exams = null;
     grades = null;
-    subjects = null;    
-
+    subjects = null;
+    exam_subjects = null;
+    exam_grades = null;
+    
     $scope.current = null;
     
     angular.element('.modal').on('show', function() {

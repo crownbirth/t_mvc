@@ -476,6 +476,45 @@ class Admission_model extends CI_Model {
     
     
     /**
+     * Get exam grade(s)
+     * 
+     * @access public
+     * @param int $id
+     * @return void
+     */
+    public function get_exam_grade($id = NULL) {
+        
+        // Initialize where clause
+        $where = array();
+        $result_set = QUERY_ARRAY_RESULT;
+        
+        // Create where clause if id is set.
+        if($id != NULL) {
+            $where = array(
+                array('field' => 'examgradeid', 'value' => $id)
+            );
+            
+            $result_set = QUERY_ARRAY_ROW;
+        }
+        
+        
+        // Call get_data from utl_model
+        return $this->util_model->get_data('exam_grades eg', 
+                                            array(), 
+                                            $where ,
+                                            array(),
+                                            array(
+                                                    array('table' => 'exams e', 'on'=> 'e.examid = eg.examid'),
+                                                    array('table' => 'grades g', 'on'=> 'g.gradeid = eg.gradeid')
+                                                ),
+                                            array(),
+                                            $result_set
+                                        );
+        
+    }// End func get_grade
+    
+    
+    /**
      * Get subject(s)
      * 
      * @access public
@@ -504,6 +543,44 @@ class Admission_model extends CI_Model {
                                             $where ,
                                             array(),
                                             array(),
+                                            array(),
+                                            $result_set
+                                        );
+        
+    }// End func get_subject
+    
+    /**
+     * Get exam subject(s)
+     * 
+     * @access public
+     * @param int $id
+     * @return void
+     */
+    public function get_exam_subject($id = NULL) {
+        
+        // Initialize where clause
+        $where = array();
+        $result_set = QUERY_ARRAY_RESULT;
+        
+        // Create where clause if id is set.
+        if($id != NULL) {
+            $where = array(
+                array('field' => 'examsubjectid', 'value' => $id)
+            );
+            
+            $result_set = QUERY_ARRAY_ROW;
+        }
+        
+        
+        // Call get_data from utl_model
+        return $this->util_model->get_data('exam_subjects es', 
+                                            array(), 
+                                            $where ,
+                                            array(),
+                                            array(
+                                                    array('table' => 'exams e', 'on'=> 'e.examid = es.examid'),
+                                                    array('table' => 'subjects s', 'on'=> 's.subid = es.subjectid')
+                                                ),
                                             array(),
                                             $result_set
                                         );
