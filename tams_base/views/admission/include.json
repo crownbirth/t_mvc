@@ -1,11 +1,25 @@
 {
     "all": {
         "js": [            
-            "plugins/chosen/chosen.jquery.min.js"
+            "plugins/chosen/chosen.jquery.min.js",
+            "plugins/wizard/jquery.form.wizard.min.js",
+            "plugins/imagesLoaded/jquery.imagesloaded.min.js",
+            "plugins/fileupload/bootstrap-fileupload.min.js",
+            "plugins/mockjax/jquery.mockjax.js",
+            "plugins/datepicker/bootstrap-datepicker.js",
+            "plugins/validation/jquery.validate.min.js",
+            "plugins/validation/additional-methods.min.js",
+            "plugins/tagsinput/jquery.tagsinput.min.js",
+            "lodash/lodash.min.js",
+            "angular/angular.min.js",
+            "angular/angular-admission.js"
         ],
                 
         "css": [
-            "plugins/chosen/chosen.css"
+            "plugins/chosen/chosen.css",
+            "plugins/plupload/jquery.plupload.queue.css",
+             "plugins/datepicker/datepicker.css",
+             "plugins/tagsinput/jquery.tagsinput.css"
         ],
         
         "feedbar": false
@@ -28,7 +42,7 @@
             
         ]
     },
-    "manage_exam": {
+    "management": {
         "js": [
             "angular/angular.min.js",
             "angular/angular-exam.js",
@@ -39,5 +53,31 @@
             
         ],
         "feedbar": true
+    },
+    "register": {
+        "js": [ 
+            
+            "plugins/chosen/chosen.jquery.min.js",
+            "plugins/wizard/jquery.form.wizard.min.js",
+            "plugins/imagesLoaded/jquery.imagesloaded.min.js",
+            "plugins/fileupload/bootstrap-fileupload.min.js",
+            "plugins/mockjax/jquery.mockjax.js",
+            "plugins/datepicker/bootstrap-datepicker.js",
+            "plugins/validation/jquery.validate.min.js",
+            "plugins/validation/additional-methods.min.js",
+            "plugins/tagsinput/jquery.tagsinput.min.js",
+            "lodash/lodash.min.js",
+            "angular/angular.min.js",
+            "angular/angular-admission.js"
+            
+        ],
+        
+        "css": [
+             "plugins/chosen/chosen.css",
+             "plugins/plupload/jquery.plupload.queue.css",
+             "plugins/datepicker/datepicker.css",
+             "plugins/tagsinput/jquery.tagsinput.css"
+        ],
+        "feedbar": false
     }
 }

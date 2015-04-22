@@ -32,6 +32,10 @@
 	<link rel="stylesheet" href="<?php echo site_url(); ?>css/bootstrap-responsive.min.css">
 	<!-- icheck -->
 	<link rel="stylesheet" href="<?php echo site_url(); ?>css/plugins/icheck/all.css">
+        
+        <!-- Choosen -->
+	<link rel="stylesheet" href="<?php echo site_url(); ?>css/plugins/chosen/chosen.css">
+        
 	<!-- Theme CSS -->
 	<link rel="stylesheet" href="<?php echo site_url(); ?>css/style.css">
 	<!-- Color CSS -->
@@ -39,6 +43,9 @@
         
         <!-- jQuery -->
 	<script src="<?php echo site_url(); ?>js/jquery.min.js"></script>
+        
+        <!-- Choosen -->
+	<script src="<?php echo site_url(); ?>js/plugins/chosen/chosen.jquery.min.js"></script>
 	
 	<!-- Nice Scroll -->
 	<script src="<?php echo site_url(); ?>js/plugins/nicescroll/jquery.nicescroll.min.js"></script>
@@ -75,12 +82,12 @@
             <h1>
                 <a href="#">
                     <img src="<?php echo site_url();?>img/logo2.png" 
-                         alt="" class='retina-ready' width="59" height="49"/>TASUED
+                         alt="" class='retina-ready' width="59" height="49"/><?php echo strtoupper($school_name['short']) ?>
                 </a>
             </h1>
            
             <div class="login-body span9"> 
-                <?php if(isset($session['id']) && $session['id'] != '') {?>
+                <?php if(!empty($admission)) {?>
                 <div class="span3">                  
                     <h3>
                         <i class="icon-bullhorn"></i>
@@ -96,7 +103,7 @@
                             <li>After submitting your initial application an email will be sent to you</li><br/>
                             <li>Follow the link in your email to complete the application process</li><br/>
                             <li>
-                                If you have already filled the <?php echo $session['name']?> 
+                                If you have already filled the <?php echo $admission['displayname']?> 
                                 application form before, click here to check 
                                 the status of your application
                             </li><br/>
@@ -116,10 +123,27 @@
                           class='form-validate' 
                           id="login">
                         <h3>
-                            <i class="icon-edit"></i><?php echo $session['name']?> APPLICATION FORM
+                            <i class="glyphicon-stats"></i> <?php echo $admission['displayname'] .' '. $admission['admtype']?> APPLICATION FORM
                         </h3>
                         <br/>
-                        <div class="text-info"><?php echo validation_errors()?></div>
+                        
+                            <?php
+                            if($msg)
+                                echo $msg;
+                            ?>
+                      
+                        <?php if($admission['jamb'] == 'yes'){?>
+                        <div class="control-group ">
+                            <div class="controls">
+                                <input type="text" 
+                                       name="jambregid" 
+                                       placeholder="Enter JAMB Reg. No." 
+                                       class='input-block-level' 
+                                       data-rule-required="true" 
+                                       value="<?php echo set_value('jambregid'); ?>"/>
+                            </div>
+                        </div>
+                        <?php }?>
                         <div class="control-group">
                             <div class="controls">
                                 <input type="text" 
@@ -127,7 +151,7 @@
                                        placeholder="Enter your Surname" 
                                        class='input-block-level' 
                                        data-rule-required="true" 
-                                       value="<?php echo set_value('sname'); ?>"/>
+                                       value="<?php echo set_value('lname'); ?>"/>
                             </div>
                         </div>                        
                         
@@ -150,6 +174,16 @@
                                        class='input-block-level' 
                                        data-rule-required="true" 
                                        value="<?php echo set_value('mname'); ?>"/>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <div class="controls">
+                                <select name="admtype" class="chosen-select input-block-level" data-rule-required="true" required="required">
+                                    <option value="">-Choose Admission-</option>
+                                    <option value="UTME">UTME</option>
+                                    <option value="DE">DE</option>
+                                </select>
                             </div>
                         </div>
 
