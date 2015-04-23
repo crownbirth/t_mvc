@@ -46,16 +46,14 @@
         "js": [
             "angular/angular.min.js",
             "angular/angular-exam.js",
-            "plugins/jquery-ui/jquery.ui.spinner.js",
-            "plugins/datatable/TableTools.min.js"
+            "plugins/jquery-ui/jquery.ui.spinner.js"
             
         ],
         
         "css": [
-            "plugins/datatable/TableTools.css",
-            "plugins/datatable/TableTools.css"
+            
         ],
-        "feedbar": true
+        "feedbar": false
     },
     "register": {
         "js": [ 

@@ -27,8 +27,27 @@ $route['admission/register'] = "admission/admission/register";
 $route['admission/view_register'] = "admission/admission/view_reg_from";
 $route['admission/registration_submit/(:any)'] = "admission/admission/registration_submit/$1";
 $route['admission/status'] = "admission/admission/admission_status";
+
+
 $route['admission/management'] = "admission/management/index";
-$route['admission/setup'] = "admission/exam/index";
+
+$route['admission/create_group'] = "admission/management/create_group";
+$route['admission/update_group'] = "admission/management/update_group";
+
+$route['admission/create_exam'] = "admission/management/create_exam";
+$route['admission/update_exam'] = "admission/management/update_exam";
+
+$route['admission/create_subject'] = "admission/management/create_subject";
+$route['admission/update_subject'] = "admission/management/update_subject";
+
+$route['admission/create_exam_subject'] = "admission/management/create_exam_subject";
+$route['admission/update_exam_subject'] = "admission/management/update_exam_subject";
+
+$route['admission/create_grade'] = "admission/management/create_grade";
+$route['admission/update_grade'] = "admission/management/update_grade";
+
+$route['admission/create_exam_grade'] = "admission/management/create_exam_grade";
+$route['admission/update_exam_grade'] = "admission/management/update_exam_grade";
 
 
 //$route['admission/application'] = "admission/admission/application";

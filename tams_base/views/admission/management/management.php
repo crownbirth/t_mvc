@@ -262,13 +262,11 @@
                                                     </li>
                                                 </ul>
                                                 <p>&nbsp;</p><br/>
-                                                <table class="table table-hover table-nomargin">
+                                                <table class="table table-hover table-nomargin table-bordered table-condensed">
                                                     <thead>
                                                         <tr>
                                                             <th>S/N</th>                                
                                                             <th>Name</th>
-                                                            <th>Weight</th>
-                                                            <th>Description</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -276,8 +274,6 @@
                                                         <tr ng-repeat="grade in data.grades">
                                                             <td ng-bind="$index+1"></td>
                                                             <td ng-bind="grade.gradename"></td> 
-                                                            <td ng-bind="grade.gradeweight"></td> 
-                                                            <td ng-bind="grade.gradedesc"></td> 
                                                             <td>
                                                                 <div class="btn-group">
                                                                     <a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
@@ -315,7 +311,9 @@
                                                         <tr>
                                                             <th>S/N</th>
                                                             <th>Exam Names</th>
-                                                            <th>Subjects </th>
+                                                            <th>Grade</th>
+                                                            <th>Weight </th>
+                                                            <th>Description  </th>
                                                             <th>Actions</th>
                                                         </tr>
                                                     </thead>
@@ -324,6 +322,8 @@
                                                             <td ng-bind="$index +1"></td>
                                                             <td ng-bind="exgrd.shortname"></td>
                                                             <td ng-bind="exgrd.gradename"></td>
+                                                            <td ng-bind="exgrd.gradeweight"></td>
+                                                            <td ng-bind="exgrd.gradedesc"></td>
                                                             <td>
                                                                 <div class="btn-group">
                                                                     <a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
@@ -351,10 +351,116 @@
                         </div>
                     </div>
                     <div id="second22" class="tab-pane">
-                        here2                    
+                         <div class="row-fluid">
+                            <div class="span12">
+                                <div class="box box-color">
+                                    <div class="box-title">
+                                        <h3>
+                                            <i class="icon-reorder"></i> Admission Setup
+                                        </h3>
+                                        <ul class="tabs">
+                                            <li class="active">
+                                                <a data-toggle="tab" href="#t7">Sample tab #1</a>
+                                            </li>
+                                            <li>
+                                                <a data-toggle="tab" href="#t8">Sample tab #2</a>
+                                            </li>  
+                                        </ul>
+                                    </div>
+                                    <div class="box-content">
+                                        <div class="tab-content">
+                                            <div id="t7" class="tab-pane active">
+                                                 <ul class="tabs pull-right form">
+                                                    <li class="btn btn-green" data-toggle="modal" href="#create_group_modal">                             
+                                                        <i class="icon-plus"> </i> Set Admission                       
+                                                    </li>
+                                                </ul>
+                                                <p>&nbsp;</p><br/>
+                                                <table class="table table-bordered table-condensed table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S/N</th>
+                                                            <th>Name</th>
+                                                            <th>Admission Type</th>
+                                                            <th>Current session</th>
+                                                            <th>Date Created</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead> 
+                                                    <tbody>
+                                                        <tr ng-repeat="adm in data.admissions">
+                                                            <td ng-bind="$index+1"></td>
+                                                            <td ng-bind="adm.displayname"></td>
+                                                            <td ng-bind="adm.admtype"></td>
+                                                            <td></td> 
+                                                            <td ng-bind="adm.created"></td>  
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
+                                                                        <i class="icon-cog"> </i>
+                                                                        <span class="caret"></span>
+                                                                    </a>
+                                                                    <ul class="dropdown-menu dropdown-success">
+                                                                        <li>
+                                                                            <a ng-click="openEditDialog('group', $index, $event)">Edit</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a ng-click="openDeleteDialog('group', $index, $event)">Delete</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr ng-show="data.admissions.length < 1">                                
+                                                            <td colspan="6">
+                                                                <?php echo sprintf($this->lang->line('no_entries'), 'groups')?>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div id="t8" class="tab-pane">
+                                                <h4>Second tab</h4>
+                                                Here
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                 
                     </div>
                     <div id="thirds3322" class="tab-pane">
-                        here3
+                        <div class="row-fluid">
+                            <div class="span6">
+                                    <div class="box box-color">
+                                        <div class="box-title">
+                                            <h3>
+                                                <i class="icon-reorder"></i> Colored widget
+                                            </h3>
+                                            <ul class="tabs">
+                                                <li class="active">
+                                                    <a data-toggle="tab" href="#t7">Sample tab #1</a>
+                                                </li>
+                                                <li>
+                                                    <a data-toggle="tab" href="#t8">Sample tab #2</a>
+                                                </li>  
+                                            </ul>
+                                        </div>
+                                            <div class="box-content">
+                                                    <div class="tab-content">
+                                                            <div id="t7" class="tab-pane active">
+                                                                    <h4>First tab</h4>
+                                                                    Lorem ipsum anim ad culpa ex id anim Excepteur esse et do cillum dolor in dolore cillum. Lorem ipsum Ut est consequat pariatur sint ut incididunt nisi dolore occaecat. 
+                                                            </div>
+                                                            <div id="t8" class="tab-pane">
+                                                                    <h4>Second tab</h4>
+                                                                    Lorem ipsum ad proident amet anim voluptate ea. Lorem ipsum voluptate et ex esse mollit labore aliquip culpa dolore culpa anim cillum nulla ut sunt. Lorem ipsum veniam sunt voluptate elit minim incididunt occaecat aute ut ut sunt laboris. Lorem ipsum cupidatat labore elit sit in aliqua nostrud adipisicing minim et mollit sunt Ut cupidatat laboris. Lorem ipsum sunt ut labore nostrud ut aliqua dolor sint cupidatat sit Duis in culpa consectetur exercitation. Lorem ipsum sunt anim reprehenderit elit minim nulla ut. 
+                                                            </div>
+                                                    </div>
+                                            </div>
+                                    </div>
+                            </div>
+                        </div> 
                     </div>
                     <div id="thirds33" class="tab-pane">
                         here4
@@ -377,4 +483,6 @@
     var exam_subjects = <?php echo (is_array($exam_subjects['rs']))? json_encode($exam_subjects['rs']): '[]'?>;
     
     var exam_grades = <?php echo (is_array($exam_grades['rs']))? json_encode($exam_grades['rs']): '[]'?>;
+    
+    var admissions = <?php echo (is_array($admission['rs']))? json_encode($admission['rs']): '[]'?>;
 </script>

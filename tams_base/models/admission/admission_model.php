@@ -71,6 +71,194 @@ class Admission_model extends CI_Model {
         return FALSE;
     }
     
+    /**
+     * Create a new admission requirement
+     * 
+     * @access public
+     * @param array $params, string $type
+     * @return void
+     */
+    public function exam_create($params, $type) {
+        
+        $status = DEFAULT_ERROR;
+        
+        switch ($type) {
+            
+            case 'group':
+                
+                // Check to an entry exists with the same 'groupname' 
+                $this->db->like('groupname', $params['groupname']);
+                $query = $this->db->get('exam_groups');
+                
+                // Set status 
+                if($query->num_rows() > 0) { 
+                    $status = DEFAULT_EXIST;
+                }else {
+                    if($this->db->insert('exam_groups', $params)) {
+                        $status = DEFAULT_SUCCESS;
+                    }
+                }
+                
+                break;
+
+            case 'exam':
+                
+                // Check to an entry exists with the same 'groupname' 
+                $this->db->like('examname', $params['examname']);                
+                $this->db->or_like('shortname', $params['shortname']);
+                $query = $this->db->get('exams');
+                
+                // Set status 
+                if($query->num_rows() > 0) { 
+                    $status = DEFAULT_EXIST;
+                }else {
+                    if($this->db->insert('exams', $params)) {
+                        $status = DEFAULT_SUCCESS;
+                    }
+                }
+
+                break;
+            
+            case 'grade':
+                
+                // Check to an entry exists with the same 'groupname' 
+                $this->db->like('gradename', $params['gradename']);
+                $query = $this->db->get('grades');
+                
+                // Set status 
+                if($query->num_rows() > 0) { 
+                    $status = DEFAULT_EXIST;
+                }else {
+                    if($this->db->insert('grades', $params)) {
+                        $status = DEFAULT_SUCCESS;
+                    }
+                }
+
+                break;
+            
+            case 'subject':
+                
+                // Check to an entry exists with the same 'groupname' 
+                $this->db->like('subname', $params['subname']);
+                $query = $this->db->get('subjects');
+                
+                // Set status 
+                if($query->num_rows() > 0) { 
+                    $status = DEFAULT_EXIST;
+                }else {
+                    if($this->db->insert('subjects', $params)) {
+                        $status = DEFAULT_SUCCESS;
+                    }
+                }
+
+                break;
+             
+            case 'exam_subject':
+                
+                // Check to an entry exists with the same 'examid' and 'subjectid' 
+                $this->db->like('subjectid', $params['subjid']);
+                $this->db->like('examid', $params['examid']);
+                $query = $this->db->get('exam_subjects');
+                
+                // Set status 
+                if($query->num_rows() > 0) { 
+                    $status = DEFAULT_EXIST;
+                }else {
+                    if($this->db->insert('exam_subjects', $params)) {
+                        $status = DEFAULT_SUCCESS;
+                    }
+                }
+
+                break;
+                
+                case 'exam_grade':
+                
+                // Check to an entry exists with the same 'examid' and 'subjectid' 
+                $this->db->like('examid', $params['examid']);
+                $this->db->like('gradeid', $params['gradeid']);
+                $this->db->like('gradeweight', $params['gradeweight']);
+                $query = $this->db->get('exam_grades');
+                
+                // Set status 
+                if($query->num_rows() > 0) { 
+                    $status = DEFAULT_EXIST;
+                }else {
+                    if($this->db->insert('exam_grades', $params)) {
+                        $status = DEFAULT_SUCCESS;
+                    }
+                }
+
+                break;
+                
+            default:
+                
+                break;
+        }
+         
+        return $status;
+    }// End func create
+	
+    /**
+     * Update an admission requirement
+     * 
+     * @access public
+     * @param int $id, array $params, string $type
+     * @return void
+     */
+    public function exam_update($id, $params, $type) {
+        
+        $status = DEFAULT_ERROR;
+        $ret;
+        
+        switch ($type) {
+            
+            case 'group':
+                
+                // Set status 
+                $ret = $this->db->update('exam_groups', $params, array('groupid' => $id));                
+                break;
+
+            case 'exam':
+                
+                // Set status 
+                $ret = $this->db->update('exams', $params, array('examid' => $id));
+                break;
+            
+            case 'grade':
+                
+                // Set status                 
+                $ret = $this->db->update('grades', $params, array('gradeid' => $id));
+                break;
+            
+            case 'subject':
+                
+                // Set status 
+                $ret = $this->db->update('subjects', $params, array('subid' => $id));
+                break;
+            
+            case 'exam_subject':
+                
+                // Set status 
+                $ret = $this->db->update('exam_subjects', $params, array('examsubjectid' => $id));
+                break;
+            
+            case 'exam_grade':
+                
+                // Set status 
+                $ret = $this->db->update('exam_grades', $params, array('examgradeid' => $id));
+                break;
+                
+            default:
+                
+                break;
+        }
+        
+        if($ret)
+            $status = DEFAULT_SUCCESS;
+        echo $this->db->last_query();
+        return $status;
+    }// End func update
+    
     /** 
      * Get active admission for the session
      * 
@@ -348,6 +536,15 @@ class Admission_model extends CI_Model {
     }
     
     
+    
+    /** 
+     * Get adm status record  
+     * 
+     * @access public
+     * @param array $param 
+     * @param integer $id
+     * @return void
+     */
     public function get_adm_status($id){
         
         echo  $prep_query = sprintf("SELECT u.*, p.*, pr1.progname AS pro_chc1,pr2.progname AS pro_chc2, pr3.progname AS pro_offered "
@@ -437,6 +634,8 @@ class Admission_model extends CI_Model {
                                         );
         
     }// End func get_exam
+    
+    
     
     
     /**
@@ -586,6 +785,40 @@ class Admission_model extends CI_Model {
                                         );
         
     }// End func get_subject
+    
+    
+    /**
+     * Get Admission
+     * 
+     * @access public
+     * @param int $id
+     * @return void
+     */
+    public function get_admission($id = NULL) {
+        
+        // Initialize where clause
+        $where = array();
+        $result_set = QUERY_ARRAY_RESULT;
+        
+        // Create where clause if id is set.
+        if($id != NULL) {
+            $where = array(
+                array('field' => 'schoolid', 'value' => $id)
+            );
+            $result_set = QUERY_ARRAY_ROW;
+        }
+        
+        // Call get_data from utl_model
+        return $this->util_model->get_data('admissions', 
+                                            array(), 
+                                            $where ,
+                                            array(),
+                                            array(),
+                                            array(),
+                                            QUERY_ARRAY_RESULT
+                                        );
+        
+    }// End func get_exam
     
 } // End class addmission_model
 

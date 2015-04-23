@@ -15,16 +15,16 @@
         id="create_exam_form" 
         class="form-horizontal form-striped" 
         method="post" 
-        action="<?php echo site_url('exam/exam/create')?>">
+        action="<?php echo site_url('admission/create_exam_subject')?>">
         
         <div class="modal-body">
                     
             <div class="control-group">
-                <label for="exam_name" class="control-label">Exam Name:</label>
+                <label for="exam_id" class="control-label">Exam Name:</label>
                 <div class="controls">
                     <select name="exam_id" 
-                        id="exam_group" 
-                        class='chosen-select'>   
+                        id="examid" 
+                        class='chosen-select' required="required">   
                         <option ng-repeat="exam in data.exams" 
                             value="{{exam.examid}}" 
                             ng-bind="exam.shortname"></option>
@@ -32,13 +32,13 @@
                 </div>
             </div>
             <div class="control-group">
-                <label for="exam_sname" class="control-label">Subject :</label>
+                <label for="subj_id" class="control-label">Subject :</label>
                 <div class="controls">
-                    <select name="exam_name" 
-                        id="exam_group" 
-                        class='chosen-select'>   
+                    <select name="subj_id" 
+                        id="subjid" 
+                        class='chosen-select' required="required">   
                         <option ng-repeat="subj in data.subjects" 
-                            value="{{subj.subjectid}}" 
+                            value="{{subj.subid}}" 
                             ng-bind="subj.subname"></option>
                     </select>
                 </div>

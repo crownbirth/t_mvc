@@ -15,7 +15,7 @@
         id="create_exam_form" 
         class="form-horizontal form-striped" 
         method="post" 
-        action="<?php echo site_url('exam/exam/create')?>">
+        action="<?php echo site_url('admission/create_exam_grade')?>">
         
         <div class="modal-body">     
             <div class="control-group">
@@ -25,20 +25,20 @@
                         id="exam_group" 
                         class='chosen-select'>   
                         <option ng-repeat="exam in data.exams" 
-                            value="{{exam.examid}}" 
+                            value="{{exam.examid}}"
                             ng-bind="exam.shortname"></option>
                     </select>
                 </div>
             </div>
             <div class="control-group">
-                <label for="exam_group" class="control-label">Grade:</label>
+                <label for="exam_grade" class="control-label">Grade:</label>
                 <div class="controls">
                     <div class="input-xlarge">
-                        <select name="exam_group" 
-                            id="exam_group" 
-                            class='chosen-select'>   
+                        <select name="exam_grade" 
+                            id="exam_grade" 
+                            class='chosen-select' required="required">   
                             <option ng-repeat="grd in data.grades" 
-                                value="{{grd.gradeid}}" 
+                                value="{{grd.gradeid}}"
                                 ng-bind="grd.gradename"></option>
                         </select>
                     </div>
@@ -47,13 +47,12 @@
             <div class="control-group">
                 <label for="grade_weight" class="control-label">Grade Weight:</label>
                 <div class="controls">
-                    <input value="1" 
-                           type="number" 
+                    <input type="number" 
                            min="1" 
                            max="9" 
                            name="grade_weight" 
                            id="grade_weight" 
-                           class="spinner input-mini uneditable-input"/>
+                           class="spinner input-mini uneditable-input" required="required"/>
                 </div>
             </div>
             <div class="control-group">

@@ -2,13 +2,15 @@ var examModule = angular.module('tams-app', []);
     
 examModule.controller('PageController', function($scope) {
     
+    
     $scope.data = {
         "groups": groups,
         "exams": exams,
         "grades": grades,
         "subjects": subjects,
         "exam_subjects": exam_subjects,
-        "exam_grades": exam_grades
+        "exam_grades": exam_grades,
+        "admissions" : admissions
     };
 
     groups = null;
@@ -17,6 +19,7 @@ examModule.controller('PageController', function($scope) {
     subjects = null;
     exam_subjects = null;
     exam_grades = null;
+    admissions = null;
     
     $scope.current = null;
     

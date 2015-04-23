@@ -13,11 +13,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Tunmyse/Documents/tams-mvc/index.php</file>
-            <file>file:/C:/Users/Tunmyse/Documents/tams-mvc/tams_base/libraries/App/Main.php</file>
-            <file>file:/C:/Users/Tunmyse/Documents/tams-mvc/installation/application/controllers/installation.php</file>
-            <file>file:/C:/Users/Tunmyse/Documents/tams-mvc/tams_base/controllers/setup/programme.php</file>
-            <file>file:/C:/Users/Tunmyse/Documents/tams-mvc/tams_base/views/setup/view_prog.php</file>
+            <file>file:/C:/wamp/www/tams-mvc/tams_base/models/admission/admission_model.php</file>
+            <file>file:/C:/wamp/www/tams-mvc/tams_base/views/admission/management/management.php</file>
+            <file>file:/C:/wamp/www/tams-mvc/tams_base/custom/route/admission.php</file>
+            <file>file:/C:/wamp/www/tams-mvc/tams_base/controllers/admission/management.php</file>
         </group>
     </open-files>
 </project-private>
