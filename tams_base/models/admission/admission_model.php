@@ -361,13 +361,84 @@ class Admission_model extends CI_Model {
                 
                 break;
                 
+                
             case '3':
-                   /**
-                    * @todo Process result submition
-                    */ 
+                
+                //Initiate transaction 
+                $this->db->trans_start();
+                
+                foreach($param['prev_qualif'] AS $qual){
+                
+                    if(isset($qual['cert']) && isset($qual['school']) && isset($qual['from']) && $qual['to']){
+                        
+                        $this->db->set('userid', $param['userid']);
+                        $this->db->set('certificate', $qual['cert']);
+                        $this->db->set('schoolname', $qual['school']);
+                        $this->db->set('from', $qual['from']);
+                        $this->db->set('to', $qual['to']);
+                        $this->db->insert('prev_qualification');  
+                        
+                    }  
+                    
+                }
+                
+                foreach($param['olevel'] AS $olvl){
+                    
+                    if(isset($olvl['examnum']) && ($olvl['examnum'] != "") && isset($olvl['examyr']) && ($olvl['examyr'] != "")){
+                        $olv_param = array(
+                                        'userid' => $param['userid'],
+                                        'examtype' => $olvl['examtype'],
+                                        'examyear' => $olvl['examyr'],
+                                        'examnumber' => $olvl['examnum'],
+                                        'sitting' => $olvl['sitting']
+                                    );
+                        
+                        $this->db->insert('olevel',$olv_param); 
+                        $result_id = $this->db->insert_id();
+
+                        $olv_reslt_param = array();
+                       
+                        for($idx = 0; $idx < count($olvl['subject']); $idx++){
+                            
+                            if($olvl['subject'][$idx] != "" && $olvl['grade'][$idx] != ""){
+                               
+                                $olv_reslt_param[$idx] = array(
+                                                    'olevelid' => $result_id,
+                                                    'subject' => $olvl['subject'][$idx],
+                                                    'grade' => $olvl['grade'][$idx]
+                                                );
+                               
+                            }
+                           
+                        }
+                        
+                        $this->db->insert_batch('olevel_result', $olv_reslt_param);
+                       
+                    }
+                    
+                }
+                
+                $record['pros'] = array(
+                                    'formsubmit' => $form,
+                                );
+                
+                $this->db->update('prospective', $record['pros'], array('userid' => $param['userid']));
+                
+                // End transaction
+                $this->db->trans_complete();
+                
+                if($this->db->trans_status() === FALSE){
+                    
+                    $status = DEFAULT_ERROR;
+                }else{
+                    
+                    $status = DEFAULT_SUCCESS;
+                }
+                
                 break;
             
              case '4':
+                 
                 if($param['admtype'] == 'DE'){
                  
                     $record['de_result'] = array(
@@ -403,7 +474,68 @@ class Admission_model extends CI_Model {
                 }
                 elseif($param['admtype'] == 'UTME'){
                     
+                    $this->db->like('userid', $param['userid']);
+                    $query = $this->db->get('utme');
+                    $found_utme = $query->num_rows();
                     
+                    if($found_utme < 1){
+                        
+                        //Initiate transaction 
+                        $this->db->trans_start();
+
+                        $utme_param = array(
+                                        'userid' => $param['userid'],
+                                        'year' => $param['utme']['examyr'],
+                                        'regid' => $param['utme']['examnum'], 
+                                    );
+
+                        $this->db->insert('utme',$utme_param); 
+                        $result_id = $this->db->insert_id();
+
+                        for($idx = 0; $idx < count($param['utme']['subject']); $idx++){
+
+                            if($param['utme']['subject'][$idx] != "" && $param['utme']['grade'][$idx] != ""){
+
+                                $utme_result_param[$idx] = array(
+                                                    'utmeid' => $result_id,
+                                                    'subject' => $param['utme']['subject'][$idx],
+                                                    'score' => $param['utme']['grade'][$idx]
+                                                );
+
+                            }
+
+                        }
+
+                        $this->db->insert_batch('utme_result', $utme_result_param);
+
+                        $record['pros'] = array(
+                                    'formsubmit' => $form,
+                                );
+
+                        $this->db->update('prospective', $record['pros'], array('userid' => $param['userid']));
+
+                        // End transaction
+                        $this->db->trans_complete();
+
+                        if($this->db->trans_status() === FALSE){
+
+                            $status = DEFAULT_SUCCESS;
+
+                        }else{
+
+                           $status = DEFAULT_ERROR; 
+                        }
+                        
+                    }else{
+                        
+                        $record['pros'] = array(
+                                    'formsubmit' => $form,
+                                );
+
+                        $this->db->update('prospective', $record['pros'], array('userid' => $param['userid']));
+                        
+                        $status = DEFAULT_SUCCESS;
+                    }
                 }
                 
                 break;
@@ -819,6 +951,62 @@ class Admission_model extends CI_Model {
                                         );
         
     }// End func get_exam
+    
+    
+    public function get_admission_record($id = NULL){
+        
+        $this->db->select('p.*, u.*, s.*, lg.*, pr1.progname AS prg1, pr2.progname AS prg2');
+        $this->db->from('prospective p');
+        $this->db->join('users u', 'u.userid = p.userid');
+        $this->db->join('programmes pr1', 'p.prog1 = pr1.progid');
+        $this->db->join('programmes pr2', 'p.prog2 = pr2.progid');
+        $this->db->join('states s', 's.stateid = u.stid');
+        $this->db->join('state_lga lg', 'lg.lgaid = u.lgaid');
+        $this->db->where('u.userid', $id);
+        $query = $this->db->get();
+        
+        return $query->row_array();
+    }
+    
+    public function get_prog_choice($id){
+       
+        $this->db->select('u.regid, u.year, s.subname, r.score');
+        $this->db->from('utme u');
+        $this->db->join('utme_result r', 'u.utmeid = r.utmeid');
+        $this->db->join('subjects s', 's.subid = r.subject');
+        $this->db->where('u.userid', $id);
+        $query = $this->db->get();
+        
+        return $query->result_array();
+    }
+    
+    public function get_utme($id){
+       
+        $this->db->select('u.regid, u.year, s.subname, r.score');
+        $this->db->from('utme u');
+        $this->db->join('utme_result r', 'u.utmeid = r.utmeid');
+        $this->db->join('subjects s', 's.subid = r.subject');
+        $this->db->where('u.userid', $id);
+        $query = $this->db->get();
+        
+        return $query->result_array();
+    }
+    
+    
+    public function get_olevel($id, $sit){
+       
+        $this->db->select('e.shortname, o.examyear, o.examnumber, s.subname, g.gradename');
+        $this->db->from('olevel o');
+        $this->db->join('olevel_result r', 'o.olevelid = r.olevelid');
+        $this->db->join('exams e', 'e.examid = o.examtype');
+        $this->db->join('subjects s', 's.subid = r.subject');
+        $this->db->join('grades g', 'g.gradeid = r.grade');
+        $this->db->where('o.userid', $id);
+        $this->db->where('o.sitting', $sit);
+        $query = $this->db->get();
+        
+        return $query->result_array();
+    }
     
 } // End class addmission_model
 

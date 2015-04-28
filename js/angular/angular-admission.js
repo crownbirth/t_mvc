@@ -8,15 +8,15 @@ var admissionModule = angular.module('tams-app', []);
 
 
 admissionModule.controller('PageController', function($scope){
-    $scope.lga = lga;
-    $scope.exam_groups = exam_groups;
-    $scope.exam_type_period = exam_type_period;
-    $scope.exam_subject = exam_subjects;
-    $scope.exam_grades = exam_grades
     
-    
-    
-    
+    $scope.data = {
+        "lga": lga,
+        "group" : exam_groups,
+        "period": exam_type_period,
+        "subject" : exam_subjects,
+        "grade" : exam_grades
+        
+    };
     
     
     /**
@@ -52,14 +52,26 @@ admissionModule.controller('PageController', function($scope){
     
     $scope.get_state_lga = function(value){
         var lg;
-        lg = _.filter($scope.lga, {'stateid' : value});
+        lg = _.filter($scope.data.lga, {'stateid' : value});
         $scope.state_local = lg;
         
         //console.log($scope.state_local);
     };//END of State and local Govt selection.
     
+
+  
+    $scope.group = 0; 
+    $scope.$watch('group', function() {
+        var grp;
+        grp = _.filter($scope.data.group, {'groupid' : $scope.group});
+        $scope.grp_itm =  genItem(grp[0].maxentries);
+        
+        $scope.exams = getExam(grp[0].groupid, grp[0].maxentries);
+        
+        console.log($scope.exams);    
+    });
     
-    $scope.gen4repeat = function(val) {
+     function genItem(val) {
         
         var dt = new Array(); 
         for(i = 0; i < val; i++){
@@ -68,50 +80,15 @@ admissionModule.controller('PageController', function($scope){
         return dt;
     };// End of repeat element
     
-  
-    $scope.group_exam = null 
-    $scope.$watch('group', function() {
-        
-        console.log("here");
-        
-        
-    });
     
-    
-   $scope.get_exam_data =  function (value){ 
-        var ex_type = _.filter($scope.exam_type_period, {'groupid' : value});
-        
-        return ex_type;
-    };
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    $scope.subject2 = null;
-    $scope.grade2 = null;
-    
-    $scope.$watch('exam_type2', function() {
-        $scope.get_exam_subject2($scope.exam_type2);  
-    });
-    
-//    $scope.get_exam_subject2 = function(value){
-//       var ex_subject2;
-//       var ex_grade2;
-//       
-//       ex_subject2 = _.filter($scope.exam_subject, {'examid' : value});
-//       ex_grade2 = _.filter($scope.exam_grades, {'examid' : value});
-//       $scope.subject2 = ex_subject2;
-//       $scope.grade2 = ex_grade2;
-//       
-//       console.log($scope.subject2);
-//    };
-    
-    
-    
+    function getExam(val, entr){
+        var type = new Array();
+        var idx = 0;
+        for(;idx < entr; idx++){
+            type[idx] = _.filter($scope.data.period, {'groupid' : val});
+        }
+         
+         return type;
+    }
 });
 

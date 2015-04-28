@@ -13,251 +13,349 @@
  * @since      File available since Release 1.0.0
  */
 
-//var_dump($exam_grade['rs']);
+//var_dump($record);
 ?>
 <div class="row-fluid">
     <div class="span12">
         <div class="box box-bordered box-color">
             <div class="box-title">
-                <h3><i class="icon-th-list"></i> Prospective Registration Form</h3>
+                <h3><i class="icon-th-list"></i> Application From</h3>
             </div>
             <div class="box-content">
-                <h4 class="span"><i class="glyphicon-user"></i> Personal Information </h4>
-                <form class="form-horizontal form-bordered" 
-                    enctype="multipart/form-data"
-                    method="POST" 
-                    action="#">
-                    
-                    <div class="row-fluid">
-                        <div class="span3">
-                            <div style="width: 200px; height: 150px;" class="fileupload-new thumbnail"><img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"></div>
-                        </div>
-                    </div>
-                    <p>&nbsp;</p>
-                    <div class="row-fluid">
-                        <div class="span6">
-                            <div class="control-group">
-                                <label class="control-label" for="fname">Surname</label>
-                                <div class="controls">
-                                   Sule-odu Adedayo
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="manme">Middle name</label>
-                                <div class="controls">
-                                    Lateef
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="dob">Date of Birth</label>
-                                <div class="controls">
-                                    04-09-1980
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="address">Contact Address</label>
-                                <div class="controls">
-                                    12, adegbola street Mushin off itire road ilasamaja lagos 
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="nationality">Nationality</label>
-                                <div class="controls">
-                                    Nigeria
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="marital">Marital Status</label>
-                                <div class="controls">
-                                    Single
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="blood">Blood Group</label>
-                                <div class="controls">
-                                    O
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="hobby">Hobby</label>
-                                <div class="controls">
-                                    jump, book, game
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="span6">
-                            <div class="control-group">
-                                <label class="control-label" for="lname">first name</label>
-                                <div class="controls">
-                                    Adedayo
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="sex">Sex</label>
-                                <div class="controls">
-                                    Male
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="phone">phone</label>
-                                <div class="controls">
-                                    08074000367
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="email">Email</label>
-                                <div class="controls">
-                                    suleodu.adedayo@gmail.com
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="soforig">State of Origin</label>
-                                <div class="controls">
-                                    Ogun
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="lgaoforig">Local Govt Areal</label>
-                                <div class="controls">
-                                    Ijebu-ode
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="disable">Physical Disability</label>
-                                <div class="controls">
-                                    No
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="religion">Religion</label>
-                                <div class="controls">
-                                    Islam
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row-fluid">
-                        <div span12>
-                            <h4><i class="glyphicon-parents"></i>  Next of Kin Details</h4>
-                        </div>
-                    </div>
-                    <div class="row-fluid ">
-                        <div class="span6">
-                            <div class="box-bordered">
-                                <h6><i class="icon-list"></i>  Next of Kin Details</h6>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="nkfname">Next of Kin Surname</label>
-                                <div class="controls">
-                                    <input type="text" class="input-large ui-wizard-content" id="nkfname" name="nkfname" placeholder="Enter Next of kin Surname  " data-rule-required="false">
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="nkoname">Next of Kin Other names</label>
-                                <div class="controls">
-                                    <input type="text" class="input-large ui-wizard-content" id="nkoanme" name="nkoanme" placeholder="Enter Next of kin Other names" data-rule-required="false">
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="nkphone">Next of Kin Phone</label>
-                                <div class="controls">
-                                    <input type="text" class="input-large ui-wizard-content" id="nkphone" name="nkphone" placeholder="Enter Next of kin phone"data-rule-required="false">
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="nkmail">Next of Kin E-mail</label>
-                                <div class="controls">
-                                    <input type="email" class="input-large ui-wizard-content " id="nkphone" name="nkmail" placeholder="Enter Next of kin E-mail" data-rule-required="false">
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="nkaddress">Next of Kin Contact Address</label>
-                                <div class="controls">
-                                    <textarea class="input-large" name="nkaddress" rows="3" placeholder="Enter Next of kin Contact Address" data-rule-required="false"></textarea>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="relationship">Relationship</label>
-                                <div class="controls">
-                                    <input type="text" class="input-large ui-wizard-content " id="nkphone" name="relationship" placeholder="Relationship with Next of kin" data-rule-required="false">
-                                </div>
-                            </div>
-                        </div>
-                        <!--Sponsor Details -->
-                        <div class="span6">
-                            <div class="box-bordered">
-                                <h6><i class="icon-list"></i>  Sponsor's Details</h6>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="sp_flname">Sponsor's Full Name</label>
-                                <div class="controls">
-                                    <input type="text" class="input-large ui-wizard-content" id="sp_flname" name="sp_flname" placeholder="Enter Sponsor's Full Name"data-rule-required="false">
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="sp_phone">Sponsor's Phone</label>
-                                <div class="controls">
-                                    <input type="text" class="input-large ui-wizard-content" id="sp_phone" name="sp_phone" placeholder="Enter Sponsor's Phone No" data-rule-required="false">
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="sp_mail">Sponsor's E-mail</label>
-                                <div class="controls">
-                                    <input type="email" class="input-large ui-wizard-content" id="sp_phone" name="sp_mail" placeholder="Enter Sponsor's E-mail" data-rule-required="false">
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="sp_address">Sponsor's Contact Address</label>
-                                <div class="controls">
-                                    <textarea class="input-large" name="sp_address" rows="3" placeholder="Enter Sponsor's Contact Address" data-rule-required="false"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div span12>
-                        <h4><i class="glyphicon-parents"></i> Previous Qualification </h4>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span12"> 
-                            <table class="table table-bordered table-colored-header table-condensed table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>S/N</th>
-                                        <th>Certificate Obtain</th>
-                                        <th>School Name</th>
-                                        <th>From</th>
-                                        <th>To</th>
+                <table class="table table-condensed table-striped table-bordered table-colored-header"">
+                    <thead>
+                        <tr>
+                            <th colspan="4">Personal Information</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="4">
+                                
+                                <table>
+                                    <tr >
+                                        <td><div style="width: 200px; height: 150px;" class="fileupload-new thumbnail "><img style="width: 197px; height: 140px;" src="<?php echo $url?>"></div></td>
+                                        <td style="text-align: center; vertical-align: middle; font-size: 25px">
+                                            &nbsp;
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>NCE</td>
-                                        <td>Tasued</td>
-                                        <td>2006</td>
-                                        <td>2009</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>OND</td>
-                                        <td>Tasued</td>
-                                        <td>2006</td>
-                                        <td>2009</td>
-                                    </tr>
-                                </tbody>
-                            </table> 
-                           
-                        </div>
-                    </div>
-                    <div span12>
-                        <h4><i class="glyphicon-parents"></i> O'Level/ A'Level Result </h4>
-                    </div>
-                    <div class="form-actions">
-                            <button class="btn btn-primary" type="submit">Save changes</button>
-                            <button class="btn" type="button">Cancel</button>
-                    </div>
-                </form>
+                                </table>
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <th width="50">SURNAME: </th>
+                            <td width="150"><?php echo $record['fname']?></td>
+                            <th width="50">OTHER NAMES: </th>
+                            <td width="150"><?php echo $record['lname'].' '.$record['mname']?></td>
+                        </tr>
+                        <tr>
+                            <th width="50">E-MAIL: </th>
+                            <td width="150"><?php echo $record['email']?></td>
+                            <th width="50">PHONE: </th>
+                            <td width="150"><?php echo $record['phone']?></td>
+                        </tr>
+                        <tr>
+                            <th width="50">Date of Birth : </th>
+                            <td width="150"><?php echo date("D, d-m-Y", strtotime($record['dob']) ) ?></td>
+                            <th width="50">Sex: </th>
+                            <td width="150"><?php echo $record['sex']?></td>
+                        </tr>
+                        <tr>
+                            <th width="50">Contact Address: </th>
+                            <td width="150"><?php echo $record['address'] ?></td>
+                            <th width="50">Religion : </th>
+                            <td width="150"><?php echo $record['religion']?></td>
+                        </tr>
+                        <tr>
+                            <th width="50">State of Origin : </th>
+                            <td width="150"><?php echo $record['statename'] ?></td>
+                            <th width="50">L.G.A : </th>
+                            <td width="150"><?php echo $record['lganame']?></td>
+                        </tr>
+                        <tr>
+                            <th width="50">Nationality : </th>
+                            <td width="150"><?php echo $record['nationality'] ?></td>
+                            <th width="50">Blood Group : </th>
+                            <td width="150"><?php echo $record['blood']?></td>
+                        </tr>
+                        <tr>
+                            <th width="50">Marital Status : </th>
+                            <td width="150"><?php echo $record['marital'] ?></td>
+                            <th width="50">Hobby : </th>
+                            <td width="150"><?php echo $record['hobby'] ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>&nbsp;</p>
+                <table class="table table-condensed table-striped table-bordered table-colored-header">
+                    <thead>
+                        <tr>
+                            <td colspan="2">Next of Kin / Sponsor's Information</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td width="50%">
+                                <table class="table table-condensed table-striped table-bordered ">
+                                    <thead>
+                                        <tr>
+                                            <td colspan="2">Next of Kin</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th width="25%">Surname :</th>
+                                            <td width="75%"><?php echo $record['nkfname']?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Other Names :</th>
+                                            <td><?php echo $record['nkoname']?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Phone :</th>
+                                            <td><?php echo $record['nkphone']?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Mail :</th>
+                                            <td><?php echo $record['nkmail']?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Address :</th>
+                                            <td><?php echo $record['nkaddress']?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Relationship with Kin :</th>
+                                            <td><?php echo $record['nkrelation']?></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            
+                            <td width="50%">
+                                <table id="tbl1" class="table table-condensed table-striped table-bordered ">
+                                    <thead>
+                                        <tr>
+                                            <td colspan="2">Sponsor</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th width="25%">Full Name :</th>
+                                            <td width="75%"><?php echo $record['spname']?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Address :</th>
+                                            <td><?php echo $record['spaddress']?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Phone :</th>
+                                            <td><?php echo $record['spphone']?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>E-mail :</th>
+                                            <td><?php echo $record['spemail']?></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>&nbsp;</p>
+                <table class="table table-condensed table-striped table-bordered table-colored-header">
+                    <thead>
+                        <tr>
+                            <td colspan="2">O'level Result</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td width="50%"> 
+                                <table class="table table-condensed table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">O'Level Sitting 1</th>
+                                        </tr>
+                                    </thead>
+                                    <?php if(!empty($olevel1)){?>
+                                    <tbody>
+                                        <tr>
+                                            <th width="25%">Exam Type:</th>
+                                            <td colspan="2"><?php echo $olevel1[0]['shortname']?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Exam Year:</th>
+                                            <td colspan="2"><?php echo $olevel1[0]['examyear']?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Exam No:</th>
+                                            <td colspan="2"><?php echo $olevel1[0]['examnumber']?></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <table class="table table-condensed table-striped table-bordered">
+                                                    <tr>
+                                                        <th>S/N</th>
+                                                        <th>Subject</th>
+                                                        <th>Grade</th>
+                                                    </tr>
+                                                    <tbody>
+                                                        <?php foreach($olevel1 AS $key => $olv){?>
+                                                        <tr>
+                                                            <td><?php echo ($key + 1)?></td>
+                                                            <td><?php  echo $olv['subname']?></td>
+                                                            <td><?php  echo $olv['gradename']?></td>
+                                                        </tr>
+                                                        <?php }?>
+                                                    </tbody>
+                                                </table> 
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <?php }else{?>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="2"> No O'level Result Submitted</td>
+                                        </tr>
+                                    </tbody>
+                                    <?php }?>
+                                </table>
+                            </td>
+                            <td width="50%"> 
+                                <table class="table table-condensed table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">O'Level Sitting 2</th>
+                                        </tr>
+                                    </thead>
+                                    <?php if(!empty($olevel2)){?>
+                                    <tbody>
+                                        <tr>
+                                            <th width="25%">Exam Type:</th>
+                                            <td colspan="2"><?php echo $olevel2[0]['shortname']?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Exam Year:</th>
+                                            <td colspan="2"><?php echo $olevel2[0]['examyear']?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Exam No:</th>
+                                            <td colspan="2"><?php echo $olevel2[0]['examnumber']?></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <table class="table table-condensed table-striped table-bordered">
+                                                    <tr>
+                                                        <th>S/N</th>
+                                                        <th>Subject</th>
+                                                        <th>Grade</th>
+                                                    </tr>
+                                                    <tbody>
+                                                        <?php foreach($olevel2 AS $key => $olv){?>
+                                                        <tr>
+                                                            <td><?php echo ($key + 1)?></td>
+                                                            <td><?php  echo $olv['subname']?></td>
+                                                            <td><?php  echo $olv['gradename']?></td>
+                                                        </tr>
+                                                        <?php }?>
+                                                    </tbody>
+                                                </table> 
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <?php }else{?>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="2"> No O'level Result Submitted</td>
+                                        </tr>
+                                    </tbody>
+                                    <?php }?>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>&nbsp;</p>
+                <table class="table table-condensed table-striped table-bordered table-colored-header">
+                    <thead>
+                        <tr>
+                            <th colspan="2">UTME Result / Programme Choice</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td width='50%'>
+                                <table class="table table-condensed table-striped table-bordered ">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">UTME Result</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th width='25%'>UTME Reg.Id</th>
+                                            <td><?php echo $utme[0]['regid']?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Year</th>
+                                            <td><?php echo $utme[0]['year']?></td>
+                                        </tr>
+                                        <tr> 
+                                            <td colspan="2">
+                                                <table class="table table-condensed table-striped table-bordered">
+                                                    <tr>
+                                                        <th>S/N</th>
+                                                        <th>Subject</th>
+                                                        <th>Score</th>
+                                                    </tr>
+                                                    <tbody>
+                                                        <?php 
+                                                            $total = 0;
+                                                            
+                                                            foreach($utme AS $key => $olv){
+                                                            $total += $olv['score'];
+                                                        ?>
+                                                        
+                                                        <tr>
+                                                            <td><?php echo ($key + 1)?></td>
+                                                            <td><?php  echo $olv['subname']?></td>
+                                                            <td><?php  echo $olv['score']?></td>
+                                                        </tr>
+                                                        <?php }?>
+                                                        <tr>
+                                                            <th colspan="2">Aggregate :</th>
+                                                            <td><?php echo $total?></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table> 
+                                            </td> 
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td width='50%'>
+                                <table class="table table-condensed table-striped table-bordered ">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">Programme Choice</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th width='25%'>Choice 1</th>
+                                            <td><?php echo $record['prg1']?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Choice 2</th>
+                                            <td><?php echo $record['prg2']?></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

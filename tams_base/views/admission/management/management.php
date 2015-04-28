@@ -15,6 +15,14 @@
 
 //var_dump($groups['rs']);
 ?>
+<style>
+    .box .box-color .box-color-remove {
+        border-color: none;
+        background: none repeat scroll 0 0 ;
+        border: 2px solid #DDD
+        
+    }
+</style>
 <div class="row-fluid">
     <div class="span12">
         <div class="box box-bordered box-color">
@@ -30,10 +38,10 @@
                         <a data-toggle="tab" href="#second22"><i class="icon-share-alt"></i> Admission Setup</a>
                     </li>
                     <li>
-                        <a data-toggle="tab" href="#thirds3322"><i class="icon-tag"></i> Upload UTME</a>
+                        <a data-toggle="tab" href="#thirds3322"><i class="glyphicon-cloud-upload"></i> Upload UTME</a>
                     </li>
                     <li>
-                        <a data-toggle="tab" href="#thirds33"><i class="icon-trash"></i> Upload Admitted</a>
+                        <a data-toggle="tab" href="#thirds33"><i class="glyphicon-cloud-upload"></i> Upload Admitted</a>
                     </li>
                 </ul>
                 <div class="tab-content padding tab-content-inline tab-content-bottom">
@@ -103,7 +111,7 @@
                                                                         <li>
                                                                             <a ng-click="openEditDialog('group', $index, $event)">Edit</a>
                                                                         </li>
-                                                                        <li>
+                                                                        <li ng-if="group.setup == 'predefine'">
                                                                             <a ng-click="openDeleteDialog('group', $index, $event)">Delete</a>
                                                                         </li>
                                                                     </ul>
@@ -360,7 +368,7 @@
                                         </h3>
                                         <ul class="tabs">
                                             <li class="active">
-                                                <a data-toggle="tab" href="#t7">Sample tab #1</a>
+                                                <a data-toggle="tab" href="#t7">Admissions</a>
                                             </li>
                                             <li>
                                                 <a data-toggle="tab" href="#t8">Sample tab #2</a>
@@ -371,8 +379,8 @@
                                         <div class="tab-content">
                                             <div id="t7" class="tab-pane active">
                                                  <ul class="tabs pull-right form">
-                                                    <li class="btn btn-green" data-toggle="modal" href="#create_group_modal">                             
-                                                        <i class="icon-plus"> </i> Set Admission                       
+                                                    <li class="btn btn-green" data-toggle="modal" href="#create_admission_modal">                             
+                                                        <i class="icon-plus"></i> Set Admission                       
                                                     </li>
                                                 </ul>
                                                 <p>&nbsp;</p><br/>
@@ -402,10 +410,10 @@
                                                                     </a>
                                                                     <ul class="dropdown-menu dropdown-success">
                                                                         <li>
-                                                                            <a ng-click="openEditDialog('group', $index, $event)">Edit</a>
+                                                                            <a ng-click="openEditDialog('admission', $index, $event)">Edit</a>
                                                                         </li>
                                                                         <li>
-                                                                            <a ng-click="openDeleteDialog('group', $index, $event)">Delete</a>
+                                                                            <a ng-click="openDeleteDialog('admission', $index, $event)">Delete</a>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -431,34 +439,113 @@
                     </div>
                     <div id="thirds3322" class="tab-pane">
                         <div class="row-fluid">
-                            <div class="span6">
-                                    <div class="box box-color">
-                                        <div class="box-title">
-                                            <h3>
-                                                <i class="icon-reorder"></i> Colored widget
-                                            </h3>
-                                            <ul class="tabs">
-                                                <li class="active">
-                                                    <a data-toggle="tab" href="#t7">Sample tab #1</a>
-                                                </li>
-                                                <li>
-                                                    <a data-toggle="tab" href="#t8">Sample tab #2</a>
-                                                </li>  
-                                            </ul>
-                                        </div>
-                                            <div class="box-content">
-                                                    <div class="tab-content">
-                                                            <div id="t7" class="tab-pane active">
-                                                                    <h4>First tab</h4>
-                                                                    Lorem ipsum anim ad culpa ex id anim Excepteur esse et do cillum dolor in dolore cillum. Lorem ipsum Ut est consequat pariatur sint ut incididunt nisi dolore occaecat. 
-                                                            </div>
-                                                            <div id="t8" class="tab-pane">
-                                                                    <h4>Second tab</h4>
-                                                                    Lorem ipsum ad proident amet anim voluptate ea. Lorem ipsum voluptate et ex esse mollit labore aliquip culpa dolore culpa anim cillum nulla ut sunt. Lorem ipsum veniam sunt voluptate elit minim incididunt occaecat aute ut ut sunt laboris. Lorem ipsum cupidatat labore elit sit in aliqua nostrud adipisicing minim et mollit sunt Ut cupidatat laboris. Lorem ipsum sunt ut labore nostrud ut aliqua dolor sint cupidatat sit Duis in culpa consectetur exercitation. Lorem ipsum sunt anim reprehenderit elit minim nulla ut. 
-                                                            </div>
-                                                    </div>
-                                            </div>
+                            <div class="span12">
+                                <div class="box">
+                                    <div class="box-title">
+                                        <h3>
+                                            <i class="glyphicon-cloud-upload"></i> UTME Result Upload
+                                        </h3>
+                                        <ul class="tabs">
+                                            <li class="active">
+                                                <a data-toggle="tab" href="#utme1">Upload UTME</a>
+                                            </li>
+                                            <li>
+                                                <a data-toggle="tab" href="#utme2">Sample tab #2</a>
+                                            </li>  
+                                        </ul>
                                     </div>
+                                    <div class="box-content">
+                                        <div class="tab-content">
+                                            <div id="utme1" class="tab-pane active">
+                                                <div id="accordion2" class="accordion">
+                                                    <div class="accordion-group">
+                                                        <div class="accordion-heading">
+                                                            <a href="#collapseOne" data-parent="#accordion2" data-toggle="collapse" class="accordion-toggle collapsed">
+                                                                Add Single Record
+                                                            </a>
+                                                        </div>
+                                                        <div class="accordion-body collapse" id="collapseOne" style="height: 0px;">
+                                                            <div class="accordion-inner">
+                                                                Single UTME Submission Here
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="accordion-group">
+                                                        <div class="accordion-heading">
+                                                            <a href="#collapseTwo" data-parent="#accordion2" data-toggle="collapse" class="accordion-toggle collapsed">
+                                                                Upload from file
+                                                            </a>
+                                                        </div>
+                                                        <div class="accordion-body collapse" id="collapseTwo" style="height: 0px;">
+                                                            <div class="accordion-inner">
+                                                                <div class="span12">
+                                                                    <form 
+                                                                        id="create_exam_form" 
+                                                                        class="form-horizontal form-striped" 
+                                                                        method="post" 
+                                                                        action="<?php echo site_url('admission/create_exam')?>">
+                                                                        <table class="table table-bordered table-condensed table-striped">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th colspan="4">UTME File Upload</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <th>Admission name: </th>
+                                                                                    <td>
+                                                                                        <select name="adm_name">
+                                                                                            <option value="">--Choose--</option>
+                                                                                        </select>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <th>Admission type: </th>
+                                                                                    <td>
+                                                                                        <select name="adm_name">
+                                                                                            <option value="">--Choose--</option>
+                                                                                        </select>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <th>Select File : </th>
+                                                                                    <td>
+                                                                                        <div data-provides="fileupload" class="fileupload fileupload-new"><input type="hidden" value="" name="aaaa">
+                                                                                            <div class="input-append">
+                                                                                                <div class="uneditable-input span3">
+                                                                                                    <i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span>
+                                                                                                </div>
+                                                                                                <span class="btn btn-file">
+                                                                                                    <span class="fileupload-new">Select file</span>
+                                                                                                    <span class="fileupload-exists">Change</span>
+                                                                                                    <input type="file" name="">
+                                                                                                </span><a data-dismiss="fileupload" class="btn fileupload-exists" href="#">Remove</a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <th>&nbsp;</th>
+                                                                                    <td>
+                                                                                        <button type="submit" class="btn btn-success btn-small">Upload</button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </form>
+                                                                    <br/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="utme2" class="tab-pane">
+                                                here 2
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div> 
                     </div>
@@ -486,3 +573,14 @@
     
     var admissions = <?php echo (is_array($admission['rs']))? json_encode($admission['rs']): '[]'?>;
 </script>
+
+
+
+
+
+
+
+
+
+
+

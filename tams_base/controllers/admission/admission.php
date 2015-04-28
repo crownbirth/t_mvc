@@ -257,7 +257,11 @@ class Admission extends CI_Controller {
         
     }// End of func create_account
     
-    
+    /**
+     * Process registration form submission 
+     * 
+     * @param int $form
+     */
     public function registration_submit($form){
         
          if($this->input->server('REQUEST_METHOD') == 'POST') {
@@ -359,6 +363,37 @@ class Admission extends CI_Controller {
                     break;
                 
                 case '3':
+                    
+                    $form_fields = $this->input->post(NULL);
+                    
+                    $form_fields['userid'] = $this->user_id;
+                    $status = $this->adm_mdl->register($form_fields, $form);
+                    
+                    // Process model response
+                    switch($status) {
+
+                        // Unique constraint violated.
+                        case DEFAULT_EXIST:
+
+                            break;
+
+                        // There was a problem creating the entry.
+                        case DEFAULT_ERROR:
+                            $error_msg = $this->lang->line('adm_error');  
+                            $this->main->set_notification_message(MSG_TYPE_ERROR, $error_msg);
+                            break;
+
+                        // Entry created successfully.
+                        case DEFAULT_SUCCESS:
+                            $success_msg = sprintf($this->lang->line('adm_success'),'Prospective UTME/DE information form', 'submitted ', 'Complete the Education Background information form and click save changes ');
+                            $this->main->set_notification_message(MSG_TYPE_SUCCESS,$success_msg);
+                            break;
+
+                        default:
+                            break;
+
+                        }
+                        
                     break;
                 
                 case '4':
@@ -444,7 +479,10 @@ class Admission extends CI_Controller {
     }
    
     
-    
+    /**
+     * Load the registration Form
+     * 
+     */
     public function register() { 
         
         $data['prospective'] = $this->util_model->get_data('prospective', 
@@ -480,12 +518,12 @@ class Admission extends CI_Controller {
                                                             QUERY_ARRAY_RESULT);
         
        $data['exam_type_period'] = $this->util_model->get_data('exams e',
-                                                            array(),
-                                                            array(),
-                                                            array(),
-                                                            array(),
-                                                            array(),
-                                                            QUERY_ARRAY_RESULT);
+                                                                array(),
+                                                                array(),
+                                                                array(),
+                                                                array(),
+                                                                array(),
+                                                                QUERY_ARRAY_RESULT);
        
        $data['exam_subject'] = $this->util_model->get_data('exam_subjects es',
                                                             array(),
@@ -496,6 +534,13 @@ class Admission extends CI_Controller {
                                                             ),
                                                             array(),
                                                             QUERY_ARRAY_RESULT);
+       $data['subject'] = $this->util_model->get_data('subjects',
+                                                            array(),
+                                                            array(),
+                                                            array(),
+                                                            array(),
+                                                            array(),
+                                                            QUERY_ARRAY_RESULT);
         
         $data['exam_grade'] = $this->util_model->get_data('exam_grades eg',
                                                             array(),
@@ -504,6 +549,14 @@ class Admission extends CI_Controller {
                                                             array(
                                                                 array('table' => 'grades g', 'on'=> 'eg.examgradeid = g.gradeid')
                                                             ),
+                                                            array(),
+                                                            QUERY_ARRAY_RESULT);
+        
+         $data['grade'] = $this->util_model->get_data('grades',
+                                                            array(),
+                                                            array(),
+                                                            array(),
+                                                            array(),
                                                             array(),
                                                             QUERY_ARRAY_RESULT);
         
@@ -545,21 +598,33 @@ class Admission extends CI_Controller {
     }// End of func register
     
     
-    
+    /**
+     * View Form 
+     * 
+     */
     public function view_reg_from(){
-       
+        $this->load->helper('getuserpics');
+        
+        $data['url'] = get_user_pics($this->user_id);
+        $data['record'] = $this->adm_mdl->get_admission_record($this->user_id);
+        $data['olevel1'] = $this->adm_mdl->get_olevel($this->user_id, 'first');
+        $data['olevel2'] = $this->adm_mdl->get_olevel($this->user_id, 'second');
+        $data['utme'] = $this->adm_mdl->get_utme($this->user_id);
+        
+        
+        
         $this->page_title = 'Registration form Details';
         $page_name = 'view_form';
         //build view pade for prospective registration 
-        $page_content = $this->load->view($this->folder_name.'/prospective/'.$page_name, '', true);
+        $page_content = $this->load->view($this->folder_name.'/prospective/'.$page_name, $data, true);
         $this->page->build($page_content, $this->folder_name, $page_name, $this->page_title );  
         
     }
     
     
     /**
-     * Prospective registration (account creation) page .	 
-     * Removed and renamed to register from application
+     * Load Admisssion Status 
+     * 
      */
     public function admission_status() {
         
@@ -627,4 +692,5 @@ class Admission extends CI_Controller {
 }
 
 /* End of file admission.php */
+
 /* Location: ./application/controllers/admission.php */

@@ -37,6 +37,7 @@
                     <div class="row-fluid">
                         <h6><i class="icon-list"></i> UTME/DE Result </h6>
                         <div class="span12">
+                            <?php if($prospective['rs']['admtype'] == 'UTME'){?>
                             <div class="span11">
                                 <p>&nbsp;</p>
                                 <table class="table table-bordered table-condensed table-striped">
@@ -47,25 +48,14 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td width='25%'>Exam Category :</td>
-                                            <td>
-                                                <div class='span4'>
-                                                    <select id="exam_cart" name="exam_cart" class="chosen-select">
-                                                        <option value="">Choose</option>
-                                                        <?php foreach ($exam_group['rs'] as $group){ ?>
-                                                        <option value="<?php echo $group['groupid']?>"> <?php echo $group['groupname']?></option>
-                                                        <?php }?>
-                                                    </select>
-                                                </div>
-                                            </td>   
-                                        </tr>
-                                        <tr>
                                             <td width='25%'>Exam Type :</td>
                                             <td>
                                                 <div class='span4'>
-                                                    <select name="olevel[0][examtype]"  class="input-medium"   ng-model="exam_type1" >
+                                                    <select name="utme[examtype]"  class="input-medium">
                                                         <option value="">--Exam Type--</option>
-                                                        <option ng-repeat="ex in ex_typ_periods" value="{{ex.examid}}">{{ex.shortname}}</option>
+                                                        <?php foreach ($exam_type_period['rs'] as $ex){?>
+                                                        <option  value="<?php echo $ex['examid']?>"><?php echo $ex['shortname']?></option>
+                                                        <?php }?>
                                                     </select>
                                                 </div>
                                             </td>   
@@ -74,7 +64,7 @@
                                             <td width='25%'>Exam Year :</td>
                                             <td>
                                                 <div class='span4'>
-                                                    <select name="olevel[0][examyr]" id="olevel[0][examyr]" class="input-large chosen-select" >
+                                                    <select name="utme[examyr]" id="olevel[0][examyr]" class="input-large chosen-select" >
                                                         <option value="">--Exam Year--</option>
                                                         <?php 
                                                         $i =0;
@@ -93,7 +83,7 @@
                                             <td width='25%'>Exam Number :</td>
                                             <td>
                                                 <div class='span4'>
-                                                    <input type="text" name="olevel[0][examnum]" id="examnum[first]" placeholder="Exam No " class="input-large">
+                                                    <input type="text" name="utme[examnum]" id="examnum[first]" placeholder="Exam No " class="input-large">
                                                 </div>
                                             </td>   
                                         </tr>
@@ -114,16 +104,18 @@
                                                         <tr>
                                                             <td><?php echo $i +1?></td>
                                                             <td>
-                                                                <select name="olevel[0][subject][]">
-                                                                    <option value="">--Subject--</option>
-                                                                    <option value="{{sbj.examsubjectid}}" ng-repeat="sbj in subject1">{{sbj.subname}}</option>
-                                                                </select> 
+                                                                <div class="span6">
+                                                                    <select name="utme[subject][]" class="input-large">
+                                                                        <option value="">--Subject--</option>
+                                                                        <?php foreach($subject['rs'] AS $sbj){?>
+                                                                        <option value="<?php echo $sbj['subid']?>" ><?php echo $sbj['subname']?></option>
+                                                                        <?php }?>
+                                                                    </select> 
+                                                                </div>
+                                                                <input type="hidden" name="admtype" value="UTME">
                                                             </td>
                                                             <td>
-                                                                <select name="olevel[0][grade][]" class="input-small">
-                                                                    <option value="">--Grade--</option>
-                                                                    <option value="{{gr.examgradeid}}" ng-repeat="gr in grade1">{{gr.gradename}}</option> 
-                                                                </select>
+                                                                <input type="number" name="utme[grade][]" class="input-small" min="0" max="100">
                                                             </td>
                                                         </tr>
                                                         <?php 
@@ -136,6 +128,64 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <?php }elseif($prospective['rs']['admtype'] == 'DE'){?>
+                            <div class="span11">
+                                <div class="box-bordered">
+                                    <h6><i class="icon-list"></i>  DE Result</h6>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="control-group">
+                                        <label class="control-label span2" for="inst_name">Institution Name</label>
+                                        <div class="controls">
+                                            <div class='span6'>
+                                                <input type="text" name="inst_name" id="inst_name" placeholder="School Name" class="input-xxlarge">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label span2" for="inst_name">Institution Address</label>
+                                        <div class="controls">
+                                            <div class='span6'>
+                                                <textarea name="inst_address" class="input-xxlarge" placeholder="School Addresss"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label span2" for="cert_obtain">Certificate Obtained</label>
+                                        <div class="controls">
+                                            <div class='span6'>
+                                                <input type="text" name="cert_obtain" id="inst_name" placeholder="Certificate Obtained" class="input-xxlarge">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label span2" for="grade">Grade</label>
+                                        <div class="controls">
+                                            <div class='span6'>
+                                                <select name="grade" class="chosen-select">
+                                                    <option value="">--Choose--</option>
+                                                    <option value="Distinction">Distinction</option>
+                                                    <option value="Upper-Credit">Upper-Credit</option>
+                                                    <option value="Lower-Credit">Lower-Credit</option>
+                                                    <option value="Merit">Merit</option>
+                                                    <option value="Pass">Pass</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label span2" for="grad_year">Graduation Year</label>
+                                        <div class="controls">
+                                            <div class='span6'>
+                                                <input type="text" name="grad_year" maxlength="4" class="input-xxlarge" placeholder="YYYY">
+                                                <span class="help-block"><small>Format : YYYY</small></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="admtype" value="DE">
+                                </div>
+                            </div>
+                            <?php }?>
                         </div>
                     </div>
                     <div class="form-actions">

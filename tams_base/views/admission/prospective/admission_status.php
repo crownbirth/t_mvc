@@ -56,36 +56,38 @@
                             
                         </tr>
                         <tr>
-                            <th width="50">SURNAME: </th>
+                            <th width="50">Surname: </th>
                             <td width="150"><?php echo $user_details['fname']?></td>
-                            <th width="50">OTHER NAMES: </th>
+                            <th width="50">Other Names: </th>
                             <td width="150"><?php echo $user_details['lname'].' '.$user_details['mname']?></td>
                         </tr>
                         <tr>
-                            <th width="50">E-MAIL: </th>
+                            <th width="50">E-mail: </th>
                             <td width="150"><?php echo $user_details['email']?></td>
-                            <th width="50">PHONE: </th>
+                            <th width="50">Phone: </th>
                             <td width="150"><?php echo $user_details['phone']?></td>
                         </tr>
                         <tr>
-                            <th width="50">DATE OF BIRTH: </th>
+                            <th width="50">Date of Birth: </th>
                             <td width="150"><?php echo date("D, d-m-Y", strtotime($user_details['dob']) ) ?></td>
                             <th width="50">SEX: </th>
                             <td width="150"><?php echo $user_details['sex']?></td>
                         </tr>
                         <tr>
-                            <th width="50">PROGRAMME CHOICE 1: </th>
+                            <th width="50">Programme Choice 1: </th>
                             <td width="150"><?php echo $user_details['prg_chc1']?></td>
-                            <th width="50">PROGRAMME CHOICE 2: </th>
+                            <th width="50">Programme Choice 2: </th>
                             <td width="150"><?php echo $user_details['prg_chc2']?></td>
                         </tr>
                         <tr>
-                            <th width="50">PROGRAMME OFFERED: </th>
+                            <th width="50">Programme Offered: </th>
                             <td width="150" colspan="3"><?php echo ($user_details['offered'])?"<span style='color: green'>".$user_details['offered']."</span>" : "<span style='color: red'>NO PROGRAMME INFORMATION</span>"?></td> 
                         </tr>
                         <tr>
                             <td width="400" colspan="4" style="text-align: center">
+                                <?php if($user_details['admstatus'] == 'Admitted'){?>
                                 <a href="#" class="btn btn-grey">Print Admission Letter</a>
+                                <?php }?>
                             </td> 
                         </tr>
                     </tbody>

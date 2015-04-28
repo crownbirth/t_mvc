@@ -44,19 +44,6 @@
                                 </div>
                                 <div class="row-fluid">
                                     <div class="control-group">
-                                        <label class="control-label span2" for="exam_cart">Exam Category</label>
-                                        <div class="controls">
-                                            <div class='span4'>
-                                                <select id="exam_cart" name="exam_cart" class="chosen-select">
-                                                    <option value="">Choose</option>
-                                                    <?php foreach ($exam_group['rs'] as $group){ ?>
-                                                    <option value="<?php echo $group['groupid']?>"> <?php echo $group['groupname']?></option>
-                                                    <?php }?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="control-group">
                                         <label class="control-label span2" for="exam_cart">Exam Type</label>
                                         <div class="controls">
                                             <div class='span4'>

@@ -31,6 +31,16 @@ examModule.controller('PageController', function($scope) {
         });
     });
     
+    
+    function updateSelect(elem){
+        angular.element(this).find('.chosen-select').each(function() {
+            return function(that) {
+                setTimeout(function(){angular.element(that).trigger('liszt:updated');},100);   
+            }(this);
+        });
+    }
+    
+    
     $scope.openEditDialog = function(name, idx, e) {         
         var href = '#edit_'+name+'_modal';         
         $scope.openDialog(href, name, idx, e);
