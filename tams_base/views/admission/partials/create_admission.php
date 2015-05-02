@@ -16,36 +16,28 @@
         id="create_exam_form" 
         class="form-horizontal form-striped" 
         method="post" 
-        action="<?php echo site_url('admission/create_exam')?>">
+        action="<?php echo site_url('admission/create_admission')?>">
         
         <div class="modal-body">
-                    
             <div class="control-group">
-                <label for="exam_group" class="control-label">Group:</label>
+                <label for="exam_valid" class="control-label">Admission Title:</label>
+                <div class="controls">
+                    <input type="text" name="adm_title" id="adm_title" class="spinner input-xlarge"/>
+                </div>
+            </div>           
+            <div class="control-group">
+                <label for="exam_group" class="control-label">Admission Session:</label>
                 <div class="controls">
                     <div class="input-xlarge">
-                        <select name="exam_group" 
-                            id="exam_group" 
-                            class='chosen-select'>   
-                            <option ng-repeat="group in data.groups" 
-                                value="{{group.groupid}}" 
-                                ng-bind="group.groupname"></option>
+                        <select name="adm_session" 
+                            id="admsesion" 
+                            class="chosen-select"> 
+                            <option value="">--Choose--</option>
+                            <option ng-repeat="admses in data.cur_adm_ses" value="{{admses.sesid}}" >{{admses.sesname}}</option>
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="control-group">
-                <label for="exam_valid" class="control-label">Valid Years:</label>
-                <div class="controls">
-                    <input value="1" 
-                           type="text" 
-                           min="1" 
-                           max="20" 
-                           name="exam_valid" 
-                           id="exam_valid" 
-                           class="spinner input-mini uneditable-input"/>
-                </div>
-            </div>            
+            </div>          
         </div>
         
         <div class="modal-footer">

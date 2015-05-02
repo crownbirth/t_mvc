@@ -82,20 +82,23 @@ class Management extends CI_Controller {
     
     
     function index(){
+        
+        $data['adm_session'] = $this->adm_mdl->get_cur_adm_session($this->school_id);
         $data['groups'] = $this->adm_mdl->get_group();
         $data['exams'] = $this->adm_mdl->get_exam();
         $data['grades'] = $this->adm_mdl->get_grade();
         $data['subjects'] = $this->adm_mdl->get_subject();
         $data['exam_subjects'] = $this->adm_mdl->get_exam_subject();
         $data['exam_grades'] = $this->adm_mdl->get_exam_grade();
-        $data['admission'] = $this->adm_mdl->get_admission($this->school_id);
-//        var_dump($data['admission']);
+        $data['admissions'] = $this->adm_mdl->get_admission($this->school_id);
+        $data['admission_types'] = $this->adm_mdl->get_admission_all_type($this->school_id);
+//        var_dump($data['admissions_type']);
 //        exit();
         
-        $page_name = 'management';
+        $page_name = 'admission_management';
         
         //build view pade for prospective registration 
-        $page_content = $this->load->view($this->folder_name.'/management/'.$page_name, $data, true);
+        $page_content = $this->load->view($this->folder_name.'/'.$page_name, $data, true);
         $page_content .= $this->load->view($this->folder_name.'/partials/edit_group', $data, true);
         $page_content .= $this->load->view($this->folder_name.'/partials/edit_exam', $data, true);
         $page_content .= $this->load->view($this->folder_name.'/partials/edit_exam_subject', $data, true);
@@ -110,6 +113,8 @@ class Management extends CI_Controller {
         $page_content .= $this->load->view($this->folder_name.'/partials/create_exam_grade', $data, true);
         $page_content .= $this->load->view($this->folder_name.'/partials/create_admission', $data, true);
         $page_content .= $this->load->view($this->folder_name.'/partials/edit_admission', $data, true);
+        $page_content .= $this->load->view($this->folder_name.'/partials/create_admission_type', $data, true);
+        $page_content .= $this->load->view($this->folder_name.'/partials/edit_admission_type', $data, true);
         $page_content .= $this->load->view($this->folder_name.'/partials/delete_modal', $data, true);
         
         $this->page->build($page_content, $this->folder_name, $page_name, $this->page_title );
@@ -899,6 +904,262 @@ class Management extends CI_Controller {
         redirect(site_url('admission/management'));
     }// End of func create_exam_group
 
-
-   
+    /**
+     * Create Admission 
+     */
+    public function create_admission(){
+        
+        // Check for valid request method
+        if($this->input->server('REQUEST_METHOD') == 'POST') {
+            
+            // Set error to true. 
+            // This should be changed only if there are no validation errors.
+            $error = false;
+                        
+            // Get all field values.
+            $form_fields = $this->input->post(NULL);
+            
+            // Validate form fields.
+            //$error = $this->validate_fields($form_fields, $fields);
+            
+            // Send fields to model if there are no errors
+            if(!$error) {
+                $params = array(
+                    'displayname' => $form_fields['adm_title'],
+                    'sesid'   => $form_fields['adm_session'],
+                    'schoolid' => $this->school_id
+                );
+                
+                // Call model method to perform insertion
+                $status = $this->adm_mdl->exam_create($params, 'admissions');
+                
+                // Process model response
+                switch($status) {
+                    
+                    // Unique constraint violated.
+                    case DEFAULT_EXIST:
+                        $error_msg = $this->lang->line('adm_entry_exist');  
+                        $this->main->set_notification_message(MSG_TYPE_WARNING, $error_msg);
+                        break;
+                    
+                    // There was a problem creating the entry.
+                    case DEFAULT_ERROR:
+                        $error_msg = $this->lang->line('adm_error');  
+                        $this->main->set_notification_message(MSG_TYPE_ERROR, $error_msg);
+                        break;
+                    
+                    // Entry created successfully.
+                    case DEFAULT_SUCCESS:
+                        $success_msg = sprintf($this->lang->line('adm_success'),'Admission', 'created', '');
+                        $this->main->set_notification_message(MSG_TYPE_SUCCESS,$success_msg);
+                        break;
+                    
+                    default:
+                        break;
+                }
+            }
+            
+        }else{
+            // Set error message for any request other than POST
+            $error_msg = $this->lang->line('invalid_req_method');  
+            $this->main->set_notification_message(MSG_TYPE_ERROR, $error_msg);
+        }        
+       
+        // Redirect to exam page, showing notifiction messages if there are.
+        redirect(site_url('admission/management'));
+    }
+    
+    
+    public function update_admission($param) {
+        
+        // Check for valid request method
+        if($this->input->server('REQUEST_METHOD') == 'POST') {
+            
+            // Set error to true. 
+            // This should be changed only if there are no validation errors.
+            $error = false;
+                        
+            // Get all field values.
+            $form_fields = $this->input->post(NULL);
+            
+            // Validate form fields.
+            //$error = $this->validate_fields($form_fields, $fields);
+            
+            // Send fields to model if there are no errors
+            if(!$error) {
+                $params = array(
+                    'displayname' => $form_fields['adm_title'],
+                    'sesid'   => $form_fields['adm_session'],
+                    'schoolid' => $this->school_id
+                );
+                
+                $id = $form_fields['edit_admission_id'];
+                // Call model method to perform insertion
+                $status = $this->adm_mdl->exam_update($id, $params, 'admissions'); 
+                
+                // Process model response
+                switch($status) {
+                    
+                    // Unique constraint violated.
+                    case DEFAULT_EXIST:
+                        $error_msg = $this->lang->line('adm_entry_exist');  
+                        $this->main->set_notification_message(MSG_TYPE_WARNING, $error_msg);
+                        break;
+                    
+                    // There was a problem creating the entry.
+                    case DEFAULT_ERROR:
+                        $error_msg = $this->lang->line('adm_error');  
+                        $this->main->set_notification_message(MSG_TYPE_ERROR, $error_msg);
+                        break;
+                    
+                    // Entry created successfully.
+                    case DEFAULT_SUCCESS:
+                        $success_msg = sprintf($this->lang->line('adm_success'),'Admission ', 'updated', '');
+                        $this->main->set_notification_message(MSG_TYPE_SUCCESS,$success_msg);
+                        break;
+                    
+                    default:
+                        break;
+                }
+            }
+            
+        }else{
+            // Set error message for any request other than POST
+            $error_msg = $this->lang->line('invalid_req_method');  
+            $this->main->set_notification_message(MSG_TYPE_ERROR, $error_msg);
+        }
+        
+        // Redirect to exam page, showing notifiction messages if there are.
+        redirect(site_url('admission/management'));
+    }
+    
+    
+    /**
+     * Create Admission Type
+     */
+    public function create_admission_type(){
+        
+        // Check for valid request method
+        if($this->input->server('REQUEST_METHOD') == 'POST') {
+            
+            // Set error to true. 
+            // This should be changed only if there are no validation errors.
+            $error = false;
+                        
+            // Get all field values.
+            $form_fields = $this->input->post(NULL);
+            
+            // Validate form fields.
+            //$error = $this->validate_fields($form_fields, $fields);
+            
+            // Send fields to model if there are no errors
+            if(!$error) {
+                $params = array(
+                    'admid' => $form_fields['adm'],
+                    'type'   => $form_fields['adm_type'],
+                    'status' => $form_fields['adm_status'],
+                );
+                
+                // Call model method to perform insertion
+                $status = $this->adm_mdl->exam_create($params, 'admission_types');
+                
+                // Process model response
+                switch($status) {
+                    
+                    // Unique constraint violated.
+                    case DEFAULT_EXIST:
+                        $error_msg = $this->lang->line('adm_entry_exist');  
+                        $this->main->set_notification_message(MSG_TYPE_WARNING, $error_msg);
+                        break;
+                    
+                    // There was a problem creating the entry.
+                    case DEFAULT_ERROR:
+                        $error_msg = $this->lang->line('adm_error');  
+                        $this->main->set_notification_message(MSG_TYPE_ERROR, $error_msg);
+                        break;
+                    
+                    // Entry created successfully.
+                    case DEFAULT_SUCCESS:
+                        $success_msg = sprintf($this->lang->line('adm_success'),'Admission Type', 'created', '');
+                        $this->main->set_notification_message(MSG_TYPE_SUCCESS,$success_msg);
+                        break;
+                    
+                    default:
+                        break;
+                }
+            }
+            
+        }else{
+            // Set error message for any request other than POST
+            $error_msg = $this->lang->line('invalid_req_method');  
+            $this->main->set_notification_message(MSG_TYPE_ERROR, $error_msg);
+        }        
+       
+        // Redirect to exam page, showing notifiction messages if there are.
+        redirect(site_url('admission/management'));
+    }
+    
+    
+     public function update_admission_type($param) {
+        
+        // Check for valid request method
+        if($this->input->server('REQUEST_METHOD') == 'POST') {
+            
+            // Set error to true. 
+            // This should be changed only if there are no validation errors.
+            $error = false;
+                        
+            // Get all field values.
+            $form_fields = $this->input->post(NULL);
+            
+            // Validate form fields.
+            //$error = $this->validate_fields($form_fields, $fields);
+            
+            // Send fields to model if there are no errors
+            if(!$error) {
+                $params = array(
+                    'admid' => $form_fields['adm'],
+                    'type'   => $form_fields['adm_type'],
+                    'status' => $form_fields['adm_status'],
+                );
+                
+                $id = $form_fields['edit_admission_type_id'];
+                // Call model method to perform insertion
+                $status = $this->adm_mdl->exam_update($id, $params, 'admission_type'); 
+                
+                // Process model response
+                switch($status) {
+                    
+                    // Unique constraint violated.
+                    case DEFAULT_EXIST:
+                        $error_msg = $this->lang->line('adm_entry_exist');  
+                        $this->main->set_notification_message(MSG_TYPE_WARNING, $error_msg);
+                        break;
+                    
+                    // There was a problem creating the entry.
+                    case DEFAULT_ERROR:
+                        $error_msg = $this->lang->line('adm_error');  
+                        $this->main->set_notification_message(MSG_TYPE_ERROR, $error_msg);
+                        break;
+                    
+                    // Entry created successfully.
+                    case DEFAULT_SUCCESS:
+                        $success_msg = sprintf($this->lang->line('adm_success'),'Admission Type', 'updated', '');
+                        $this->main->set_notification_message(MSG_TYPE_SUCCESS,$success_msg);
+                        break;
+                    
+                    default:
+                        break;
+                }
+            }
+            
+        }else{
+            // Set error message for any request other than POST
+            $error_msg = $this->lang->line('invalid_req_method');  
+            $this->main->set_notification_message(MSG_TYPE_ERROR, $error_msg);
+        }
+        
+        // Redirect to exam page, showing notifiction messages if there are.
+        redirect(site_url('admission/management'));
+    }
 }

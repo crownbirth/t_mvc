@@ -13,16 +13,8 @@
  * @since      File available since Release 1.0.0
  */
 
-//var_dump($groups['rs']);
+//var_dump($admissions['rs']);
 ?>
-<style>
-    .box .box-color .box-color-remove {
-        border-color: none;
-        background: none repeat scroll 0 0 ;
-        border: 2px solid #DDD
-        
-    }
-</style>
 <div class="row-fluid">
     <div class="span12">
         <div class="box box-bordered box-color">
@@ -83,7 +75,7 @@
                                                     </li>
                                                 </ul>
                                                 <p>&nbsp;</p><br/>
-                                                <table class="table table-bordered table-condensed table-striped">
+                                                <table id="examgroup" class="table table-bordered table-condensed table-striped dataTable dataTables_filter dataTables_paginate">
                                                     <thead>
                                                         <tr>
                                                             <th>S/N</th>
@@ -109,7 +101,7 @@
                                                                     </a>
                                                                     <ul class="dropdown-menu dropdown-success">
                                                                         <li>
-                                                                            <a ng-click="openEditDialog('group', $index, $event)">Edit</a>
+                                                                            <a ng-click="openEditDialog('user', $index, $event)">Edit</a>
                                                                         </li>
                                                                         <li ng-if="group.setup == 'predefine'">
                                                                             <a ng-click="openDeleteDialog('group', $index, $event)">Delete</a>
@@ -133,7 +125,7 @@
                                                     </li>
                                                 </ul>
                                                 <p>&nbsp;</p><br/>
-                                                <table class="table table-hover table-nomargin table-condensed">
+                                                <table id="exam" class="table table-hover table-nomargin table-condensed dataTable dataTables_filter dataTables_paginate">
                                                     <thead>
                                                         <th>S/N</th>                                
                                                         <th>Name</th>
@@ -185,7 +177,7 @@
                                                     </li>
                                                 </ul>
                                                 <p>&nbsp;</p><br/>
-                                                <table class="table table-hover table-nomargin dataTable">
+                                                <table id="subject" class="table table-hover table-nomargin dataTable dataTables_filter dataTables_paginate">
                                                     <thead>
                                                         <tr>
                                                             <th>S/N</th>                                
@@ -229,7 +221,7 @@
                                                     </li>
                                                 </ul>
                                                 <p>&nbsp;</p><br/>
-                                                <table class="table table-hover table-nomargin">
+                                                <table id="examsubject" class="table table-hover table-nomargin dataTable dataTables_filter dataTables_paginate">
                                                     <thead>
                                                         <tr>
                                                             <th>S/N</th>
@@ -270,7 +262,7 @@
                                                     </li>
                                                 </ul>
                                                 <p>&nbsp;</p><br/>
-                                                <table class="table table-hover table-nomargin table-bordered table-condensed">
+                                                <table id="grade" class="table table-hover table-nomargin table-bordered table-condensed dataTable dataTables_filter dataTables_paginate">
                                                     <thead>
                                                         <tr>
                                                             <th>S/N</th>                                
@@ -314,7 +306,7 @@
                                                     </li>
                                                 </ul>
                                                 <p>&nbsp;</p><br/>
-                                                <table class="table table-hover table-nomargin">
+                                                <table id="examgrade" class="table table-hover table-nomargin dataTable dataTables_filter dataTables_paginate">
                                                     <thead>
                                                         <tr>
                                                             <th>S/N</th>
@@ -371,7 +363,7 @@
                                                 <a data-toggle="tab" href="#t7">Admissions</a>
                                             </li>
                                             <li>
-                                                <a data-toggle="tab" href="#t8">Sample tab #2</a>
+                                                <a data-toggle="tab" href="#t8">Admission Types</a>
                                             </li>  
                                         </ul>
                                     </div>
@@ -384,13 +376,12 @@
                                                     </li>
                                                 </ul>
                                                 <p>&nbsp;</p><br/>
-                                                <table class="table table-bordered table-condensed table-striped">
+                                                <table id="adm-table" class="table table-bordered table-condensed table-striped dataTable dataTables_filter dataTables_paginate">
                                                     <thead>
                                                         <tr>
                                                             <th>S/N</th>
-                                                            <th>Name</th>
-                                                            <th>Admission Type</th>
-                                                            <th>Current session</th>
+                                                            <th>Admission Title </th>
+                                                            <th>Session</th>
                                                             <th>Date Created</th>
                                                             <th>Actions</th>
                                                         </tr>
@@ -399,8 +390,7 @@
                                                         <tr ng-repeat="adm in data.admissions">
                                                             <td ng-bind="$index+1"></td>
                                                             <td ng-bind="adm.displayname"></td>
-                                                            <td ng-bind="adm.admtype"></td>
-                                                            <td></td> 
+                                                            <td ng-bind="adm.sesname"></td> 
                                                             <td ng-bind="adm.created"></td>  
                                                             <td>
                                                                 <div class="btn-group">
@@ -428,8 +418,54 @@
                                                 </table>
                                             </div>
                                             <div id="t8" class="tab-pane">
-                                                <h4>Second tab</h4>
-                                                Here
+                                                <ul class="tabs pull-right form">
+                                                    <li class="btn btn-green" data-toggle="modal" href="#create_admission_type_modal">                             
+                                                        <i class="icon-plus"></i> Add Admission Type                     
+                                                    </li>
+                                                </ul>
+                                                <p>&nbsp;</p><br/>
+                                                <table id="adm-table" class="table table-bordered table-condensed table-striped dataTable dataTables_filter dataTables_paginate">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S/N</th>
+                                                            <th>Admission Title </th>
+                                                            <th>Session</th>
+                                                            <th>Admission Type</th>
+                                                            <th>Status</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead> 
+                                                    <tbody>
+                                                        <tr ng-repeat="adm_typ in data.admission_types">
+                                                            <td ng-bind="$index+1"></td>
+                                                            <td ng-bind="adm_typ.displayname"></td>
+                                                            <td ng-bind="adm_typ.sesname"></td> 
+                                                            <td ng-bind="adm_typ.type"></td>
+                                                            <td ng-bind="adm_typ.status"></td>  
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
+                                                                        <i class="icon-cog"> </i>
+                                                                        <span class="caret"></span>
+                                                                    </a>
+                                                                    <ul class="dropdown-menu dropdown-success">
+                                                                        <li>
+                                                                            <a ng-click="openEditDialog('admission_type', $index, $event)">Edit</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a ng-click="openDeleteDialog('admission_type', $index, $event)">Delete</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr ng-show="data.admissions.length < 1">                                
+                                                            <td colspan="6">
+                                                                <?php echo sprintf($this->lang->line('no_entries'), 'groups')?>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
@@ -558,6 +594,8 @@
     </div>
 </div>
 <script>
+    
+    var cur_adm_session = <?php echo (is_array($adm_session))? json_encode($adm_session): '[]'?>;
 
     var groups = <?php echo (is_array($groups['rs']))? json_encode($groups['rs']): '[]'?>;
 
@@ -571,7 +609,9 @@
     
     var exam_grades = <?php echo (is_array($exam_grades['rs']))? json_encode($exam_grades['rs']): '[]'?>;
     
-    var admissions = <?php echo (is_array($admission['rs']))? json_encode($admission['rs']): '[]'?>;
+    var admissions = <?php echo (is_array($admissions['rs']))? json_encode($admissions['rs']): '[]'?>;
+    
+    var admission_types = <?php echo (is_array($admission_types['rs']))? json_encode($admission_types['rs']): '[]'?>;
 </script>
 
 

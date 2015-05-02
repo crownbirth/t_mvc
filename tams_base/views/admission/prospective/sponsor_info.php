@@ -21,11 +21,11 @@
             <div class="box-title">
                 <h3><i class="icon-th-list"></i> Application Form - Step 2</h3>
                 <ul class="tabs">
-                    <li class="btn btn-grey-2">Bio Data <i class="icon  icon-forward"></i></li>
-                    <li class="btn btn-blue ">Next of Kin / Sponsor's Details <i class="icon  icon-forward"></i></li>
-                    <li class="btn btn-grey-2">Education Background <i class="icon  icon-forward"></i></li>
-                    <li class="btn btn-grey-2">UTME/DE Result <i class="icon  icon-forward"></i></li>
-                    <li class="btn btn-grey-2">Programme Choice <i class="icon  icon-forward"></i></li>
+                    <li class="btn btn-grey-2"><small>Bio Data</small></li>
+                    <li class="btn btn-blue "><small>Next of Kin / Sponsor's Details</small></li>
+                    <li class="btn btn-gray-2"><small>Education Background</small></li>
+                    <li class="btn btn-grey-2"><small>UTME/DE Result</small></li>
+                    <li class="btn btn-grey-2"><small>Programme Choice</small></li>
                 </ul>
             </div>
             <div class="box-content">
@@ -37,7 +37,7 @@
                    
                     <div class="row-fluid">
                         <div class="span6">
-                            <table class="table table-condensed table-striped table-bordered">
+                            <table class="table table-condensed table-striped table-bordered table-colored-header">
                                 <thead>
                                     <tr>
                                         <th colspan="2">Next of Kin Details</th>
@@ -84,7 +84,7 @@
                             </table>
                         </div>
                         <div class="span6">
-                            <table class="table table-condensed table-striped table-bordered">
+                            <table class="table table-condensed table-striped table-bordered table-colored-header">
                                 <thead >
                                     <tr>
                                         <th colspan="2">Sponsor's Details</th>
@@ -98,13 +98,13 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Sponsor's E-mail : </th>
+                                        <th>Sponsor's phone : </th>
                                         <td>
                                             <input type="text" class="input-large " id="sp_phone" name="sp_phone" placeholder="Enter Sponsor's Phone No" required="required">
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Sponsor's Phone : </th>
+                                        <th>Sponsor's E-mail : </th>
                                         <td>
                                             <input type="email" class="input-large " id="sp_phone" name="sp_mail" placeholder="Enter Sponsor's E-mail" required="required">
                                         </td>

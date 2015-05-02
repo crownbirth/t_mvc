@@ -21,11 +21,11 @@
             <div class="box-title">
                 <h3><i class="icon-th-list"></i> Prospective Registration Form 5</h3>
                 <ul class="tabs">
-                    <li class="btn btn-grey-2">Personal Information</li>
-                    <li class="btn btn-grey-2 ">Next of Kin / Sponsor's Details</li>
-                    <li class="btn btn-grey-2">Education Background</li>
-                    <li class="btn btn-grey-2">UTME/DE Result</li>
-                    <li class="btn btn-blue">Programme Choice</li>
+                    <li class="btn btn-grey-2"><small>Bio Data</small></li>
+                    <li class="btn btn-grey-2 "><small>Next of Kin / Sponsor's Details</small></li>
+                    <li class="btn btn-grey-2"><small>Education Background</small></li>
+                    <li class="btn btn-grey-2"><small>UTME/DE Result</small></li>
+                    <li class="btn btn-blue"><small>Programme Choice</small></li>
                 </ul>
             </div>
             <div class="box-content">

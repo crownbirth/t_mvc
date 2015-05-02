@@ -21,11 +21,11 @@
             <div class="box-title">
                 <h3><i class="icon-th-list"></i> Application Form - Step 1</h3>
                 <ul class="tabs small">
-                    <li class="btn btn-blue">Bio Data <i class="icon  icon-forward"></i></li>
-                    <li class="btn btn-grey-2">Next of Kin / Sponsor's Details <i class="icon  icon-forward"></i></li>
-                    <li class="btn btn-grey-2">Education Background <i class="icon  icon-forward"></i></li>
-                    <li class="btn btn-grey-2">UTME/DE Result <i class="icon  icon-forward"></i></li>
-                    <li class="btn btn-grey-2">Programme Choice <i class="icon  icon-forward"></i></li>
+                    <li class="btn btn-blue"><small>Bio Data</small></li>
+                    <li class="btn btn-grey-2"><small>Next of Kin / Sponsor's Details </small></li>
+                    <li class="btn btn-grey-2"><small>Education Background </small></li>
+                    <li class="btn btn-grey-2"><small>UTME/DE Result </small></li>
+                    <li class="btn btn-grey-2"><small>Programme Choice </small></li>
                 </ul>
             </div>
             <div class="box-content">
@@ -57,19 +57,19 @@
                                     </td>  
                                 </tr>
                                 <tr>
-                                    <th>SURNAME : </th>
+                                    <th>Surname : </th>
                                     <td>
                                         <input type="text" class="input-large " id="firstname" name="fname" value="<?php echo $users['rs']['fname']?>" placeholder="Enter Surname here " required="required">
                                     </td>
-                                    <th>FIRST NAME :</th>
+                                    <th>First Name :</th>
                                     <td>
                                         <input type="text" class="input-large " id="anotherelem"value="<?php echo $users['rs']['lname']?>" name="lname" required="required">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>MIDDLE NAME : </th>
+                                    <th>Middle Name : </th>
                                     <td><input type="text" class="input-large " id="additionalfield" value="<?php echo $users['rs']['mname']?>" name="mname" required="required"></td>
-                                    <th>SEX :</th>
+                                    <th>Sex :</th>
                                     <td>
                                         <div class="span4">
                                             <select id="sex" name="sex" class=" input-small chosen-select " required="required">
@@ -81,37 +81,37 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>DATE OF BIRTH: </th>
+                                    <th>Date Of Birth: </th>
                                     <td>
                                          <input type="text" class="input-large datepick" id="dob" value="<?php echo $users['rs']['dob']?>" name="dob" required="required">
                                     </td>
-                                    <th>PHONE :</th>
+                                    <th>Phone :</th>
                                     <td>
                                         <input type="text" class="input-large" value="<?php echo $users['rs']['phone']?>" id="phone" name="phone" required="required">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>ADDRESS: </th>
+                                    <th>Address: </th>
                                     <td>
                                         <textarea class="input-large" name="address"   rows="3" required="required"><?php echo $users['rs']['address']?></textarea>
                                     </td>
-                                    <th>E-MAIL :</th>
+                                    <th>E-Mail :</th>
                                     <td>
                                         <input type="email" class="input-large " id="additionalfield" value="<?php echo $users['rs']['email']?>" name="email" required="required">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>NATIONALITY : </th>
+                                    <th>Nationality : </th>
                                     <td>
                                         <div class="span4">
                                             <select id="nationality" name="nationality" class=" input-large chosen-select " data-rule-required="true">
                                                 <option value="">Choose</option>
-                                                <option value="1">Nigeria</option>
-                                                <option value="2">Others</option>
+                                                <option value="Nigeria">Nigeria</option>
+                                                <option value="others">Others</option>
                                             </select>
                                         </div>
                                     </td>
-                                    <th>STATE OF ORIGIN :</th>
+                                    <th>State Of Origin :</th>
                                     <td>
                                         <div class="span6">
                                             <select id="soforig" name="soforig" ng-model="state" class=" input-large chosen-select " required="required">
@@ -124,7 +124,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>MARITAL STATUS : </th>
+                                    <th>Marital Status  : </th>
                                     <td>
                                         <div class="span6">
                                             <select id="marital" name="marital" class=" input-large chosen-select" required="required">
@@ -136,7 +136,7 @@
                                             </select>
                                         </div>
                                     </td>
-                                    <th>LGA :</th>
+                                    <th>Lga :</th>
                                     <td>
                                         <div class="span6">
                                             <select id="lgaoforig" name="lgaoforig" class=" input-large" required="required">
@@ -147,7 +147,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>BLOOD GROUP: </th>
+                                    <th>Blood Group: </th>
                                     <td>
                                         <div class="span6">
                                             <select id="blood" name="blood" class=" input-large chosen-select " required="required">
@@ -159,7 +159,7 @@
                                             </select>
                                         </div> 
                                     </td>
-                                    <th>PHYSICAL DISABILITY :</th>
+                                    <th>Physical Disability :</th>
                                     <td>
                                         <div class="span6">
                                             <select id="disable" name="disable" ng-model="disable"  class=" input-large chosen-select " required="required">
@@ -174,11 +174,11 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>HOBBY : </th>
+                                    <th>Hobby : </th>
                                     <td>
                                          <div class="span10"><input type="text" name="hobby" id="hobby" class=" tagsinput input-large"></div>
                                     </td>
-                                    <th>RELIGION :</th>
+                                    <th>Religion :</th>
                                     <td>
                                         <div class="span6">
                                             <select id="religion" name="religion" class=" input-large chosen-select " required="required">

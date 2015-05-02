@@ -9,12 +9,21 @@ var admissionModule = angular.module('tams-app', []);
 
 admissionModule.controller('PageController', function($scope){
     
+    angular.element('.modal').on('show', function() {
+        angular.element(this).find('.chosen-select').each(function() {
+            return function(that) {
+                setTimeout(function(){angular.element(that).trigger('liszt:updated');},100);   
+            }(this);
+        });
+    });
+    
     $scope.data = {
         "lga": lga,
         "group" : exam_groups,
         "period": exam_type_period,
         "subject" : exam_subjects,
-        "grade" : exam_grades
+        "grade" : exam_grades,
+        
         
     };
     

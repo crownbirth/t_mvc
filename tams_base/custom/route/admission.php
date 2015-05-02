@@ -49,6 +49,12 @@ $route['admission/update_grade'] = "admission/management/update_grade";
 $route['admission/create_exam_grade'] = "admission/management/create_exam_grade";
 $route['admission/update_exam_grade'] = "admission/management/update_exam_grade";
 
+$route['admission/create_admission'] = "admission/management/create_admission";
+$route['admission/update_admission'] = "admission/management/update_admission";
+
+$route['admission/create_admission_type'] = "admission/management/create_admission_type";
+$route['admission/update_admission_type'] = "admission/management/update_admission_type";
+
 
 //$route['admission/application'] = "admission/admission/application";
 //$route['admission/application/(:any)'] = "admission/admission/$1";

@@ -1,3 +1,21 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+/**
+ * TAMS
+ * Payment Managent 
+ * 
+ * @category   View
+ * @package    Payment
+ * @subpackage 
+ * @author     Sule-odu Adedayo <suleodu.adedayo@gmail.com>
+ * @copyright  Copyright © 2014 TAMS.
+ * @version    1.0.0
+ * @since      File available since Release 1.0.0
+ */
+
+var_dump($payschd);
+?>
+
 <div class="row-fluid">
     <div class="span12">
         <div class="box box-bordered box-color">
@@ -287,7 +305,7 @@
                             
                             <?php if($this->main->has_perm('payment', 'payment.setup.view') && $this->main->has_perm('payment', 'payment.setup.view.payschedule')){?>
                             
-                            <table id="all_schedules"class="table table-bordered table-condensed table-hover table-striped  dataTable dataTables_paginate dataTables_filter">
+                            <table id="all_schedules" class="table table-bordered table-condensed table-hover table-striped  dataTable dataTables_paginate dataTables_filter">
                                 <thead>
                                     <th>S/n</th>
                                     <th>Session Name</th>
@@ -296,7 +314,7 @@
                                     <th>Amount</th>
                                     <th>Penalty</th>
                                     <th>Penalty Status</th>
-                                    <th>Payment Type</th>
+                                    <th>Revenue Head</th>
                                     <th>Date Created</th>
                                     <th>&nbsp;</th>
                                 </thead>
@@ -308,9 +326,9 @@
                                         <td ng-bind="schdl.percentage"></td>
                                         <td style="color: blue">NGN {{schdl.amount | number}}</td>
                                         <td style="color: brown">NGN {{schdl.penalty | number}}</td>
-                                        <td style="text-align: center; color: orangered" ng-show="schdl.penalty_status == 'active'"> {{schdl.penalty_status}}</td>
-                                        <td style="text-align: center; color: gray" ng-show="schdl.penalty_status == 'inactive'"> {{schdl.penalty_status}}</td>
-                                        <td >{{schdl.eligible}}</td>
+                                        <td style="text-align: center; color: orangered" ng-if="schdl.penalty_status == 'active'"> {{schdl.penalty_status}}</td>
+                                        <td style="text-align: center; color: gray" ng-if="schdl.penalty_status == 'inactive'"> {{schdl.penalty_status}}</td>
+                                        <td >{{schdl.revhead}}</td>
                                         <td >{{schdl.created}}</td>
                                         <td>
                                             <div class="btn-group">

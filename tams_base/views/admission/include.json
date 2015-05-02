@@ -1,15 +1,12 @@
 {
     "all": {
-        "js": [            
+        "js": [ 
             "plugins/chosen/chosen.jquery.min.js",
             "plugins/wizard/jquery.form.wizard.min.js",
             "plugins/imagesLoaded/jquery.imagesloaded.min.js",
             "plugins/fileupload/bootstrap-fileupload.min.js",
-            "plugins/mockjax/jquery.mockjax.js",
-            "plugins/datepicker/bootstrap-datepicker.js",
-            "plugins/validation/jquery.validate.min.js",
-            "plugins/validation/additional-methods.min.js",
             "plugins/tagsinput/jquery.tagsinput.min.js",
+            "plugins/datatable/jquery.dataTables.min.js",
             "lodash/lodash.min.js",
             "angular/angular.min.js",
             "angular/angular-admission.js"
@@ -18,8 +15,9 @@
         "css": [
             "plugins/chosen/chosen.css",
             "plugins/plupload/jquery.plupload.queue.css",
-             "plugins/datepicker/datepicker.css",
-             "plugins/tagsinput/jquery.tagsinput.css"
+            "plugins/datepicker/datepicker.css",
+            "plugins/tagsinput/jquery.tagsinput.css",
+            "plugins/datatable/TableTools.css"
         ],
         
         "feedbar": false
@@ -42,19 +40,38 @@
             
         ]
     },
-    "management": {
+    "admission_management": {
         "js": [
+            "plugins/chosen/chosen.jquery.min.js",
+            "plugins/wizard/jquery.form.wizard.min.js",
+            "plugins/imagesLoaded/jquery.imagesloaded.min.js",
+            "plugins/fileupload/bootstrap-fileupload.min.js",
+            "plugins/mockjax/jquery.mockjax.js",
+            "plugins/datatable/jquery.dataTables.min.js",
+            "plugins/datatable/TableTools.min.js",
+            "plugins/datatable/ColReorder.min.js",
+            "plugins/datatable/ColVis.min.js",
+            "plugins/datatable/jquery.dataTables.columnFilter.js",
+            "plugins/datepicker/bootstrap-datepicker.js",
+            "plugins/validation/jquery.validate.min.js",
+            "plugins/validation/additional-methods.min.js",
+            "plugins/tagsinput/jquery.tagsinput.min.js",
+            "lodash/lodash.min.js",
             "angular/angular.min.js",
-            "angular/angular-exam.js",
-            "plugins/jquery-ui/jquery.ui.spinner.js"
+            "angular/angular_admission_management.js"
             
         ],
         
         "css": [
-            
+            "plugins/chosen/chosen.css",
+            "plugins/plupload/jquery.plupload.queue.css",
+            "plugins/datepicker/datepicker.css",
+            "plugins/tagsinput/jquery.tagsinput.css",
+            "plugins/datatable/TableTools.css"
         ],
         "feedbar": false
     },
+    
     "register": {
         "js": [ 
             
@@ -66,10 +83,8 @@
             "plugins/datepicker/bootstrap-datepicker.js",
             "plugins/validation/jquery.validate.min.js",
             "plugins/validation/additional-methods.min.js",
-            "plugins/tagsinput/jquery.tagsinput.min.js",
-            "lodash/lodash.min.js",
-            "angular/angular.min.js",
-            "angular/angular-admission.js"
+            "plugins/tagsinput/jquery.tagsinput.min.js"
+            
             
         ],
         

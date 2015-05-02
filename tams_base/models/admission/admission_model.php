@@ -72,6 +72,22 @@ class Admission_model extends CI_Model {
     }
     
     /**
+     * Get Current Admission Session 
+     * 
+     * 
+     */
+    public function get_cur_adm_session($param) {
+        
+        $this->db->limit(1);
+        $this->db->where('schoolid', $param);
+        $this->db->where('application', 'Open');
+        $query = $this->db->get('session');
+        $result = $query->result_array();
+        
+        return $result;
+    }
+    
+    /**
      * Create a new admission requirement
      * 
      * @access public
@@ -171,7 +187,7 @@ class Admission_model extends CI_Model {
 
                 break;
                 
-                case 'exam_grade':
+            case 'exam_grade':
                 
                 // Check to an entry exists with the same 'examid' and 'subjectid' 
                 $this->db->like('examid', $params['examid']);
@@ -189,6 +205,44 @@ class Admission_model extends CI_Model {
                 }
 
                 break;
+                
+            case 'admissions':
+                
+                // Check to an entry exists with the same 'examid' and 'subjectid' 
+                $this->db->like('displayname', $params['displayname']);
+                $this->db->like('schoolid', $params['schoolid']);
+                $this->db->like('sesid', $params['sesid']);
+                $query = $this->db->get('admissions');
+                
+                // Set status 
+                if($query->num_rows() > 0) { 
+                    $status = DEFAULT_EXIST;
+                }else {
+                    if($this->db->insert('admissions', $params)) {
+                        $status = DEFAULT_SUCCESS;
+                    }
+                }
+                
+                break;
+             
+            case 'admission_types':
+                
+                // Check to an entry exists with the same 'examid' and 'subjectid' 
+                $this->db->like('admid', $params['admid']);
+                $this->db->like('type', $params['type']);
+                $this->db->like('status', $params['status']);
+                $query = $this->db->get('adm_types');
+                
+                // Set status 
+                if($query->num_rows() > 0) { 
+                    $status = DEFAULT_EXIST;
+                }else {
+                    if($this->db->insert('adm_types', $params)) {
+                        $status = DEFAULT_SUCCESS;
+                    }
+                }
+                
+                break;    
                 
             default:
                 
@@ -247,15 +301,27 @@ class Admission_model extends CI_Model {
                 // Set status 
                 $ret = $this->db->update('exam_grades', $params, array('examgradeid' => $id));
                 break;
+            
+            case 'admissions':
                 
+                // Set status 
+                $ret = $this->db->update('admissions', $params, array('admid' => $id));
+                break;
+            
+            case 'admission_type':
+                
+                // Set status 
+                $ret = $this->db->update('adm_types', $params, array('typeid' => $id));
+                break;
             default:
                 
                 break;
         }
         
         if($ret)
+            
             $status = DEFAULT_SUCCESS;
-        echo $this->db->last_query();
+            //echo $this->db->last_query();
         return $status;
     }// End func update
     
@@ -269,13 +335,14 @@ class Admission_model extends CI_Model {
     public function get_current_admission($param){
         
         $this->db->select('*');
-        $this->db->from('adm_batch');
-        $this->db->join('admissions', 'admissions.admid = adm_batch.admid');
-        $this->db->where('adm_batch.status', $param['status']);
-        $this->db->where('admissions.schoolid', $param['schoolid']);
+        $this->db->from('adm_types typ');
+        $this->db->join('admissions adm', 'adm.admid = typ.admid');
+        $this->db->join('session s', 's.sesid = adm.sesid');
+        $this->db->where('typ.status', $param['status']);
+        $this->db->where('adm.schoolid', $param['schoolid']);
         $query = $this->db->get();
         
-        $result = $query->row_array();
+        $result = $query->result_array();
         
         return $result;
         
@@ -935,17 +1002,55 @@ class Admission_model extends CI_Model {
         // Create where clause if id is set.
         if($id != NULL) {
             $where = array(
-                array('field' => 'schoolid', 'value' => $id)
+                array('field' => 'adm.schoolid', 'value' => $id)
             );
             $result_set = QUERY_ARRAY_ROW;
         }
         
         // Call get_data from utl_model
-        return $this->util_model->get_data('admissions', 
+        return $this->util_model->get_data('admissions adm', 
                                             array(), 
                                             $where ,
                                             array(),
+                                            array(
+                                                array('table' => 'session s', 'on'=> 'adm.sesid = s.sesid')
+                                            ),
                                             array(),
+                                            QUERY_ARRAY_RESULT
+                                        );
+        
+    }// End func get_exam
+    
+    /**
+     * Get Admission
+     * 
+     * @access public
+     * @param int $id
+     * @return void
+     */
+    public function get_admission_all_type($id = NULL) {
+        
+        // Initialize where clause
+        $where = array();
+        $result_set = QUERY_ARRAY_RESULT;
+        
+        // Create where clause if id is set.
+        if($id != NULL) {
+            $where = array(
+                array('field' => 'adm.schoolid', 'value' => $id)
+            );
+            $result_set = QUERY_ARRAY_ROW;
+        }
+        
+        // Call get_data from utl_model
+        return $this->util_model->get_data('adm_types typ', 
+                                            array('adm.admid','typ.typeid','adm.displayname', 's.sesname', 'typ.type', 'typ.status','adm.sesid'), 
+                                            $where ,
+                                            array(),
+                                            array(
+                                                array('table' => 'admissions adm', 'on'=> 'adm.admid = typ.admid'),
+                                                array('table' => 'session s', 'on'=> 'adm.sesid = s.sesid')
+                                            ),
                                             array(),
                                             QUERY_ARRAY_RESULT
                                         );
@@ -968,6 +1073,7 @@ class Admission_model extends CI_Model {
         return $query->row_array();
     }
     
+    
     public function get_prog_choice($id){
        
         $this->db->select('u.regid, u.year, s.subname, r.score');
@@ -979,6 +1085,7 @@ class Admission_model extends CI_Model {
         
         return $query->result_array();
     }
+    
     
     public function get_utme($id){
        

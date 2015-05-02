@@ -15,7 +15,7 @@
 
 ?>
 <!doctype html>
-<html>
+<html ng-app="tams-app">
     <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -59,6 +59,36 @@
 	<!-- Bootstrap -->
 	<script src="<?php echo site_url(); ?>js/bootstrap.min.js"></script>
 	<script src="<?php echo site_url(); ?>js/eakroko.js"></script>
+        <!--Lodash -->
+        <script src="<?php echo site_url(); ?>js/lodash/lodash.min.js"></script>
+        <!--Angular -->
+        <script src="<?php echo site_url(); ?>js/angular/angular.min.js"></script>
+        
+        <script lang="text/javascript">
+            var admission_details = <?php echo (is_array($admission))? json_encode($admission): '[]'?>;
+
+            var admissionModule = angular.module('tams-app', []);
+
+            admissionModule.controller('PageController', function($scope){
+
+                $scope.data = {
+                    "admission_details" : admission_details,
+                    "utme":'no'
+                };
+                $scope.utme = null;
+                $scope.adm_type = null;
+                $scope.$watch('adm_type', function() {
+                    
+                   $scope.data.utme = checkUtme($scope.adm_type);
+                   
+                });
+                function checkUtme(id){
+                    return _.result(_.find(admission_details, {'typeid' : id}), 'utme');
+                }
+
+            });
+        </script>
+        
 
 	<!--[if lte IE 9]>
 		<script src="<?php echo site_url(); ?>js/plugins/placeholder/jquery.placeholder.min.js"></script>
@@ -77,21 +107,20 @@
 
     </head>
 
-   <body class='login'>
+    <body class='login' ng-controller="PageController">
        <div class="wrapper" style="margin-left: -435px">
             <h1>
                 <a href="#">
-                    <img src="<?php echo site_url();?>img/logo2.png" 
+                    <img src="<?php echo site_url();?>img/logo@2x.png" 
                          alt="" class='retina-ready' width="59" height="49"/><?php echo strtoupper($school_name['short']) ?>
                 </a>
             </h1>
-           
+         
             <div class="login-body span9"> 
                 <?php if(!empty($admission)) {?>
                 <div class="span3">                  
                     <h3>
-                        <i class="icon-bullhorn"></i>
-                        INSTRUCTIONS
+                        <i class="icon-bullhorn"></i> INSTRUCTIONS
                     </h3>
                     <br/>
                     <div class="text-info">
@@ -103,37 +132,46 @@
                             <li>After submitting your initial application an email will be sent to you</li><br/>
                             <li>Follow the link in your email to complete the application process</li><br/>
                             <li>
-                                If you have already filled the <?php echo $admission['displayname']?> 
+                                If you have already filled the <?php echo $admission[0]['displayname']?> 
                                 application form before, click here to check 
                                 the status of your application
                             </li><br/>
                         </ul>
-                    </div>  <br/><br/><br/>
+                    </div>
+                    <br/><br/><br/>
                     <div class="submit pull-left">
-                        <a href="<?php echo site_url('login?rdr=appl_status')?>" class="btn btn-primary" >
+                        <a href="<?php echo site_url('login?rdr=admission/status')?>" class="btn btn-primary" >
                             Check App. Status
                         </a>                                               
                     </div>
                 </div>
-                
                 <div class="span5">                    
-                    <p></p>                 
+                    <p>
+                   
+                    </p>                 
                     <form action="<?php echo site_url('admission/create_account')?>" 
                           method='post' 
                           class='form-validate' 
                           id="login">
                         <h3>
-                            <i class="glyphicon-stats"></i> <?php echo $admission['displayname'] .' '. $admission['admtype']?> APPLICATION FORM
+                            <i class="glyphicon-stats"></i> <?php echo $admission[0]['displayname']?> 
                         </h3>
                         <br/>
-                        
                             <?php
                             if($msg)
                                 echo $msg;
                             ?>
-                      
-                        <?php if($admission['jamb'] == 'yes'){?>
-                        <div class="control-group ">
+                        <div class="control-group">
+                            <div class="controls">
+                                <select id="admutme" name="admtype" class="input-block-level" ng-model="adm_type" required="true">
+                                    <option value=""> -- Choose Admission -- </option>
+                                    <?php foreach($admission As $adm){?>
+                                    <option  value="<?php echo $adm['typeid']?>"><?php echo $adm['displayname'].' '.$adm['type']?> </option>
+                                    <?php }?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group"ng-if="data.utme == 'yes'" >
                             <div class="controls">
                                 <input type="text" 
                                        name="jambregid" 
@@ -143,7 +181,6 @@
                                        value="<?php echo set_value('jambregid'); ?>"/>
                             </div>
                         </div>
-                        <?php }?>
                         <div class="control-group">
                             <div class="controls">
                                 <input type="text" 
@@ -176,17 +213,6 @@
                                        value="<?php echo set_value('mname'); ?>"/>
                             </div>
                         </div>
-                        
-                        <div class="control-group">
-                            <div class="controls">
-                                <select name="admtype" class="chosen-select input-block-level" data-rule-required="true" required="required">
-                                    <option value="">-Choose Admission-</option>
-                                    <option value="UTME">UTME</option>
-                                    <option value="DE">DE</option>
-                                </select>
-                            </div>
-                        </div>
-
                         <div class="control-group">
                             <div class="controls">
                                 <input type="text" 
@@ -219,7 +245,7 @@
                         <div class="control-group">
                             <div class="pw controls">
                                 <input type="password" 
-                                       name="confPassword" 
+                                       name="passconf" 
                                        placeholder="Confirm Password" 
                                        class='input-block-level' 
                                        data-rule-required="true"/>
@@ -246,3 +272,4 @@
     </body>
 
 </html>
+

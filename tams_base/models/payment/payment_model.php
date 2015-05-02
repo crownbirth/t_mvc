@@ -520,14 +520,15 @@ class Payment_model extends CI_Model{
                 
                 }else{
                     
-                    $query = $this->db->query(
-                               "SELECT sh.*, sh.scheduleid, s.sesname, ph.type, inst.percentage, sh.amount
-                                FROM tams_pay_schedule sh, tams_session s, 
-                                tams_pay_head ph, tams_pay_instalment inst
-                                WHERE sh.sesid = s.sesid
-                                AND sh.payheadid = ph.payheadid
-                                AND sh.instid = inst.instid ORDER BY sh.scheduleid DESC"
-                            );
+                    $prep_query = "SELECT sh.*, sh.scheduleid, s.sesname, ph.type, inst.percentage, sh.amount
+                                    FROM tams_pay_schedule sh, tams_session s, 
+                                    tams_pay_head ph, tams_pay_instalment inst
+                                    WHERE sh.sesid = s.sesid
+                                    AND sh.payheadid = ph.payheadid
+                                    AND sh.instid = inst.instid ORDER BY sh.scheduleid DESC";
+                    $query = $this->db->query($prep_query);
+                            
+                    
                     $result = $query->result_array();
                 
                 }

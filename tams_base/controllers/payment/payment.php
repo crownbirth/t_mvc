@@ -308,7 +308,7 @@ class Payment extends CI_Controller {
         
     }
     
-     public function mypersonalschedule(){
+    public function mypersonalschedule(){
          //Get usertype to fetch schedule
         $user_type = $this->main->item('user_type');
         $schedule = $this->pay_mdl->sch1($user_type);
@@ -944,16 +944,7 @@ class Payment extends CI_Controller {
                                   'label'   => 'Penalty',
                                   'rules'   => 'required |numeric'
                                ),
-                            array(
-                                  'field'   => 'unittype[]',
-                                  'label'   => 'Pay. Specification',
-                                  'rules'   => 'required'
-                               ),
-                            array(
-                                  'field'   => 'level[]',
-                                  'label'   => 'Level',
-                                  'rules'   => 'required'
-                               ),
+                            
                             
                          );
 
@@ -971,26 +962,6 @@ class Payment extends CI_Controller {
                                 // Get all field values.
                                 $form_fields = $this->input->post(NULL);
                                 
-                                if($form_fields['unittype'] != 'all'){
-                                    for($i = 0; $i < count($form_fields['unitname']); $i++ ){
-                                        
-                                        $unit_name_arry[$i] = $form_fields['unitname'][$i];
-                                    }
-                                    $unit_name = json_encode($unit_name_arry);
-                                    
-                                }
-                                else{
-                                    
-                                   $unit_name = 'all'; 
-                                }
-                                
-                                
-                                for($i = 0; $i < count($form_fields['level']); $i++ ){
-                                        
-                                        $level_arry[$i] = $form_fields['level'][$i];
-                                    }
-                                    $level = json_encode($level_arry);
-                                
                                 
                                 $params = array( 
                                     'schoolid' => $this->main->get('school_id'),
@@ -998,9 +969,6 @@ class Payment extends CI_Controller {
                                     'payheadid' => $form_fields['pay_head'],
                                     'scheduletype' => $form_fields['user_type'],
                                     'instid' => $form_fields['instalment'],
-                                    'eligible' => $form_fields['unittype'],
-                                    'eligtype' => $unit_name,
-                                    'eliglevel' => $level,
                                     'amount' => $form_fields['amount'],
                                     'penalty' => $form_fields['pamount']
                                 );

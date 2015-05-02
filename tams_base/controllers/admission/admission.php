@@ -169,12 +169,13 @@ class Admission extends CI_Controller {
         );
         
         $page_name = 'create_account'; 
-        $adm = $this->adm_mdl->get_current_admission($param);
         
+        $adm = $this->adm_mdl->get_current_admission($param);
         $data['admission'] = $adm;
         $data['school_name'] = $this->school_name;      
         $data['msg'] = '';
-        
+//        var_dump($adm);
+//        exit();
         // Check for valid request method
         if($this->input->server('REQUEST_METHOD') == 'POST') {
             
@@ -187,12 +188,12 @@ class Admission extends CI_Controller {
                 // Check email and phone uniqueness
                 $unique_email = $this->util_model->is_user_unique($form_fields['email'], 'email');
                 $unique_phone = $this->util_model->is_user_unique($form_fields['phone'], 'phone');
-                $unique_jamb = ($adm['jamb'] == 'yes')? $this->util_model->is_user_unique($form_fields['jambregid'], 'usertypeid'): true;
+                $unique_jamb = ($form_fields['jambregid'])? $this->util_model->is_user_unique($form_fields['jambregid'], 'usertypeid'): true;
 
                 // Format post data from db operation
                 $params = array(
                     'user' => array(
-                        'usertypeid' => ($adm['jamb'] == 'yes')? $form_fields['jambregid']: '',
+                        'usertypeid' => ($form_fields['jambregid']) ? $form_fields['jambregid']: '',
                         'fname'   => $form_fields['fname'],
                         'lname'   => $form_fields['lname'],
                         'mname'   => $form_fields['mname'],
@@ -200,12 +201,12 @@ class Admission extends CI_Controller {
                         'phone'   => $form_fields['phone'],
                         'password' => $this->main->encrypt($form_fields['password']),
                         'schoolid' => $this->school_id,
-                        'usertype' => "prospective"
+                        'usertype' => "applicant"
                     ),                
                     'pros' => array(
-                        'sesid' => $adm['session'],
-                        'jambregid' => ($adm['jamb'] == 'yes')? $form_fields['jambregid']: '',
                         'admtype' => $form_fields['admtype'],
+                        'jambregid' => ($form_fields['jambregid'])? $form_fields['jambregid']: '',
+                        
                     )
                 );
 
@@ -216,7 +217,7 @@ class Admission extends CI_Controller {
                         case DEFAULT_ERROR:
                             $error_msg = $this->lang->line('account_faled'); 
                             $data['msg'] = '<div class="alert alert-danger">'.$error_msg. '</div>';
-                            //$this->main->set_notification_message(MSG_TYPE_ERROR, $error_msg);
+                            
                             break;
 
                         case DEFAULT_SUCCESS:
@@ -226,6 +227,7 @@ class Admission extends CI_Controller {
                             
                             $success_msg = $this->lang->line('account_created');
                             $data['msg'] = '<div class="alert alert-success">'.$success_msg. '</div>';
+                           
                            
                             break;
                     }
@@ -253,7 +255,7 @@ class Admission extends CI_Controller {
         
         $this->load->view($this->folder_name.'/prospective/'.$page_name, $data);  
         // Redirect to application page, showing notifiction messages if there are.
-        //redirect(site_url('admission/application'));        
+        //redirect(site_url('admission/create_account'));        
         
     }// End of func create_account
     

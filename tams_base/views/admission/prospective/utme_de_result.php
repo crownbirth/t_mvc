@@ -21,12 +21,12 @@
             <div class="box-title">
                 <h3><i class="icon-th-list"></i> Application Form - Step 4</h3>
                 <ul class="tabs small">
-                    <li class="btn btn-grey-2">Personal Information</li>
-                    <li class="btn btn-grey-2 ">Next of Kin / Sponsor's Details</li>
-                    <li class="btn btn-grey-2">Education Background</li>
-                    <li class="btn btn-blue">UTME/DE Result</li>
-                    <li class="btn btn-grey-2">Programme Choice</li>
-                </ul>
+                    <li class="btn btn-grey-2"><small>Bio Data</small></li>
+                    <li class="btn btn-grey-2 "><small>Next of Kin / Sponsor's Details</small></li>
+                    <li class="btn btn-grey-2"><small>Education Background</small></li>
+                    <li class="btn btn-blue"><small>UTME/DE Result</small></li>
+                    <li class="btn btn-grey-2"><small>Programme Choice</small></li>
+                </ul>    
             </div>
             <div class="box-content">
                 <h4 class="span"><i class="glyphicon-book"></i> UTME / DE Result  </h4>

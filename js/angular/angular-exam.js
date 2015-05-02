@@ -4,6 +4,7 @@ examModule.controller('PageController', function($scope) {
     
     
     $scope.data = {
+        "cur_adm_ses": cur_adm_session,
         "groups": groups,
         "exams": exams,
         "grades": grades,
@@ -12,7 +13,8 @@ examModule.controller('PageController', function($scope) {
         "exam_grades": exam_grades,
         "admissions" : admissions
     };
-
+    
+    cur_adm_session = null;
     groups = null;
     exams = null;
     grades = null;
