@@ -45,9 +45,9 @@ class Admission extends CI_Controller {
      * @retun void
      */
     public function __construct() {
-
+        
         parent::__construct();
-       
+        
         /*
          * Load models
          */
@@ -84,13 +84,14 @@ class Admission extends CI_Controller {
      */
     public function index() {
         
+        if($this->user_type == 'admin'){
+            
+            redirect('admission/management');
+        }else{
+            redirect('admission/view_register');
+        }
     }// End of func index
-                        
-    /*
-     *---------------------------------------------------------------
-     * Sule's Registration function
-     *---------------------------------------------------------------
-     */
+
     
     /**
      * Prospective Registration.
@@ -488,80 +489,18 @@ class Admission extends CI_Controller {
      */
     public function register() { 
         
-        $data['prospective'] = $this->util_model->get_data('prospective', 
-                                                            array(), 
-                                                            array(
-                                                                array('field' => "userid", 'value' => $this->user_id)
-                                                            ),
-                                                            array(),
-                                                            array()
-                                                            ,array(),
-                                                            QUERY_ARRAY_ROW);
-        
-         $data['users'] = $this->util_model->get_data('users', 
-                                                            array(), 
-                                                            array(
-                                                                array('field' => "userid", 'value' => $this->user_id)
-                                                            ),
-                                                            array(),
-                                                            array()
-                                                            ,array(),
-                                                            QUERY_ARRAY_ROW);
-        $data['state'] = $this->util_model->get_data('states', array(), array(),array(),array(),array(),QUERY_ARRAY_RESULT);
-        $data['programmes'] = $this->util_model->get_data('programmes', array(), array(),array(),array(),array(),QUERY_ARRAY_RESULT);
-        $data['lga'] = $this->util_model->get_data('state_lga', array(), array(),array(),array(),array(),QUERY_ARRAY_RESULT);
-        $data['exam_group'] = $this->util_model->get_data('exam_groups',
-                                                            array(),
-                                                            array(
-                                                                array('field' => "status", 'value' => "Active")
-                                                            ),
-                                                            array(),
-                                                            array(),
-                                                            array(),
-                                                            QUERY_ARRAY_RESULT);
-        
-       $data['exam_type_period'] = $this->util_model->get_data('exams e',
-                                                                array(),
-                                                                array(),
-                                                                array(),
-                                                                array(),
-                                                                array(),
-                                                                QUERY_ARRAY_RESULT);
-       
-       $data['exam_subject'] = $this->util_model->get_data('exam_subjects es',
-                                                            array(),
-                                                            array(),
-                                                            array(),
-                                                            array(
-                                                                array('table' => 'subjects s', 'on'=> 'es.subjectid = s.subid')
-                                                            ),
-                                                            array(),
-                                                            QUERY_ARRAY_RESULT);
-       $data['subject'] = $this->util_model->get_data('subjects',
-                                                            array(),
-                                                            array(),
-                                                            array(),
-                                                            array(),
-                                                            array(),
-                                                            QUERY_ARRAY_RESULT);
-        
-        $data['exam_grade'] = $this->util_model->get_data('exam_grades eg',
-                                                            array(),
-                                                            array(),
-                                                            array(),
-                                                            array(
-                                                                array('table' => 'grades g', 'on'=> 'eg.examgradeid = g.gradeid')
-                                                            ),
-                                                            array(),
-                                                            QUERY_ARRAY_RESULT);
-        
-         $data['grade'] = $this->util_model->get_data('grades',
-                                                            array(),
-                                                            array(),
-                                                            array(),
-                                                            array(),
-                                                            array(),
-                                                            QUERY_ARRAY_RESULT);
+        $data['prospective'] = $this->adm_mdl->get_prospective($this->user_id);
+        $data['users'] = $this->adm_mdl->get_user($this->user_id);
+        $data['state'] = $this->adm_mdl->get_state();
+        $data['programmes'] = $this->adm_mdl->get_programmes();
+        $data['lga'] = $this->adm_mdl->get_lga();       
+        $data['exam_group'] = $this->adm_mdl->get_exam_group();
+        $data['exam_type_period'] = $this->adm_mdl->get_exam_type_period();
+        $data['exam_subject'] = $this->adm_mdl->get_exam_subject();        
+        $data['subject'] = $this->adm_mdl->get_subject();
+        $data['exam_grade'] = $this->adm_mdl->get_exam_grade();
+        $data['grade'] = $this->adm_mdl->get_grade();
+                 
         
         
         $data['this_year'] = date('Y');
@@ -587,7 +526,7 @@ class Admission extends CI_Controller {
                 break;
             case 5:
                 
-                redirect(base_url('admission/view_register'));
+                redirect(base_url("admission/view_register/{$this->user_id}"));
                 break;
             default:
                 break;
@@ -605,14 +544,14 @@ class Admission extends CI_Controller {
      * View Form 
      * 
      */
-    public function view_reg_from(){
+    public function view_reg_from($id = NULL){
         $this->load->helper('getuserpics');
-        
-        $data['url'] = get_user_pics($this->user_id);
-        $data['record'] = $this->adm_mdl->get_admission_record($this->user_id);
-        $data['olevel1'] = $this->adm_mdl->get_olevel($this->user_id, 'first');
-        $data['olevel2'] = $this->adm_mdl->get_olevel($this->user_id, 'second');
-        $data['utme'] = $this->adm_mdl->get_utme($this->user_id);
+        $userid = (isset($id))? $id :  $this->user_id;
+        $data['url'] = get_user_pics($userid);
+        $data['record'] = $this->adm_mdl->get_admission_record($userid);
+        $data['olevel1'] = $this->adm_mdl->get_olevel($userid, 'first');
+        $data['olevel2'] = $this->adm_mdl->get_olevel($userid, 'second');
+        $data['utme'] = $this->adm_mdl->get_utme($userid);
         
         
         

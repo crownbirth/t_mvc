@@ -15,13 +15,16 @@
 
 //var_dump($admissions['rs']);
 ?>
+
 <div class="row-fluid">
     <div class="span12">
         <div class="box box-bordered box-color">
             <div class="box-title">
                 <h3><i class="icon-reorder"></i> Admission Management</h3>
             </div>
+           
             <div class="box-content nopadding">
+                 <?php if(!$this->main->has_perm('admission', 'admission.setup.view')){?>
                 <ul class="tabs tabs-inline tabs-top">
                     <li class="active">
                         <a data-toggle="tab" href="#first11"><i class="icon-inbox"></i> Exam Setup</a>
@@ -40,6 +43,7 @@
                     <div id="first11" class="tab-pane active">
                         <div class="row-fluid">
                             <div class="span12">
+                                <?php if($this->main->has_perm('admission', 'admission.exam_setup.view')){?>
                                 <div class="box box-bordered">
                                     <div class="box-title">
                                         <h3>
@@ -69,13 +73,16 @@
                                     <div class="box-content">
                                         <div class="tab-content">
                                             <div id="t1" class="tab-pane active">
+                                                <?php if($this->main->has_perm('admission', 'admission.exam_setup.exam_group.view')){?>
+                                                <?php if($this->main->has_perm('admission', 'admission.exam_setup.exam_group.create')){?>
                                                 <ul class="tabs pull-right form">
                                                     <li class="btn btn-green" data-toggle="modal" href="#create_group_modal">                             
                                                         <i class="icon-plus"> </i> New Exam Group                       
                                                     </li>
                                                 </ul>
+                                                <?php }?>
                                                 <p>&nbsp;</p><br/>
-                                                <table id="examgroup" class="table table-bordered table-condensed table-striped dataTable dataTables_filter dataTables_paginate">
+                                                <table class=" table dataTable">
                                                     <thead>
                                                         <tr>
                                                             <th>S/N</th>
@@ -85,10 +92,10 @@
                                                             <th>Status</th>
                                                             <th>Actions</th>
                                                         </tr>
-                                                    </thead> 
+                                                    </thead>
                                                     <tbody>
                                                         <tr ng-repeat="group in data.groups">
-                                                            <td ng-bind="$index+1"></td>
+                                                            <td ng-bind="$index + 1"></td>
                                                             <td ng-bind="group.groupname"></td>
                                                             <td ng-bind="group.required"></td>
                                                             <td ng-bind="group.maxentries"></td> 
@@ -110,22 +117,27 @@
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                        <tr ng-show="data.groups.length < 1">                                
-                                                            <td colspan="6">
-                                                                <?php echo sprintf($this->lang->line('no_entries'), 'groups')?>
-                                                            </td>
-                                                        </tr>
                                                     </tbody>
                                                 </table>
+                                                <?php }else{?>
+                                                    <table class="table ">
+                                                        <tr>
+                                                            <td style="text-align: center"> <span class="alert alert-danger span12">Access Denied</span> </td>
+                                                        </tr>
+                                                    </table>
+                                                <?php }?>
                                             </div>
                                             <div id="t2" class="tab-pane">
+                                                <?php if($this->main->has_perm('admission', 'admission.exam_setup.exam.view')){?>
+                                                <?php if($this->main->has_perm('admission', 'admission.exam_setup.exam.create')){?>
                                                 <ul class="tabs pull-right form">
                                                     <li class="btn btn-green" data-toggle="modal" href="#create_exam_modal">
                                                         <i class="icon-plus"> </i> New Exam
                                                     </li>
                                                 </ul>
+                                                <?php }?>
                                                 <p>&nbsp;</p><br/>
-                                                <table id="exam" class="table table-hover table-nomargin table-condensed dataTable dataTables_filter dataTables_paginate">
+                                                <table class="table table-hover table-bordered table-striped table-condensed dataTable ">
                                                     <thead>
                                                         <th>S/N</th>                                
                                                         <th>Name</th>
@@ -152,32 +164,41 @@
                                                                         <span class="caret"></span>
                                                                     </a>
                                                                     <ul class="dropdown-menu dropdown-success">
+                                                                        <?php if($this->main->has_perm('admission', 'admission.exam_setup.exam.edit')){?>
                                                                         <li>
                                                                             <a ng-click="openEditDialog('exam', $index, $event)">Edit</a>
                                                                         </li>
+                                                                        <?php }?>
+                                                                        <?php if($this->main->has_perm('admission', 'admission.exam_setup.exam.delete')){?>
                                                                         <li>
                                                                             <a ng-click="openDeleteDialog('exam', $index, $event)">Delete</a>
                                                                         </li>
+                                                                        <?php }?>
                                                                     </ul>
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                        <tr ng-show="data.exams.length < 1">                                
-                                                            <td colspan="8">
-                                                                <?php echo sprintf($this->lang->line('no_entries'), 'exams')?>
-                                                            </td>
-                                                        </tr>
                                                     </tbody>
                                                 </table>
+                                                <?php }else{?>
+                                                    <table class="table ">
+                                                        <tr>
+                                                            <td style="text-align: center"> <span class="alert alert-danger span12">Access Denied</span> </td>
+                                                        </tr>
+                                                    </table>
+                                                <?php }?>
                                             </div>
                                             <div id="t3" class="tab-pane ">
+                                                <?php if($this->main->has_perm('admission', 'admission.exam_setup.subject.view')){?>
+                                                <?php if($this->main->has_perm('admission', 'admission.exam_setup.subject.create')){?>
                                                 <ul class="tabs pull-right form">
                                                     <li class="btn btn-green" data-toggle="modal" href="#create_subject_modal">                             
                                                         <i class="icon-plus"> </i> New Subject                        
                                                     </li>
                                                 </ul>
+                                                <?php }?>
                                                 <p>&nbsp;</p><br/>
-                                                <table id="subject" class="table table-hover table-nomargin dataTable dataTables_filter dataTables_paginate">
+                                                <table class="table table-hover table-bordered table-striped table-condensed dataTable">
                                                     <thead>
                                                         <tr>
                                                             <th>S/N</th>                                
@@ -196,32 +217,41 @@
                                                                         <span class="caret"></span>
                                                                     </a>
                                                                     <ul class="dropdown-menu dropdown-success">
+                                                                        <?php if($this->main->has_perm('admission', 'admission.exam_setup.subject.edit')){?>
                                                                         <li>
                                                                             <a ng-click="openEditDialog('subject', $index, $event)">Edit</a>
                                                                         </li>
+                                                                        <?php }?>
+                                                                        <?php if($this->main->has_perm('admission', 'admission.exam_setup.subject.delete')){?>
                                                                         <li>
                                                                             <a ng-click="openDeleteDialog('subject', $index, $event)">Delete</a>
                                                                         </li>
+                                                                        <?php }?>
                                                                     </ul>
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                        <tr ng-show="data.subjects.length < 1">                                
-                                                            <td colspan="3">
-                                                                <?php echo sprintf($this->lang->line('no_entries'), 'subjects')?>
-                                                            </td>
-                                                        </tr>
                                                     </tbody>
                                                 </table>
+                                                <?php }else{?>
+                                                    <table class="table ">
+                                                        <tr>
+                                                            <td style="text-align: center"> <span class="alert alert-danger span12">Access Denied</span> </td>
+                                                        </tr>
+                                                    </table>
+                                                <?php }?>
                                             </div>
                                             <div id="t4" class="tab-pane ">
+                                                <?php if($this->main->has_perm('admission', 'admission.exam_setup.exam_subject.view')){?>
+                                                <?php if($this->main->has_perm('admission', 'admission.exam_setup.exam_subject.create')){?>
                                                 <ul class="tabs pull-right form">
                                                     <li class="btn btn-green" data-toggle="modal" href="#create_exam_subject_modal">                             
                                                         <i class="icon-plus"> </i> New Exam Subject                        
                                                     </li>
                                                 </ul>
+                                                <?php }?>
                                                 <p>&nbsp;</p><br/>
-                                                <table id="examsubject" class="table table-hover table-nomargin dataTable dataTables_filter dataTables_paginate">
+                                                <table class="table table-hover table-bordered table-striped table-condensed dataTable">
                                                     <thead>
                                                         <tr>
                                                             <th>S/N</th>
@@ -242,27 +272,41 @@
                                                                         <span class="caret"></span>
                                                                     </a>
                                                                     <ul class="dropdown-menu dropdown-success">
+                                                                        <?php if($this->main->has_perm('admission', 'admission.exam_setup.exam_subject.edit')){?>
                                                                         <li>
                                                                             <a ng-click="openEditDialog('exam_subject', $index, $event)">Edit</a>
                                                                         </li>
+                                                                        <?php }?>
+                                                                        <?php if($this->main->has_perm('admission', 'admission.exam_setup.exam_subject.delete')){?>
                                                                         <li>
                                                                             <a ng-click="openDeleteDialog('grade', $index, $event)">Delete</a>
                                                                         </li>
+                                                                        <?php }?>
                                                                     </ul>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                <?php }else{?>
+                                                    <table class="table ">
+                                                        <tr>
+                                                            <td style="text-align: center"> <span class="alert alert-danger span12">Access Denied</span> </td>
+                                                        </tr>
+                                                    </table>
+                                                <?php }?>
                                             </div>
                                             <div id="t5" class="tab-pane ">
+                                                <?php if($this->main->has_perm('admission', 'admission.exam_setup.grade.view')){?>
+                                                <?php if($this->main->has_perm('admission', 'admission.exam_setup.grade.create')){?>
                                                 <ul class="tabs pull-right form">
                                                     <li class="btn btn-green" data-toggle="modal" href="#create_grade_modal">
                                                         <i class="icon-plus"></i> New Grade
                                                     </li>
                                                 </ul>
+                                                <?php }?>
                                                 <p>&nbsp;</p><br/>
-                                                <table id="grade" class="table table-hover table-nomargin table-bordered table-condensed dataTable dataTables_filter dataTables_paginate">
+                                                <table class="table table-hover table-bordered table-striped table-condensed dataTable">
                                                     <thead>
                                                         <tr>
                                                             <th>S/N</th>                                
@@ -281,32 +325,41 @@
                                                                         <span class="caret"></span>
                                                                     </a>
                                                                     <ul class="dropdown-menu dropdown-success">
+                                                                        <?php if($this->main->has_perm('admission', 'admission.exam_setup.grade.edit')){?>
                                                                         <li>
                                                                             <a ng-click="openEditDialog('grade', $index, $event)">Edit</a>
                                                                         </li>
+                                                                        <?php }?>
+                                                                        <?php if($this->main->has_perm('admission', 'admission.exam_setup.grade.delete')){?>
                                                                         <li>
                                                                             <a ng-click="openDeleteDialog('grade', $index, $event)">Delete</a>
                                                                         </li>
+                                                                        <?php }?>
                                                                     </ul>
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                        <tr ng-show="data.grades.length < 1">                                
-                                                            <td colspan="5">
-                                                                <?php echo sprintf($this->lang->line('no_entries'), 'grades')?>
-                                                            </td>
-                                                        </tr>
                                                     </tbody>
                                                 </table>
+                                                <?php }else{?>
+                                                    <table class="table ">
+                                                        <tr>
+                                                            <td style="text-align: center"> <span class="alert alert-danger span12">Access Denied</span> </td>
+                                                        </tr>
+                                                    </table>
+                                                <?php }?>
                                             </div>
                                             <div id="t6" class="tab-pane ">
+                                                <?php if($this->main->has_perm('admission', 'admission.exam_setup.exam_grade.view')){?>
+                                                <?php if($this->main->has_perm('admission', 'admission.exam_setup.exam_grade.create')){?>
                                                 <ul class="tabs pull-right form">
                                                     <li class="btn btn-green" data-toggle="modal" href="#create_exam_grade_modal">
                                                         <i class="icon-plus"></i> New Exam Grade
                                                     </li>
                                                 </ul>
+                                                <?php }?>
                                                 <p>&nbsp;</p><br/>
-                                                <table id="examgrade" class="table table-hover table-nomargin dataTable dataTables_filter dataTables_paginate">
+                                                <table class="table table-hover table-bordered table-striped table-condensed dataTable">
                                                     <thead>
                                                         <tr>
                                                             <th>S/N</th>
@@ -331,28 +384,47 @@
                                                                         <span class="caret"></span>
                                                                     </a>
                                                                     <ul class="dropdown-menu dropdown-success">
+                                                                        <?php if($this->main->has_perm('admission', 'admission.exam_setup.exam_grade.edit')){?>
                                                                         <li>
                                                                             <a ng-click="openEditDialog('exam_grade', $index, $event)">Edit</a>
                                                                         </li>
+                                                                        <?php }?>
+                                                                        <?php if($this->main->has_perm('admission', 'admission.exam_setup.exam_grade.delete')){?>
                                                                         <li>
                                                                             <a ng-click="openDeleteDialog('exam_grade', $index, $event)">Delete</a>
                                                                         </li>
+                                                                        <?php }?>
                                                                     </ul>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                <?php }else{?>
+                                                    <table class="table ">
+                                                        <tr>
+                                                            <td style="text-align: center"> <span class="alert alert-danger span12">Access Denied</span> </td>
+                                                        </tr>
+                                                    </table>
+                                                <?php }?>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            <?php }else{?>
+                                <table class="table ">
+                                    <tr>
+                                        <td style="text-align: center"> <span class="alert alert-danger span12">Access Denied</span> </td>
+                                    </tr>
+                                </table>
+                            <?php }?>
                             </div>
                         </div>
                     </div>
                     <div id="second22" class="tab-pane">
                          <div class="row-fluid">
                             <div class="span12">
+                                <?php if($this->main->has_perm('admission', 'admission.adm_setup.view')){?>
                                 <div class="box box-color">
                                     <div class="box-title">
                                         <h3>
@@ -370,13 +442,16 @@
                                     <div class="box-content">
                                         <div class="tab-content">
                                             <div id="t7" class="tab-pane active">
+                                                <?php if($this->main->has_perm('admission', 'admission.adm_setup.admissions.view')){?>
+                                                <?php if($this->main->has_perm('admission', 'admission.adm_setup.admissions.create')){?>
                                                  <ul class="tabs pull-right form">
                                                     <li class="btn btn-green" data-toggle="modal" href="#create_admission_modal">                             
                                                         <i class="icon-plus"></i> Set Admission                       
                                                     </li>
                                                 </ul>
+                                                <?php }?>
                                                 <p>&nbsp;</p><br/>
-                                                <table id="adm-table" class="table table-bordered table-condensed table-striped dataTable dataTables_filter dataTables_paginate">
+                                                <table class="table table-bordered table-condensed table-striped dataTable">
                                                     <thead>
                                                         <tr>
                                                             <th>S/N</th>
@@ -399,48 +474,59 @@
                                                                         <span class="caret"></span>
                                                                     </a>
                                                                     <ul class="dropdown-menu dropdown-success">
+                                                                        <?php if($this->main->has_perm('admission', 'admission.adm_setup.admissions.edit')){?>
                                                                         <li>
                                                                             <a ng-click="openEditDialog('admission', $index, $event)">Edit</a>
                                                                         </li>
+                                                                        <?php }?>
+                                                                        <?php if($this->main->has_perm('admission', 'admission.adm_setup.admissions.delete')){?>
                                                                         <li>
                                                                             <a ng-click="openDeleteDialog('admission', $index, $event)">Delete</a>
                                                                         </li>
+                                                                        <?php }?>
                                                                     </ul>
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                        <tr ng-show="data.admissions.length < 1">                                
-                                                            <td colspan="6">
-                                                                <?php echo sprintf($this->lang->line('no_entries'), 'groups')?>
-                                                            </td>
-                                                        </tr>
                                                     </tbody>
                                                 </table>
-                                            </div>
+                                                <?php }else{?>
+                                                    <table class="table ">
+                                                        <tr>
+                                                            <td style="text-align: center"> <span class="alert alert-danger span12">Access Denied</span> </td>
+                                                        </tr>
+                                                    </table>
+                                                <?php }?>
+                                                                </div>
                                             <div id="t8" class="tab-pane">
+                                                <?php if($this->main->has_perm('admission', 'admission.adm_setup.adm_type.view')){?>
+                                                <?php if($this->main->has_perm('admission', 'admission.adm_setup.adm_type.create')){?>
                                                 <ul class="tabs pull-right form">
                                                     <li class="btn btn-green" data-toggle="modal" href="#create_admission_type_modal">                             
                                                         <i class="icon-plus"></i> Add Admission Type                     
                                                     </li>
                                                 </ul>
+                                                <?php }?>
                                                 <p>&nbsp;</p><br/>
-                                                <table id="adm-table" class="table table-bordered table-condensed table-striped dataTable dataTables_filter dataTables_paginate">
+                                                <table class="table table-bordered table-condensed table-striped dataTable">
                                                     <thead>
                                                         <tr>
                                                             <th>S/N</th>
                                                             <th>Admission Title </th>
                                                             <th>Session</th>
                                                             <th>Admission Type</th>
+                                                            <th>Enable UTME Exam</th>
                                                             <th>Status</th>
                                                             <th>Actions</th>
                                                         </tr>
                                                     </thead> 
                                                     <tbody>
                                                         <tr ng-repeat="adm_typ in data.admission_types">
-                                                            <td ng-bind="$index+1"></td>
+                                                            <td ng-bind="$index + 1"></td>
                                                             <td ng-bind="adm_typ.displayname"></td>
                                                             <td ng-bind="adm_typ.sesname"></td> 
                                                             <td ng-bind="adm_typ.type"></td>
+                                                            <td ng-bind="adm_typ.utme"></td>
                                                             <td ng-bind="adm_typ.status"></td>  
                                                             <td>
                                                                 <div class="btn-group">
@@ -449,33 +535,47 @@
                                                                         <span class="caret"></span>
                                                                     </a>
                                                                     <ul class="dropdown-menu dropdown-success">
+                                                                        <?php if($this->main->has_perm('admission', 'admission.adm_setup.adm_type.edit')){?>
                                                                         <li>
                                                                             <a ng-click="openEditDialog('admission_type', $index, $event)">Edit</a>
                                                                         </li>
+                                                                        <?php }?>
+                                                                        <?php if($this->main->has_perm('admission', 'admission.adm_setup.adm_type.delete')){?>
                                                                         <li>
                                                                             <a ng-click="openDeleteDialog('admission_type', $index, $event)">Delete</a>
                                                                         </li>
+                                                                        <?php }?>
                                                                     </ul>
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                        <tr ng-show="data.admissions.length < 1">                                
-                                                            <td colspan="6">
-                                                                <?php echo sprintf($this->lang->line('no_entries'), 'groups')?>
-                                                            </td>
-                                                        </tr>
                                                     </tbody>
                                                 </table>
+                                                <?php }else{?>
+                                                    <table class="table ">
+                                                        <tr>
+                                                            <td style="text-align: center"> <span class="alert alert-danger span12">Access Denied</span> </td>
+                                                        </tr>
+                                                    </table>
+                                                <?php }?>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <?php }else{?>
+                                    <table class="table ">
+                                        <tr>
+                                            <td style="text-align: center"> <span class="alert alert-danger span12">Access Denied</span> </td>
+                                        </tr>
+                                    </table>
+                                <?php }?>
                             </div>
                         </div>                 
                     </div>
                     <div id="thirds3322" class="tab-pane">
                         <div class="row-fluid">
                             <div class="span12">
+                                <?php if($this->main->has_perm('admission', 'admission.upload_utme.view')){?>
                                 <div class="box">
                                     <div class="box-title">
                                         <h3>
@@ -518,29 +618,44 @@
                                                                     <form 
                                                                         id="create_exam_form" 
                                                                         class="form-horizontal form-striped" 
+                                                                        enctype="multipart/form-data"
                                                                         method="post" 
-                                                                        action="<?php echo site_url('admission/create_exam')?>">
-                                                                        <table class="table table-bordered table-condensed table-striped">
+                                                                        action="<?php echo site_url('admission/upload_utme')?>">
+                                                                        <table class="table table-bordered table-condensed table-striped table-colored-header">
                                                                             <thead>
                                                                                 <tr>
-                                                                                    <th colspan="4">UTME File Upload</th>
+                                                                                    <th colspan="4">UTME File Upload  <div class="btn btn-small btn-grey-2 pull-right" data-toggle="modal" href="#utmeupload_help_modal"><small>Upload Help</small></div></th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr>
-                                                                                    <th>Admission name: </th>
+                                                                                    <th>Admission type: </th>
                                                                                     <td>
-                                                                                        <select name="adm_name">
+                                                                                        <select name="adm_type" required="required">
                                                                                             <option value="">--Choose--</option>
+                                                                                            <?php foreach($cur_adm AS $adm){?>
+                                                                                            <option value="<?php echo $adm['typeid']?>"><?php echo $adm['displayname'].' '.$adm['type']?></option>
+                                                                                            <?php }?>
                                                                                         </select>
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <th>Admission type: </th>
+                                                                                    <th>UTME Year: </th>
                                                                                     <td>
-                                                                                        <select name="adm_name">
-                                                                                            <option value="">--Choose--</option>
-                                                                                        </select>
+                                                                                        <div class='span12'>
+                                                                                            <select name="utme_year" id="olevel[0][examyr]" class="input-xxlarge chosen-select" required="true" >
+                                                                                                <option value="">--Exam Year--</option>
+                                                                                                <?php 
+                                                                                                $i =0;
+                                                                                                do{
+                                                                                                   $year = $this_year - $i;  
+                                                                                                ?>
+                                                                                                <option value="<?php echo $year?>"><?php echo $year?></option>
+                                                                                                <?php 
+                                                                                                $i++;
+                                                                                                }while($i <= 30)?>
+                                                                                            </select>
+                                                                                        </div>
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
@@ -554,9 +669,10 @@
                                                                                                 <span class="btn btn-file">
                                                                                                     <span class="fileupload-new">Select file</span>
                                                                                                     <span class="fileupload-exists">Change</span>
-                                                                                                    <input type="file" name="">
+                                                                                                    <input type="file" name="filename">
                                                                                                 </span><a data-dismiss="fileupload" class="btn fileupload-exists" href="#">Remove</a>
                                                                                             </div>
+                                                                                            <span class="help-block">File Format must be in CSV</span>
                                                                                         </div>
                                                                                     </td>
                                                                                 </tr>
@@ -582,6 +698,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                <?php }else{?>
+                                    <table class="table ">
+                                        <tr>
+                                            <td style="text-align: center"> <span class="alert alert-danger span12">Access Denied</span> </td>
+                                        </tr>
+                                    </table>
+                                <?php }?>
                             </div>
                         </div> 
                     </div>
@@ -589,6 +712,13 @@
                         here4
                     </div>
                 </div>
+                <?php }else{?>
+                <table class="table ">
+                    <tr>
+                        <td style="text-align: center"> <span class="alert alert-danger span12">Access Denied</span> </td>
+                    </tr>
+                </table>
+                <?php }?>
             </div>
         </div>
     </div>

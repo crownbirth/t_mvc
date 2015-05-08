@@ -81,6 +81,7 @@ class Admission_model extends CI_Model {
         $this->db->limit(1);
         $this->db->where('schoolid', $param);
         $this->db->where('application', 'Open');
+        $this->db->where('status', 'inactive');
         $query = $this->db->get('session');
         $result = $query->result_array();
         
@@ -230,6 +231,7 @@ class Admission_model extends CI_Model {
                 // Check to an entry exists with the same 'examid' and 'subjectid' 
                 $this->db->like('admid', $params['admid']);
                 $this->db->like('type', $params['type']);
+                $this->db->like('utme', $params['utme']);
                 $this->db->like('status', $params['status']);
                 $query = $this->db->get('adm_types');
                 
@@ -506,7 +508,7 @@ class Admission_model extends CI_Model {
             
              case '4':
                  
-                if($param['admtype'] == 'DE'){
+                if($param['extype'] == 'no'){
                  
                     $record['de_result'] = array(
                                         'schoolname' => $param['inst_name'],
@@ -531,15 +533,15 @@ class Admission_model extends CI_Model {
 
                     if($this->db->trans_status() === FALSE){
 
-                        $status = DEFAULT_SUCCESS;
+                        $status = DEFAULT_ERROR; 
 
                     }else{
-
-                       $status = DEFAULT_ERROR; 
+                        $status = DEFAULT_SUCCESS;
+                       
                     }
 
                 }
-                elseif($param['admtype'] == 'UTME'){
+                elseif($param['extype'] == 'yes'){
                     
                     $this->db->like('userid', $param['userid']);
                     $query = $this->db->get('utme');
@@ -586,11 +588,11 @@ class Admission_model extends CI_Model {
 
                         if($this->db->trans_status() === FALSE){
 
-                            $status = DEFAULT_SUCCESS;
-
+                            
+                            $status = DEFAULT_ERROR; 
                         }else{
 
-                           $status = DEFAULT_ERROR; 
+                           $status = DEFAULT_SUCCESS;
                         }
                         
                     }else{
@@ -1044,7 +1046,7 @@ class Admission_model extends CI_Model {
         
         // Call get_data from utl_model
         return $this->util_model->get_data('adm_types typ', 
-                                            array('adm.admid','typ.typeid','adm.displayname', 's.sesname', 'typ.type', 'typ.status','adm.sesid'), 
+                                            array('adm.admid','typ.typeid','adm.displayname', 's.sesname', 'typ.type', 'typ.status','adm.sesid', 'typ.utme'), 
                                             $where ,
                                             array(),
                                             array(
@@ -1115,7 +1117,145 @@ class Admission_model extends CI_Model {
         return $query->result_array();
     }
     
+    
+    
+    public function get_prospective($userid){
+       return $this->util_model->get_data('prospective p', 
+                                    array(), 
+                                    array(
+                                        array('field' => "p.userid", 'value' => $userid)
+                                    ),
+                                    array(),
+                                    array(
+                                        array('table' => 'adm_types typ', 'on'=> 'p.admtype = typ.typeid')
+                                    )
+                                    ,array(),
+                                    QUERY_ARRAY_ROW);
+    }
+    
+    
+    public function get_user($userid){
+       return $this->util_model->get_data('users', 
+                                            array(), 
+                                            array(
+                                                array('field' => "userid", 'value' => $userid)
+                                            ),
+                                            array(),
+                                            array()
+                                            ,array(),
+                                            QUERY_ARRAY_ROW);
+    }
+    
+    
+    public function get_state(){
+        return $this->util_model->get_data('states', 
+                                            array(), 
+                                            array(),
+                                            array(),
+                                            array(),
+                                            array(),
+                                            QUERY_ARRAY_RESULT);
+    }
+    
+    public function get_programmes(){
+        return $this->util_model->get_data('programmes', 
+                                            array(), 
+                                            array(),
+                                            array(),
+                                            array(),
+                                            array(),
+                                            QUERY_ARRAY_RESULT);
+    }
+    
+    public function get_lga(){
+        return $this->util_model->get_data('state_lga', 
+                                            array(), 
+                                            array(),
+                                            array(),
+                                            array(),
+                                            array(),QUERY_ARRAY_RESULT);
+    }
+    
+    
+    public function get_exam_group(){
+        return $this->util_model->get_data('exam_groups',
+                                            array(),
+                                            array(
+                                                array('field' => "status", 'value' => "Active")
+                                            ),
+                                            array(),
+                                            array(),
+                                            array(),
+                                            QUERY_ARRAY_RESULT);
+    }
+    
+    public function get_exam_type_period(){
+       return  $this->util_model->get_data('exams e',
+                                            array(),
+                                            array(),
+                                            array(),
+                                            array(),
+                                            array(),
+                                            QUERY_ARRAY_RESULT);
+    }
+    
+    public function adm_has_utme($type){
+        $status = FALSE;
+        $this->db->select('utme');
+        $this->db->where('typeid', $type); 
+        $query = $this->db->get('adm_types');
+        
+         $row = $query->row(); 
+         if($row->utme == 'yes'){
+             $status = TRUE;
+         }
+         
+         return $status;
+    }
+    
+    public function upload_utme($resource){
+        
+        $this->db->trans_start();
+                
+        foreach($resource as $rec){
+            
+            $this->db->insert('users', $rec['user']); 
+
+            $rec['pros']['userid'] = $this->db->insert_id();
+            $rec['utme']['userid'] = $this->db->insert_id();
+            
+            $this->db->insert('prospective', $rec['pros']);
+            
+            $this->db->set('userid', $rec['utme']['userid']);
+            $this->db->set('regid', $rec['utme']['regid']);
+            $this->db->set('year', $rec['utme']['year']);
+            $this->db->insert('utme');
+            $utmeid = $this->db->insert_id();
+            
+            
+            for($idx = 0; $idx < count($rec['utme']['subject']); $idx++){
+                
+                $this->db->set('utmeid', $utmeid);
+                $this->db->set('subject', $rec['utme']['subject'][$idx]);
+                $this->db->set('score', $rec['utme']['score'][$idx]);
+                $this->db->insert('utme_result');
+                
+            }
+           
+        }
+        
+        // End transaction
+        $this->db->trans_complete();
+        
+        if ($this->db->trans_status() === FALSE) {
+            
+            return DEFAULT_ERROR;
+        }
+
+        return DEFAULT_SUCCESS;  
+    }
+    
 } // End class addmission_model
 
 
-// End file addmission_model.php
+

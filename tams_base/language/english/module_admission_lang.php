@@ -10,6 +10,7 @@ $lang['registration_fail'] = 'Sorry! Your Registration is not successfull. '
 $lang['adm_success'] = '%s %s succefully %s';
 $lang['adm_error'] = 'There was a problem creating the entry.';
 $lang['adm_entry_exist'] = 'Unique constraint violated %s name already exist.';
+$lang['adm_utme_upload_error'] = 'Sorry!. UTME Scores was not enabled for the Admission Type you select';
 
 /* End of file main_lang.php */
 /* Location: ./base/language/english/main_lang.php */

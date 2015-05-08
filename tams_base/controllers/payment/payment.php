@@ -24,6 +24,9 @@ class Payment extends CI_Controller {
      */
     private $folder_name = 'payment';
     
+    private $user_id;
+    private $usertype;
+    
     /**
      * Folder Name
      * 
@@ -70,7 +73,8 @@ class Payment extends CI_Controller {
          */
         $this->load->library('Pay/pay');
         
-        
+        $this->user_id = $this->main->item('school_id');
+        $this->usertype = $this->main->item('user_type');
     }
     
     
@@ -84,13 +88,13 @@ class Payment extends CI_Controller {
     public function index(){
         
         //Set eligible visitor to page 
-        $visitor = array('student', 'prospective');
+        $visitor = array('student', 'applicant');
         
         $user_type = $this->main->get("user_type");
         
         if(in_array($user_type, $visitor)){
             
-            $this->myschedule();
+            $this->user_schedule();
             
         }else{
             
@@ -207,7 +211,63 @@ class Payment extends CI_Controller {
     }
     
     
-   
+    /**
+     * Get user eligible payment schedule
+     */
+    public function user_schedule(){
+        $user_details = $this->pay_mdl->get_user_details()
+        $active_schedule = array();
+        
+        //set user pay schedule parameter
+        $user_schedule_param = array(
+                                "usertype" => $this->usertype,
+                                "schoolid" => $this->user_id
+                            );
+        
+        $user_schedule =  $this->pay_mdl->user_schedule( $user_schedule_param);
+        
+        foreach($user_schedule as $u_schdl){
+            if($u_schdl['exceptions'] == 'Yes'){
+                /**
+                 * @todo write a function to check if user is eligible for exception 
+                 */
+                $has_excep = $this->has_exceptions($param);
+            }
+            array_push($active_schedule, $u_schdl);
+        }
+        
+        $data['my_pay_schedule'] = $active_schedule;
+        $page_name = 'payment';
+        
+        //build view page for payment 
+        $page_content = $this->load->view($this->folder_name.'/'.$page_name, $data, true);
+        $this->page->build($page_content, $this->folder_name, $page_name, $this->page_title );
+    }
+    
+    private function has_exception($id){
+        
+    }
+    /**
+     * This is call to begin the payment process of user 
+     * 
+     * @param type $scheduleid
+     */
+    public function user_paynow($scheduleid){
+        switch($this->usertype){
+            case 'applicant':
+                
+                break;
+            case 'student':
+                break;
+            case 'staff':
+                break;
+            case 'admin':
+                break;
+            default:
+                break;
+        }
+        
+    }
     
     /*
     * Function Pay: this function handle how student make thier payment 
@@ -218,6 +278,7 @@ class Payment extends CI_Controller {
     * @retun void
     */
     public function myschedule(){
+        
         
         $this->main->check_auth(
                                 array(
@@ -323,7 +384,7 @@ class Payment extends CI_Controller {
 
                     break;
 
-                case 'prospective':
+                case 'applicant':
                     foreach($schedule As $sch){
                     var_dump($sch);
                     }

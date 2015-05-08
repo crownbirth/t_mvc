@@ -24,6 +24,7 @@ $route['admission/create_account_require'] = FALSE;
 
 $route['admission/create_account'] = "admission/admission/create_account";
 $route['admission/register'] = "admission/admission/register";
+$route['admission/view_register/(:any)'] = "admission/admission/view_reg_from/$1";
 $route['admission/view_register'] = "admission/admission/view_reg_from";
 $route['admission/registration_submit/(:any)'] = "admission/admission/registration_submit/$1";
 $route['admission/status'] = "admission/admission/admission_status";
@@ -54,6 +55,8 @@ $route['admission/update_admission'] = "admission/management/update_admission";
 
 $route['admission/create_admission_type'] = "admission/management/create_admission_type";
 $route['admission/update_admission_type'] = "admission/management/update_admission_type";
+
+$route['admission/upload_utme'] = "admission/management/upload_utme";
 
 
 //$route['admission/application'] = "admission/admission/application";

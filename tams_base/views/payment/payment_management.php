@@ -13,7 +13,7 @@
  * @since      File available since Release 1.0.0
  */
 
-var_dump($payschd);
+//var_dump($payschd);
 ?>
 
 <div class="row-fluid">

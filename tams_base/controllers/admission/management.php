@@ -46,9 +46,15 @@ class Management extends CI_Controller {
      * @retun void
      */
     public function __construct() {
-
+        
         parent::__construct();
        
+        $this->main->check_auth(
+                                array(
+                                        'admission' => array('admission'),
+                                        
+                                    )
+                                );
         /*
          * Load models
          */
@@ -82,6 +88,18 @@ class Management extends CI_Controller {
     
     
     function index(){
+        $this->main->check_auth(
+                                array(
+                                        'admission' => array('admission','admission.setup.view'),
+                                        
+                                    )
+                                );
+        $param = array(
+            'status' => "open",
+            'schoolid' => $this->school_id
+        );
+        $data['this_year'] = date('Y');
+        $data['cur_adm'] = $this->adm_mdl->get_current_admission($param);
         
         $data['adm_session'] = $this->adm_mdl->get_cur_adm_session($this->school_id);
         $data['groups'] = $this->adm_mdl->get_group();
@@ -115,6 +133,7 @@ class Management extends CI_Controller {
         $page_content .= $this->load->view($this->folder_name.'/partials/edit_admission', $data, true);
         $page_content .= $this->load->view($this->folder_name.'/partials/create_admission_type', $data, true);
         $page_content .= $this->load->view($this->folder_name.'/partials/edit_admission_type', $data, true);
+        $page_content .= $this->load->view($this->folder_name.'/partials/upload_help', $data, true);
         $page_content .= $this->load->view($this->folder_name.'/partials/delete_modal', $data, true);
         
         $this->page->build($page_content, $this->folder_name, $page_name, $this->page_title );
@@ -1057,6 +1076,7 @@ class Management extends CI_Controller {
                 $params = array(
                     'admid' => $form_fields['adm'],
                     'type'   => $form_fields['adm_type'],
+                    'utme'   => $form_fields['adm_utme'],
                     'status' => $form_fields['adm_status'],
                 );
                 
@@ -1100,7 +1120,7 @@ class Management extends CI_Controller {
     }
     
     
-     public function update_admission_type($param) {
+    public function update_admission_type($param) {
         
         // Check for valid request method
         if($this->input->server('REQUEST_METHOD') == 'POST') {
@@ -1120,6 +1140,7 @@ class Management extends CI_Controller {
                 $params = array(
                     'admid' => $form_fields['adm'],
                     'type'   => $form_fields['adm_type'],
+                    'utme'   => $form_fields['adm_utme'],
                     'status' => $form_fields['adm_status'],
                 );
                 
@@ -1161,5 +1182,114 @@ class Management extends CI_Controller {
         
         // Redirect to exam page, showing notifiction messages if there are.
         redirect(site_url('admission/management'));
+    }
+    
+    
+    public function upload_utme(){
+        
+        // Check for valid request method
+        if($this->input->server('REQUEST_METHOD') == 'POST') {
+            // Get all field values.
+            $form_fields = $this->input->post(NULL);
+            
+            if($this->adm_mdl->adm_has_utme($form_fields['adm_type'])){
+                
+                if(is_uploaded_file($_FILES['filename']['tmp_name'])){
+                    
+                    $param = array(
+                        'usertype' => 'applicant',
+                        'schoolid' => $this->school_id,
+                        'admtype' => $form_fields['adm_type']
+                        );
+                    
+                    $uploaded = true;
+                    $rec = array();
+                    //Import uploaded file to Database	
+                    $handle = fopen($_FILES['filename']['tmp_name'], "r");
+                    
+                    while (($data = fgetcsv($handle, 1500, ",")) !== FALSE) {
+                        $rec[] = array(
+                                    'user' => array(
+                                                'usertypeid' => $data[0],
+                                                'fname' => $data[1], 
+                                                'lname' => $data[2],
+                                                'mname' => $data[3],
+                                                'phone' => $data[4],
+                                                'email' => $data[5],
+                                                'sex' => $data[15],
+                                                'usertype' => $param['usertype'],
+                                                'schoolid' => $param['schoolid'],
+                                                'password' => $this->main->encrypt($data[1])
+                                            ),
+                                    'pros' => array(
+                                                'userid'=>'',
+                                                'jambregid' => $data[0],
+                                                'admtype' => $param['admtype'],
+                                                'prog1' => $data[14],
+                                                'formsubmit' => 0
+                                            ),
+                                    'utme' => array(
+                                                'userid'=>'',
+                                                'regid' => $data[0],
+                                                'year' => $form_fields['utme_year'],
+                                                'subject' => array(
+                                                                $data[6],
+                                                                $data[8],
+                                                                $data[10],
+                                                                $data[12],
+                                                            ),
+                                                'score' => array(
+                                                                $data[7],
+                                                                $data[9],
+                                                                $data[11],
+                                                                $data[13],
+                                                            )           
+                                            )       
+                                );
+                    }
+                    
+                    fclose($handle);
+                    $status = $this->adm_mdl->upload_utme($rec);   
+                    // Process model response
+                    switch($status) {
+
+                        // Unique constraint violated.
+                        case DEFAULT_EXIST:
+                            $error_msg = $this->lang->line('adm_entry_exist');  
+                            $this->main->set_notification_message(MSG_TYPE_WARNING, $error_msg);
+                            break;
+
+                        // There was a problem creating the entry.
+                        case DEFAULT_ERROR:
+                            $error_msg = $this->lang->line('adm_error');  
+                            $this->main->set_notification_message(MSG_TYPE_ERROR, $error_msg);
+                            break;
+
+                        // Entry created successfully.
+                        case DEFAULT_SUCCESS:
+                            $success_msg = sprintf($this->lang->line('adm_success'),'UTME Result', 'Uploaded', '');
+                            $this->main->set_notification_message(MSG_TYPE_SUCCESS,$success_msg);
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+                
+                 
+            }else{
+                // Set error message for any request other than POST
+                $error_msg = $this->lang->line('adm_utme_upload_error');  
+                $this->main->set_notification_message(MSG_TYPE_ERROR, $error_msg);  
+            }
+            
+            
+        }else{
+            // Set error message for any request other than POST
+            $error_msg = $this->lang->line('invalid_req_method');  
+            $this->main->set_notification_message(MSG_TYPE_ERROR, $error_msg);  
+        }
+        // Redirect to exam page, showing notifiction messages if there are.
+        redirect(site_url('admission/management'));  
     }
 }

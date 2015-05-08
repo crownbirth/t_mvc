@@ -37,10 +37,10 @@
                     <div class="row-fluid">
                         <h6><i class="icon-list"></i> UTME/DE Result </h6>
                         <div class="span12">
-                            <?php if($prospective['rs']['admtype'] == 'UTME'){?>
+                            <?php if($prospective['rs']['utme'] == 'yes'){?>
                             <div class="span11">
                                 <p>&nbsp;</p>
-                                <table class="table table-bordered table-condensed table-striped">
+                                <table class="table table-bordered table-condensed table-striped table-colored-header">
                                     <thead>
                                         <tr>
                                             <th colspan="2">UTME Result</th>
@@ -64,7 +64,7 @@
                                             <td width='25%'>Exam Year :</td>
                                             <td>
                                                 <div class='span4'>
-                                                    <select name="utme[examyr]" id="olevel[0][examyr]" class="input-large chosen-select" >
+                                                    <select name="utme[examyr]" id="olevel[0][examyr]" class="input-large chosen-select" required="true" >
                                                         <option value="">--Exam Year--</option>
                                                         <?php 
                                                         $i =0;
@@ -83,7 +83,7 @@
                                             <td width='25%'>Exam Number :</td>
                                             <td>
                                                 <div class='span4'>
-                                                    <input type="text" name="utme[examnum]" id="examnum[first]" placeholder="Exam No " class="input-large">
+                                                    <input type="text" name="utme[examnum]" id="examnum[first]" placeholder="Exam No " class="input-large" required="true">
                                                 </div>
                                             </td>   
                                         </tr>
@@ -112,7 +112,7 @@
                                                                         <?php }?>
                                                                     </select> 
                                                                 </div>
-                                                                <input type="hidden" name="admtype" value="UTME">
+                                                                <input type="hidden" name="extype" value="<?php echo $prospective['rs']['utme']?>">
                                                             </td>
                                                             <td>
                                                                 <input type="number" name="utme[grade][]" class="input-small" min="0" max="100">
@@ -128,7 +128,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <?php }elseif($prospective['rs']['admtype'] == 'DE'){?>
+                            <?php }elseif($prospective['rs']['utme'] == 'no'){?>
                             <div class="span11">
                                 <div class="box-bordered">
                                     <h6><i class="icon-list"></i>  DE Result</h6>

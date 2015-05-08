@@ -54,10 +54,10 @@ $route['payment/pay/paid'] = "payment/payment/paid";
 $route['payment/pay/decline'] = "payment/payment/decline";
 $route['payment/pay/cancle'] = "payment/payment/cancle";
 
-$route['payment'] = "payment/payment";
+
 $route['payment/setup'] = "payment/payment/setup";
 $route['setup/payment/payinfo'] = "payment/payment/payinfo";
-$route['payment/myschedule'] = "payment/payment/myschedule";
+$route['payment/myschedule'] = "payment/payment/user_schedule";
 $route['payment/process_pay'] = "payment/payment/process_payment";
 $route['payment/paynow/(:any)'] = "payment/payment/paynow/$1";
 $route['payment/invoice'] = "payment/payment/invoice";

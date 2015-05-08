@@ -1,3 +1,19 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+/**
+ * TAMS
+ * Payment  
+ * 
+ * @category   View
+ * @package    Payment
+ * @subpackage 
+ * @author     Sule-odu Adedayo <suleodu.adedayo@gmail.com>
+ * @copyright  Copyright © 2014 TAMS.
+ * @version    1.0.0
+ * @since      File available since Release 1.0.0
+ */
+//var_dump($my_pay_schedule);
+?>
 <div class="span12">
         <div class="box box-bordered box-color">
                 <div class="box-title">
@@ -37,7 +53,7 @@
                                                         <tr>
                                                             <td><?php echo $key +1?></td>
                                                             <td><?php echo $value['sesname']?></td>
-                                                            <td><?php echo $value['type']?></td>
+                                                            <td><?php echo ucfirst($value['type'])?></td>
                                                             <td>
                                                                 <a href="<?php echo base_url(sprintf('payment/paynow/%s',$value['scheduleid']))?>" class="btn btn-lime">Proceed to Payment</a>
                                                             </td>

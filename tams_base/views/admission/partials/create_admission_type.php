@@ -20,6 +20,12 @@
         
         <div class="modal-body">
             <div class="control-group">
+                <label for="exam_valid" class="control-label">Admission Type:</label>
+                <div class="controls">
+                    <input type="text" name="adm_type" id="adm_title" class="spinner input-xlarge"/>
+                </div>
+            </div>
+            <div class="control-group">
                 <label for="exam_valid" class="control-label">Admission:</label>
                 <div class="controls">
                     <div class="input-xlarge">
@@ -33,12 +39,6 @@
                 </div>
             </div>
             <div class="control-group">
-                <label for="exam_valid" class="control-label">Admission Type:</label>
-                <div class="controls">
-                    <input type="text" name="adm_type" id="adm_title" class="spinner input-xlarge"/>
-                </div>
-            </div>
-            <div class="control-group">
                 <label for="adm_status" class="control-label">Status:</label>
                 <div class="controls">
                     <div class="input-xlarge">
@@ -46,6 +46,18 @@
                             <option value="">--Choose--</option>
                             <option value="open">Open</option>
                             <option value="close">Close</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <label for="adm_utme" class="control-label">Enable UTME Exam : </label>
+                <div class="controls">
+                    <div class="input-xlarge">
+                        <select name="adm_utme" id="adm_status" class="chosen-select"> 
+                            <option value="">--Choose--</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
                         </select>
                     </div>
                 </div>

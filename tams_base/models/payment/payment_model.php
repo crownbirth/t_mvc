@@ -781,15 +781,75 @@ class Payment_model extends CI_Model{
         return $result;  
     } // End of function gets
     
+    /**
+     * Get user eligible b=payment Schedule
+     * 
+     * @param array $param
+     */
+    public function user_schedule($param){
+        
+        $prep_query = "SELECT SUM(ptr.percentage) AS total_paid,  ps.scheduleid, ps.amount, ps.exceptions, ps.penalty, "
+                    . "ps.penalty_status,ps.revhead, ps.created, s.sesname, ph.type, pi.percentage "
+                    . "FROM {$this->db->protect_identifiers('pay_schedule', TRUE) } ps "
+                    . "LEFT JOIN {$this->db->protect_identifiers('session', TRUE)} s ON s.sesid = ps.sesid "
+                    . "LEFT JOIN {$this->db->protect_identifiers('pay_head', TRUE)} ph ON  ph.payheadid = ps.payheadid  "
+                    . "LEFT JOIN {$this->db->protect_identifiers('pay_instalment', TRUE)} pi ON pi.instid = ps.instid "
+                    . "LEFT JOIN {$this->db->protect_identifiers('pay_transactions', TRUE)} ptr ON ptr.scheduleid = ps.scheduleid "
+                    . "AND ptr.status = 'APPROVED' "
+                    . "WHERE 1 <= ps.sesid AND ps.usertype = '{$param['usertype']}' "
+                    . "AND ps.schoolid = {$param['schoolid']} "
+                    . "GROUP BY ps.scheduleid "
+                    . "HAVING total_paid < 100  OR total_Paid IS NULL  ";
+//                  echo $prep_query;
+//                  exit();
+        $query = $this->db->query($prep_query);
+        
+        return $query->result_array();
+        
+    }
     
-    public function sch1($usertype){
-        $this->db->select('*');
-        $this->db->from('pay_schedule');
-        $this->db->where('pay_schedule.usertype', $usertype);
-        $query = $this->db->get();
+    public function get_user_details($usertype, $id){
         
-        $result = $query->result_array();
-        
+        switch($usertype){
+            
+            case 'applicant':
+                // Call get_data from utl_model
+                $result = $this->util_model->get_data('users u', 
+                                                    array(), 
+                                                    array(
+                                                            array('field' => 'u.userid', 'value' => $id)
+                                                        ),
+                                                    array(),
+                                                    array(
+                                                            array('table' => 'prospective p', 'on'=> 'u.userid = p.userid')
+                                                        ),
+                                                    array(),
+                                                    QUERY_ARRAY_ROW
+                                                );
+                break;
+            case 'student':
+                // Call get_data from utl_model
+                $result = $this->util_model->get_data('users u', 
+                                                    array(), 
+                                                    array(
+                                                            array('field' => 'u.userid', 'value' => $id)
+                                                        ),
+                                                    array(),
+                                                    array(
+                                                            array('table' => 'students s', 'on'=> 'u.userid = s.userid')
+                                                        ),
+                                                    array(),
+                                                    QUERY_ARRAY_ROW
+                                                );
+                break;
+            case 'admin':
+                break;
+            case 'staff':
+                break;
+            default:
+                break;
+                
+        }
         return $result;
     }
 }

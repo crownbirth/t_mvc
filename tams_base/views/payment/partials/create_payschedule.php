@@ -26,7 +26,8 @@
                         <?php foreach($session as $ses){?>
                         <option value="<?php echo $ses['sesid']?>"><?php echo $ses['sesname']?></option>
                         <?php }?>
-                    </select>                                                                     
+                    </select> 
+                    <span><a href="<?php echo site_url('session')?>" class="btn btn-small btn-primary">Create Session </a></span>
                 </div>
             </div>
         </div>
