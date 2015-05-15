@@ -424,9 +424,6 @@ class Payment_model extends CI_Model{
         return $status;
     }// End func delete
 
-    
-    
- 
     /**
      * Gets
      * 
@@ -851,6 +848,60 @@ class Payment_model extends CI_Model{
                 
         }
         return $result;
+    }
+    
+    public function get_user_exceptions($param, $id){
+        
+        switch ($param['usertype']) {
+            case 'applicant':
+                $prep_query = "SELECT ex.*, ex.amount AS ex_amount , sh.*, s.sesname, ph.type, inst.percentage "
+                            . "FROM tams_pay_exception ex, tams_pay_instalment inst, "
+                            . "tams_pay_schedule sh, tams_session s, tams_pay_head ph "
+                            . "WHERE ex.instid = inst.instid "
+                            . "AND ph.payheadid = sh.payheadid "
+                            . "AND sh.sesid = s.sesid "
+                            . "AND ex.scheduleid = {$id} "
+                            . "AND ex.scheduleid = sh.scheduleid  "
+                            . "AND "
+                            . "("
+                            . "(unittype = 'prog_offered' AND unitid = %s ) "
+                            . "OR (unittype = 'coi' AND unitid = %s ) "
+                            . "OR (unittype = 'state' AND unitid = %s ) "
+                            . ")"
+                            . "AND level = %s "
+                            . "ORDER BY unittype DESC ";
+                                    
+
+                break;
+            case 'student':
+
+
+                break;
+            case 'admin':
+
+
+                break;
+            case 'staff':
+
+
+                break;
+
+            default:
+                break;
+        }
+    }
+    
+    public function has_paid($param){
+        
+        $status = FALSE;
+        
+        $query = $this->db->get_where('pay_transactions', $param);
+        $record = $query->num_rows();
+        if($record > 0){
+            $status = TRUE; 
+        }
+        
+        return $status;
     }
 }
 

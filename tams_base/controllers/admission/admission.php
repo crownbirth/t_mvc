@@ -69,6 +69,16 @@ class Admission extends CI_Controller {
          */
         $this->load->library('form_validation');
         
+        /*
+         * Load payment model 
+         */
+        $this->load->model('payment/payment_model','pay_mdl' );
+        
+        /*
+         * Load Pay Library  
+         */
+        $this->load->library('Pay/pay');
+        
         // Initialize class variables
         $this->user_id = $this->main->get('user_id');
         $this->user_type = $this->main->get('user_type');
@@ -488,6 +498,7 @@ class Admission extends CI_Controller {
      * 
      */
     public function register() { 
+        $parameter = array();
         
         $data['prospective'] = $this->adm_mdl->get_prospective($this->user_id);
         $data['users'] = $this->adm_mdl->get_user($this->user_id);
@@ -501,42 +512,62 @@ class Admission extends CI_Controller {
         $data['exam_grade'] = $this->adm_mdl->get_exam_grade();
         $data['grade'] = $this->adm_mdl->get_grade();
                  
+        //die(var_dump($data['prospective']));
         
+        $schedule = $this->adm_mdl->get_adm_payschedule($data['prospective']['rs']['typeid']);
         
-        $data['this_year'] = date('Y');
-        $page_name = "";
+        $prm = array(
+                'scheduleid' => "Application Fee",
+                'userid' => $this->user_id,
+                'status' => "APPROVE",
+                'percentage' => 100              
+            );
         
+       if(!$this->has_paid("application", $prm)){
+            unset($prm['status']);
+            $prm['amount'] = ($data['prospective']['rs']['coi'] == 'yes')? $schedule['coi_app_fee'] : $schedule['reg_app_fee'];
+            
+            $this->pay_app_fee($prm);
+           
+       }else{
+           
+            $data['this_year'] = date('Y');
+            $page_name = "";
         
-        //Set Page name
-        switch ($data['prospective']['rs']['formsubmit']) {
-            case 0:
-                $page_name = 'personal_info';
-                break;
-            case 1:
-                $page_name = 'sponsor_info';
-                break;
-            case 2:
-                $page_name = 'education_info';
-                break;
-            case 3:
-                $page_name = 'utme_de_result';    
-                break;
-            case 4:
-                $page_name = 'programme_choice';    
-                break;
-            case 5:
-                
-                redirect(base_url("admission/view_register/{$this->user_id}"));
-                break;
-            default:
-                break;
-        }
+
         
-        $this->page_title = 'Prospective Registration';
+            //Set Page name
+            switch ($data['prospective']['rs']['formsubmit']) {
+                case 0:
+                    $page_name = 'personal_info';
+                    break;
+                case 1:
+                    $page_name = 'sponsor_info';
+                    break;
+                case 2:
+                    $page_name = 'education_info';
+                    break;
+                case 3:
+                    $page_name = 'utme_de_result';    
+                    break;
+                case 4:
+                    $page_name = 'programme_choice';    
+                    break;
+                case 5:
+
+                    redirect(base_url("admission/view_register/{$this->user_id}"));
+                    break;
+                default:
+                    break;
+            }
         
-        //build view pade for prospective registration 
-        $page_content = $this->load->view($this->folder_name.'/prospective/'.$page_name, $data, true);
-        $this->page->build($page_content, $this->folder_name, $page_name, $this->page_title );    
+            $this->page_title = 'Prospective Registration';
+
+            //build view pade for prospective registration 
+            $page_content = $this->load->view($this->folder_name.'/prospective/'.$page_name, $data, true);
+            $this->page->build($page_content, $this->folder_name, $page_name, $this->page_title );     
+       }
+       
     }// End of func register
     
     
@@ -631,6 +662,43 @@ class Admission extends CI_Controller {
         $this->page->build($page_content, $this->folder_name, $page_name, $this->page_title );   
             
     }// End of func register
+    
+    
+    
+    
+    public function has_paid($what, $param){
+        $status = FALSE;
+        
+        switch($what){
+            case 'application':
+                $status = $this->pay_mdl->has_paid($param);
+                break;
+            
+            
+            case 'acceptance':
+                $status = $this->pay_mdl->has_paid($param);
+                break;
+            
+            
+            default:
+                break;
+            
+        }
+        
+        return $status;
+    }
+    
+    
+    private function pay_app_fee($param){
+        
+        $data['prm'] = $param;
+        
+        $page_name = "application_fee";
+        $this->page_title = 'Prospective Application Payment';
+        //build view pade for prospective registration 
+        $page_content = $this->load->view($this->folder_name.'/prospective/'.$page_name, $data, true);
+        $this->page->build($page_content, $this->folder_name, $page_name, $this->page_title );  
+    }
 }
 
 /* End of file admission.php */

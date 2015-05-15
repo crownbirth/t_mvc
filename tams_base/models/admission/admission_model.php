@@ -1046,7 +1046,7 @@ class Admission_model extends CI_Model {
         
         // Call get_data from utl_model
         return $this->util_model->get_data('adm_types typ', 
-                                            array('adm.admid','typ.typeid','adm.displayname', 's.sesname', 'typ.type', 'typ.status','adm.sesid', 'typ.utme'), 
+                                            array('adm.admid','typ.typeid','adm.displayname', 's.sesname', 'typ.type', 'typ.status','adm.sesid', 'typ.utme', 'typ.coi_app_fee','typ.coi_acc_fee','typ.reg_app_fee', 'typ.reg_acc_fee'), 
                                             $where ,
                                             array(),
                                             array(
@@ -1058,6 +1058,16 @@ class Admission_model extends CI_Model {
                                         );
         
     }// End func get_exam
+    
+    public function get_adm_payschedule($id){
+        
+        $this->db->select('*');
+        $this->db->from('adm_types');
+        $this->db->where('typeid', $id); 
+        $query = $this->db->get();
+        
+        return $query->row_array();
+    }
     
     
     public function get_admission_record($id = NULL){

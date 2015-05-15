@@ -453,7 +453,7 @@ class Pay {
      * 
      * @return type array
      */
-    public function cancle(){
+    public function cancel(){
         
         $result = array();
         // Check for valid request method

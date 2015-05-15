@@ -1051,8 +1051,6 @@ class Management extends CI_Controller {
         // Redirect to exam page, showing notifiction messages if there are.
         redirect(site_url('admission/management'));
     }
-    
-    
     /**
      * Create Admission Type
      */
@@ -1078,6 +1076,10 @@ class Management extends CI_Controller {
                     'type'   => $form_fields['adm_type'],
                     'utme'   => $form_fields['adm_utme'],
                     'status' => $form_fields['adm_status'],
+                    'coi_app_fee' => $form_fields['coi_app_fee'],
+                    'reg_app_fee' => $form_fields['reg_app_fee'],
+                    'coi_acc_fee' => $form_fields['coi_acc_fee'],
+                    'reg_acc_fee' => $form_fields['reg_acc_fee']
                 );
                 
                 // Call model method to perform insertion
@@ -1142,6 +1144,10 @@ class Management extends CI_Controller {
                     'type'   => $form_fields['adm_type'],
                     'utme'   => $form_fields['adm_utme'],
                     'status' => $form_fields['adm_status'],
+                    'coi_app_fee' => $form_fields['coi_app_fee'],
+                    'reg_app_fee' => $form_fields['reg_app_fee'],
+                    'coi_acc_fee' => $form_fields['coi_acc_fee'],
+                    'reg_acc_fee' => $form_fields['reg_acc_fee']
                 );
                 
                 $id = $form_fields['edit_admission_type_id'];

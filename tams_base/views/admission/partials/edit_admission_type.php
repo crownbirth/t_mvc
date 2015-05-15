@@ -17,51 +17,114 @@
         class="form-horizontal form-striped" 
         method="post" 
         action="<?php echo site_url('admission/update_admission_type')?>">
-        
         <div class="modal-body">
-            <div class="control-group">
-                <label for="exam_valid" class="control-label">Admission Type:</label>
-                <div class="controls">
-                    <input type="text" name="adm_type" id="adm_title" value="{{current.type}} "class="spinner input-xlarge"/>
-                </div>
-            </div>
-            <div class="control-group">
-                <label for="exam_valid" class="control-label">Admission:</label>
-                <div class="controls">
-                    <div class="input-xlarge">
-                        <select name="adm" 
-                            id="edtadm" 
-                            class="chosen-select"> 
-                            <option value="">--Choose--</option>
-                            <option ng-repeat="adm in data.admissions" ng-selected="current.admid == adm.admid" value="{{adm.admid}}" >{{adm.displayname}}</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="control-group">
-                <label for="adm_status" class="control-label">Status:</label>
-                <div class="controls">
-                    <div class="input-xlarge">
-                        <select name="adm_status" id="edtadm_status" class="chosen-select"> 
-                            <option value="">--Choose--</option>
-                            <option value="open" ng-selected="current.status =='open'">Open</option>
-                            <option value="close" ng-selected="current.status =='close'">Close</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="control-group">
-                <label for="adm_utme" class="control-label">Enable UTME Exam : </label>
-                <div class="controls">
-                    <div class="input-xlarge">
-                        <select name="adm_utme" id="adm_status" class="chosen-select"> 
-                            <option value="">--Choose--</option>
-                            <option value="yes" ng-selected="current.utme =='yes'">Yes</option>
-                            <option value="no" ng-selected="current.utme =='no'">No</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+            <table class="table table-bordered table-condensed table-colored-header table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="2">Set Admission Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Admission Type : </td>
+                        <td>
+                            <input type="text" name="adm_type" id="adm_title" value="{{current.type}} "class="input-xlarge">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Admission: </td>
+                        <td>
+                            <div class="input-xlarge">
+                                <select name="adm" 
+                                    id="edtadm" 
+                                    class="chosen-select"> 
+                                    <option value="">--Choose--</option>
+                                    <option ng-repeat="adm in data.admissions" ng-selected="current.admid == adm.admid" value="{{adm.admid}}" >{{adm.displayname}}</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Status : </td>
+                        <td>
+                            <div class="input-xlarge">
+                                <select name="adm_status" id="edtadm_status" class="chosen-select"> 
+                                    <option value="">--Choose--</option>
+                                    <option value="open" ng-selected="current.status =='open'">Open</option>
+                                    <option value="close" ng-selected="current.status =='close'">Close</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Enable UTME Exam : </td>
+                        <td>
+                            <div class="input-xlarge">
+                                <select name="adm_utme" id="adm_status" class="chosen-select"> 
+                                    <option value="">--Choose--</option>
+                                    <option value="yes" ng-selected="current.utme =='yes'">Yes</option>
+                                    <option value="no" ng-selected="current.utme =='no'">No</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered table-condensed table-colored-header table-striped ">
+                <thead>
+                    <tr>
+                        <th colspan="2"><i class="icon-money"></i> Set Admission Payment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th colspan="2">Regular Applicant</th>
+                    </tr>
+                    <tr>
+                        <td>Application Fee: </td>
+                        <td>
+                            <div class="input-append input-prepend">
+                                <span class="add-on">NGN</span>
+                                <input class="input-small" type="text" name="reg_app_fee" value="{{current.reg_app_fee}}" required="">
+                                <span class="add-on">.00</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Acceptance Fee: </td>
+                        <td>
+                            <div class="input-append input-prepend">
+                                <span class="add-on">NGN</span>
+                                <input class="input-small" type="text" name="reg_acc_fee" value="{{current.reg_acc_fee}}" required="">
+                                <span class="add-on">.00</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">C O I Applicant</th>
+                    </tr>
+                    <tr>
+                        <td>Application Fee: </td>
+                        <td>
+                            <div class="input-append input-prepend">
+                                <span class="add-on">NGN</span>
+                                <input class="input-small" type="text" name="coi_app_fee" value="{{current.coi_app_fee}}" required="">
+                                <span class="add-on">.00</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Acceptance Fee: </td>
+                        <td>
+                            <div class="input-append input-prepend">
+                                <span class="add-on">NGN</span>
+                                <input class="input-small" type="text" name="coi_acc_fee" value="{{current.coi_acc_fee}}" required="">
+                                <span class="add-on">.00</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <input type="hidden" name="edit_admission_type_id" value="{{current.typeid}}"/>
         <div class="modal-footer">

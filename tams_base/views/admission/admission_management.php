@@ -24,7 +24,7 @@
             </div>
            
             <div class="box-content nopadding">
-                 <?php if(!$this->main->has_perm('admission', 'admission.setup.view')){?>
+                 <?php if($this->main->has_perm('admission', 'admission.setup.view')){?>
                 <ul class="tabs tabs-inline tabs-top">
                     <li class="active">
                         <a data-toggle="tab" href="#first11"><i class="icon-inbox"></i> Exam Setup</a>
@@ -515,8 +515,10 @@
                                                             <th>Admission Title </th>
                                                             <th>Session</th>
                                                             <th>Admission Type</th>
-                                                            <th>Enable UTME Exam</th>
+                                                            <th>Enable UTME ?</th>
                                                             <th>Status</th>
+                                                            <th>Regular Payment</th>
+                                                            <th>COI Payment</th>
                                                             <th>Actions</th>
                                                         </tr>
                                                     </thead> 
@@ -527,7 +529,39 @@
                                                             <td ng-bind="adm_typ.sesname"></td> 
                                                             <td ng-bind="adm_typ.type"></td>
                                                             <td ng-bind="adm_typ.utme"></td>
-                                                            <td ng-bind="adm_typ.status"></td>  
+                                                            <td ng-bind="adm_typ.status"></td>
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
+                                                                        <i class="icon-money"> </i>
+                                                                        <span class="caret"></span>
+                                                                    </a>
+                                                                    <ul class="dropdown-menu dropdown-success">
+                                                                        <li>
+                                                                            <small><b>Application</b> : NGN {{adm_typ.reg_app_fee}}</small>
+                                                                        </li>
+                                                                        <li>
+                                                                            <small><b>Acceptance</b>: NGN {{adm_typ.reg_acc_fee}}</small>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
+                                                                        <i class="icon-money"> </i>
+                                                                        <span class="caret"></span>
+                                                                    </a>
+                                                                    <ul class="dropdown-menu dropdown-success">
+                                                                        <li>
+                                                                            <small><b>Application</b>: NGN {{adm_typ.coi_app_fee}}</small>
+                                                                        </li>
+                                                                        <li>
+                                                                            <small><b>Acceptance</b>: NGN {{adm_typ.coi_acc_fee}}</small>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
                                                             <td>
                                                                 <div class="btn-group">
                                                                     <a class="btn dropdown-toggle" href="#" data-toggle="dropdown">

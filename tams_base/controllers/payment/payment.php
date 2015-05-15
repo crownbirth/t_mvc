@@ -26,6 +26,7 @@ class Payment extends CI_Controller {
     
     private $user_id;
     private $usertype;
+    private $school_id;
     
     /**
      * Folder Name
@@ -73,8 +74,9 @@ class Payment extends CI_Controller {
          */
         $this->load->library('Pay/pay');
         
-        $this->user_id = $this->main->item('school_id');
+        $this->school_id = $this->main->item('school_id');
         $this->usertype = $this->main->item('user_type');
+        $this->user_id = $this->main->item('user_id');
     }
     
     
@@ -122,7 +124,7 @@ class Payment extends CI_Controller {
         //pre load paysetup dependencies from database 
         $data['merchant'] = $this->gets('pay_merchant');
         $data['payschd'] = $this->gets('pay_schedule');
-        $data['exceptions'] = $this->gets('pay_exceptions');
+        $data['exceptions'] = $this->gets('my_pay_exceptions');
         $data['session'] = $this->gets('session');
         $data['payhead'] = $this->gets('pay_head');
         $data['college'] = $this->gets('college');
@@ -215,13 +217,17 @@ class Payment extends CI_Controller {
      * Get user eligible payment schedule
      */
     public function user_schedule(){
-        $user_details = $this->pay_mdl->get_user_details()
+        
+        $user_details = $this->pay_mdl->get_user_details($this->usertype, $this->user_id);
+        
+        
         $active_schedule = array();
+        
         
         //set user pay schedule parameter
         $user_schedule_param = array(
                                 "usertype" => $this->usertype,
-                                "schoolid" => $this->user_id
+                                "schoolid" => $this->school_id
                             );
         
         $user_schedule =  $this->pay_mdl->user_schedule( $user_schedule_param);
@@ -231,7 +237,7 @@ class Payment extends CI_Controller {
                 /**
                  * @todo write a function to check if user is eligible for exception 
                  */
-                $has_excep = $this->has_exceptions($param);
+                $has_excep = $this->has_exceptions($user_details['rs']);
             }
             array_push($active_schedule, $u_schdl);
         }
@@ -244,7 +250,10 @@ class Payment extends CI_Controller {
         $this->page->build($page_content, $this->folder_name, $page_name, $this->page_title );
     }
     
-    private function has_exception($id){
+    private function has_exception($user_rec){
+        switch ($user_rec){
+            
+        }
         
     }
     /**
@@ -368,6 +377,8 @@ class Payment extends CI_Controller {
         $this->page->build($page_content, $this->folder_name, $page_name, $this->page_title );
         
     }
+    
+    
     
     public function mypersonalschedule(){
          //Get usertype to fetch schedule
@@ -2147,9 +2158,6 @@ class Payment extends CI_Controller {
         } 
         
     }
-    
-    
-    
     
     
     /**
